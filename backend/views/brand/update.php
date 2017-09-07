@@ -20,6 +20,9 @@ use \yii\helpers\Html;
                 <h3>编辑品牌</h3>
             </div>
 
+            <!-- 消息提示-->
+            <?= $this->render('/common/message');?>
+
             <div class="row-fluid form-wrapper">
                 <!-- left column -->
                 <div class="span9 with-sidebar">

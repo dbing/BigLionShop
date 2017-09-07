@@ -19,11 +19,16 @@ use yii\helpers\Url;
             <div class="row-fluid header">
                 <h3>品牌列表</h3>
                 <div class="span10 pull-right">
-                    <input type="text" class="span5 search" placeholder="Type a user's name..." />
 
+                    <?= \yii\helpers\Html::beginForm(['brand/list'],'get')?>
+
+                    <input type="text" value="<?=$brandName;?>" class="span5 search" name="brand_name" placeholder="Search brand name..." />
                     <div class="ui-dropdown">
-                        <button class="btn">Search</button>
+                        <input type="submit" class="btn" value="Search">
+<!--                        <button class="btn">Search</button>-->
                     </div>
+                    <?= \yii\helpers\Html::endForm(); ?>
+
 
                     <a href="<?= Url::to(['brand/create']);?>" class="btn-flat success pull-right">
                         <span>&#43;</span>

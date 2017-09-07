@@ -26,12 +26,15 @@ class BrandController extends Controller
      */
     public function actionList()
     {
-        $query = Brand::find();
+        $brandName = Yii::$app->request->get('brand_name','');
 
+        // where barnd_name like '%%'
+        $map = empty($brandName) ? [] : ['like','brand_name',$brandName];
+        $query = Brand::find()->where($map);
         $page = new Pagination(['defaultPageSize'=>Yii::$app->params['pageSize'],'totalCount'=>$query->count()]);
         $brands = $query->offset($page->offset)->limit($page->limit)->all();
 
-        return $this->render('list',['brands'=>$brands,'page'=>$page]);
+        return $this->render('list',['brands'=>$brands,'page'=>$page,'brandName'=>$brandName]);
     }
 
     /**
@@ -49,7 +52,14 @@ class BrandController extends Controller
             if($brand->load($post) && $brand->validate())
             {
                 $res = $brand->save();
-                var_dump($res);
+                if($res)
+                {
+                    $this->success('添加品牌成功');
+                }
+                else
+                {
+                    $this->error('添加品牌失败');
+                }
 
             }
         }
@@ -74,10 +84,18 @@ class BrandController extends Controller
             {
                 $res = $brand->save();
                 var_dump($res);
+                if($res)
+                {
+                    $this->success('修改成功.',['brand/list']);
+                }
+                else
+                {
+                    $this->error('没有修改或修改失败');
+                }
             }
             else
             {
-                echo 'save Fail';
+                $this->error('数据不合法.');
             }
         }
 
@@ -104,5 +122,15 @@ class BrandController extends Controller
             die('delete Fail');
         }
 
+    }
+
+    protected function success($msg='',$url='',$wait=3)
+    {
+        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'state'=>1]);
+    }
+
+    protected function error($msg)
+    {
+        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'state'=>0]);
     }
 }
