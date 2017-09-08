@@ -86,7 +86,7 @@ class BrandController extends Controller
                 var_dump($res);
                 if($res)
                 {
-                    $this->success('修改成功.',['brand/list']);
+                    $this->success('修改成功.','brand/list',5);
                 }
                 else
                 {
@@ -126,11 +126,13 @@ class BrandController extends Controller
 
     protected function success($msg='',$url='',$wait=3)
     {
-        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'state'=>1]);
+        $url = !empty($url) ? yii\helpers\Url::toRoute($url) : '';
+        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'url'=>$url,'state'=>1,'wait'=>$wait]);
     }
 
-    protected function error($msg)
+    protected function error($msg,$url='',$wait=3)
     {
-        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'state'=>0]);
+        $url = !empty($url) ? yii\helpers\Url::toRoute($url) : '';
+        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'url'=>$url,'state'=>0,'wait'=>$wait]);
     }
 }
