@@ -1,8 +1,22 @@
-Yii 2 Advanced Developing Shop Project
+PHP 大狮班电商项目
 ===============================
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+## 简介
+本仓库是`PHP`大师班商城项目仓库，使用[Yii 2](http://www.yiiframework.com/) Advanced 开发，
+后续每一个版本的发布都将对应一个功能模块的新增，对应版本号与对应代码的修改见如下：
+
+- v0.0.1 初始版本；
+- v0.1.1
+    * 使用 layout 完成后台模板布局； 
+    * 新增品牌添加；
+    * 新增品牌修改；
+    * 新增品牌删除；
+    * 新增品牌列表和搜索与分页；   
+- v0.2.1 新增后台消息提示方法；
+- v0.3.1 使用用户认证组件完成完成后台管理登录与退出；
+
+
+
 
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
@@ -11,48 +25,10 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
 
 
-本仓库是`PHP`大师班商城项目仓库，后续每一个版本的发布都将对应一个功能模块的新增，对应版本号与对应代码的修改见如下：
-
-
-
-
-
-
 
 DIRECTORY STRUCTURE
 -------------------
 
 ```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
+
 ```

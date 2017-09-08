@@ -1,35 +1,35 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<div class="row-fluid login-wrapper">
+    <a class="brand" href="index.html"></a>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+    <div class="span4 box">
+        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <div class="content-wrap">
+            <h6>必应商城 - 后台管理</h6>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true,'class'=>'span12','placeholder'=>'管理员账号'])->label(''); ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <?= $form->field($model, 'password')->passwordInput(['class'=>'span12','placeholder'=>'管理员密码'])->label(''); ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
+            <a href="#" class="forgot">忘记密码?</a>
+            <div class="remember">
+                <?= $form->field($model, 'rememberMe')->checkbox()->label('记住我') ?>
+            </div>
 
-            <?php ActiveForm::end(); ?>
+            <?= Html::submitButton('Login', ['class' => 'btn-glow primary login', 'name' => 'login-button']) ?>
+
         </div>
+        <?php ActiveForm::end(); ?>
+    </div>
+
+    <div class="span4 no-account">
+        <p>没有账户?</p>
+        <a href="signup.html">注册</a>
     </div>
 </div>

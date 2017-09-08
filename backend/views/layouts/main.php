@@ -9,6 +9,7 @@
  */
 
 use \yii\helpers\Url;
+use \yii\helpers\Html;
 ?>
 
 
@@ -170,9 +171,13 @@ use \yii\helpers\Url;
                 </a>
             </li>
             <li class="settings hidden-phone">
-                <a href="signin.html" role="button">
-                    <i class="icon-share-alt"></i>
-                </a>
+                <?= Html::beginForm(['/site/logout'], 'post'); ?>
+                    <?= Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'btn btn-link logout']
+                    )?>
+                <?= Html::endForm(); ?>
+
             </li>
         </ul>
     </div>

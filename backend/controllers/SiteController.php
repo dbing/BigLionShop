@@ -60,7 +60,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->redirect(['index/index']);
+//        return $this->render('index');
     }
 
     /**
@@ -70,7 +71,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-
+        $this->layout = 'signin';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
