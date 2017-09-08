@@ -44,7 +44,8 @@ class BrandController extends Controller
      */
     public function actionCreate()
     {
-        $brand = new Brand();
+        $brand = (new Brand())->loadDefaultValues();
+
         if(Yii::$app->request->isPost)
         {
             $post = yii::$app->request->post();
@@ -63,7 +64,8 @@ class BrandController extends Controller
 
             }
         }
-        $brand->is_show = 1;
+//        $brand->is_show = 1;
+
         return $this->render('create',['brand'=>$brand]);
     }
 
@@ -83,7 +85,6 @@ class BrandController extends Controller
             if($brand->load(Yii::$app->request->post()) && $brand->validate())
             {
                 $res = $brand->save();
-                var_dump($res);
                 if($res)
                 {
                     $this->success('修改成功.','brand/list',5);
