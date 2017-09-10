@@ -19,4 +19,5 @@ class IndexController extends Controller
     {
         return $this->render('index');
     }
+    
 }
