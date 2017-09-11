@@ -204,10 +204,10 @@ use \yii\helpers\Html;
                 <i class="icon-chevron-down"></i>
             </a>
             <ul class="submenu">
-                <li><a href="<?= Url::to('brand/list');?>">品牌列表</a></li>
-                <li><a href="<?= Url::to('category/list');?>">分类管理</a></li>
-                <li><a href="<?= Url::to('goodstype/list');?>">商品类型</a></li>
-                <li><a href="<?= Url::to('goods/list');?>">商品管理</a></li>
+                <li><a href="<?= Url::to(['brand/list']);?>">品牌列表</a></li>
+                <li><a href="<?= Url::to(['category/list']);?>">分类管理</a></li>
+                <li><a href="<?= Url::to(['goodstype/list']);?>">商品类型</a></li>
+                <li><a href="<?= Url::to(['goods/list']);?>">商品管理</a></li>
             </ul>
         </li>
         <li>

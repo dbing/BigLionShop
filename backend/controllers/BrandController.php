@@ -16,7 +16,7 @@ use yii\web\Controller;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 
-class BrandController extends Controller
+class BrandController extends IndexController
 {
     public $layout = 'main';
 
@@ -149,15 +149,5 @@ class BrandController extends Controller
 
     }
 
-    protected function success($msg='',$url='',$wait=3)
-    {
-        $url = !empty($url) ? yii\helpers\Url::toRoute($url) : '';
-        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'url'=>$url,'state'=>1,'wait'=>$wait]);
-    }
 
-    protected function error($msg,$url='',$wait=3)
-    {
-        $url = !empty($url) ? yii\helpers\Url::toRoute($url) : '';
-        Yii::$app->session->setFlash('alerts',['msg'=>$msg,'url'=>$url,'state'=>0,'wait'=>$wait]);
-    }
 }
