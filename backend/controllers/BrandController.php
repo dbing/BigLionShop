@@ -14,10 +14,34 @@ use yii;
 use common\models\Brand;
 use yii\web\Controller;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
 
 class BrandController extends Controller
 {
     public $layout = 'main';
+
+
+    /**
+     * ACF 认证
+     *
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['@'],       // @ 已认证用户
+                    ],
+                ],
+            ],
+        ];
+    }
 
     /**
      * 品牌列表

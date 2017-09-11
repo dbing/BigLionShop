@@ -32,6 +32,14 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username'  =>'管理员账号',
+            'password'  =>'管理员密码'
+        ];
+    }
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.

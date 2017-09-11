@@ -12,9 +12,32 @@ namespace backend\controllers;
 
 
 use yii\web\Controller;
+use yii\filters\AccessControl;
 
 class IndexController extends Controller
 {
+    /**
+     * ACF 认证
+     *
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['@'],       // @ 已认证用户
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         return $this->render('index');

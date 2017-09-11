@@ -13,10 +13,13 @@ use backend\models\LoginForm;
 class SiteController extends Controller
 {
     /**
+     * ACF 认证
+     *
      * @inheritdoc
      */
     public function behaviors()
     {
+
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -24,11 +27,12 @@ class SiteController extends Controller
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
+                        'roles' =>['?']         // 所有用户
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','demo'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['@'],       // @ 已认证用户
                     ],
                 ],
             ],
@@ -39,6 +43,11 @@ class SiteController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionDemo()
+    {
+        echo 'demo';
     }
 
     /**
