@@ -9,7 +9,7 @@ class CategoryController extends IndexController
 {
     public function actionCreate()
     {
-        $category = new Category();
+        $category = (new Category())->loadDefaultValues();
         if(Yii::$app->request->isPost)
         {
             if($category->load(Yii::$app->request->post()) && $category->validate())
@@ -26,8 +26,11 @@ class CategoryController extends IndexController
             }
 
         }
+        // 下拉菜单
+        $categories = Category::getLevelCategories(Category::find()->asArray()->all());
+        $dropDownList = $category->dropDownList($categories);
 
-        return $this->render('create',['category'=>$category]);
+        return $this->render('create',['category'=>$category,'dropDownList'=>$dropDownList]);
     }
 
     public function actionDelete()
@@ -37,7 +40,9 @@ class CategoryController extends IndexController
 
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $categories = Category::getLevelCategories(Category::find()->asArray()->all());
+        return $this->render('index',['categories'=>$categories]);
     }
 
     public function actionUpdate()

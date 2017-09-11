@@ -51,11 +51,65 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public function loadDefaultValues($skipIfSet = true)
+    {
+        $this->is_show = 1;
+        $this->sort = 50;
+        return $this;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getGoods()
     {
         return $this->hasMany(Goods::className(), ['cat_id' => 'cat_id']);
+    }
+
+    /**
+     * 分类下拉菜单数据
+     *
+     * @param array $categories
+     * @return array
+     */
+    public function dropDownList($categories=[])
+    {
+
+        $result = [];
+        if(is_array($categories))
+        {
+            foreach ($categories as $value)
+            {
+                $result[$value['cat_id']] = str_repeat('|----',$value['level']).$value['cat_name'];
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 处理无限极分类
+     *
+     * @param array $categories
+     * @param int $parentId
+     * @param int $level
+     * @return array
+     */
+    static public function getLevelCategories($categories=[],$parentId=0,$level=0)
+    {
+        static $result = [];
+        if(is_array($categories))
+        {
+            foreach ($categories as $key=>$value)
+            {
+                if($value['parent_id'] == $parentId)
+                {
+                    $value['level'] = $level;
+                    $result[] = $value;
+                    self::getLevelCategories($categories,$value['cat_id'],$level+1);
+                }
+            }
+        }
+
+        return $result;
     }
 }
