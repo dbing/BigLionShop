@@ -160,8 +160,7 @@ use \yii\helpers\Html;
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="personal-info.html">个人信息管理</a></li>
-                    <li><a href="#">修改密码</a></li>
+                    <li><a href="<?=Url::to(['admin/info'])?>">个人信息管理</a></li>
                     <li><a href="#">订单管理</a></li>
                 </ul>
             </li>

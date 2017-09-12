@@ -10,6 +10,7 @@ class CategoryController extends IndexController
     public function actionCreate()
     {
         $category = (new Category())->loadDefaultValues();
+
         if(Yii::$app->request->isPost)
         {
             if($category->load(Yii::$app->request->post()) && $category->validate())
