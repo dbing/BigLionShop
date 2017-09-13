@@ -26,6 +26,7 @@ PHP 大狮班电商项目
 
 - v0.5.1
     * 上传管理员头像
+    * 修改管理员信息
 
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 

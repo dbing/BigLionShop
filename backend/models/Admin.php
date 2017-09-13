@@ -26,6 +26,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    public $repassword;
 
     /**
      * @inheritdoc
@@ -53,7 +54,31 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username','email'],'required'],
+            ['email','email'],
+            ['username','unique']
+
+
         ];
+    }
+
+    /**
+     * 修改管理员信息
+     *
+     * @return bool
+     */
+    public function updateAdminInfo()
+    {
+        $post = Yii::$app->request->post();
+        if($this->load($post) && $this->validate())
+        {
+            if(!empty($post['Admin']['password_hash']))
+            {
+                $this->setPassword($post['Admin']['password_hash']);
+                $this->generateAuthKey();
+            }
+            return $this->save();
+        }
     }
 
     /**
