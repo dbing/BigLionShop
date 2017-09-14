@@ -17,7 +17,7 @@ use yii\bootstrap\ActiveForm;
 
             <?= $form->field($model, 'password')->passwordInput(['class'=>'span12','placeholder'=>'管理员密码'])->label(''); ?>
 
-            <a href="#" class="forgot">忘记密码?</a>
+            <a href="<?=\yii\helpers\Url::to(['site/send-mail']);?>" class="forgot">忘记密码?</a>
             <div class="remember">
                 <?= $form->field($model, 'rememberMe')->checkbox()->label('记住我') ?>
             </div>

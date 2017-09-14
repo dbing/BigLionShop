@@ -27,6 +27,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
     public $repassword;
+    public $password;
 
     /**
      * @inheritdoc
@@ -54,11 +55,29 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['username','email'],'required'],
+            [['username','email','password','repassword'],'required'],
             ['email','email'],
-            ['username','unique']
+            ['username','unique'],
+            ['repassword','compare','compareAttribute'=>'password']
 
 
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'update'  =>['username','email'],
+            'sendmail'=>['email'],
+            'resetpwd'=>['password','repassword']
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'repassword'    =>'确认密码',
+            'password' =>'新密码'
         ];
     }
 

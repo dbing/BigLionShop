@@ -20,7 +20,7 @@ class AdminController extends IndexController
     {
         $model = new UploadForm();
         $admin = Yii::$app->user->getIdentity();
-
+        $admin->scenario = 'update';
         if(Yii::$app->request->isPost)
         {
 
