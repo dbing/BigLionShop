@@ -135,7 +135,7 @@ class SiteController extends Controller
                          ->setSubject('BigLion商城找回密码.')
                          ->send();
 
-                    Tools::success('发送Email成功，请查收.','',false);
+                    Tools::success('发送Email成功，请查收.',[],false);
                 }
                 else
                 {
@@ -162,19 +162,19 @@ class SiteController extends Controller
         $token = Yii::$app->request->get('token');
 
 
-//        if((time() - $timestamp) > 1800)
-//        {
-//            Tools::error('连接已经失效.','',false);
-//            $this->redirect(['site/send-mail']);
-//        }
+        if((time() - $timestamp) > 1800)
+        {
+            Tools::error('连接已经失效.',[],false);
+            $this->redirect(['site/send-mail']);
+        }
 
-//        $myToken = $this->createToken($timestamp,$email);
-//        if($myToken != $token)
-//        {
-//
-//            Tools::error('有问题,小伙子，不要搞事情.','',false);
-//            $this->redirect(['site/send-mail']);
-//        }
+        $myToken = $this->createToken($timestamp,$email);
+        if($myToken != $token)
+        {
+
+            Tools::error('有问题,小伙子，不要搞事情.',[],false);
+            $this->redirect(['site/send-mail']);
+        }
         $admin = Admin::findOne(['email'=>$email]);
         $admin->scenario = 'resetpwd';
 
@@ -187,11 +187,11 @@ class SiteController extends Controller
                 $admin->setPassword($admin->password);
                 if($admin->save())
                 {
-                    Tools::success('密码修改成功.','site/login');
+                    Tools::success('密码修改成功.',['site/login']);
                 }
                 else
                 {
-                    Tools::error('密码修改失败.','',false);
+                    Tools::error('密码修改失败.',[],false);
                 }
             }
 

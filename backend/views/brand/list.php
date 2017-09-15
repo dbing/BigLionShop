@@ -63,7 +63,7 @@ use yii\helpers\Url;
                     <?php foreach ($brands as $brand): ?>
                     <tr class="first">
                         <td>
-                            <img src="/statics/img/contact-img.png" class="img-circle avatar thumbnail hidden-phone" />
+                            <img src="<?= $brand->brand_logo;?>" class="img-circle avatar thumbnail hidden-phone" />
                             <a href="<?= $brand->site_url;?>" class="name" target="_blank"><?= $brand->brand_name;?></a>
                             <span class="subtext"><?= $brand->brand_desc;?></span>
                         </td>

@@ -14,7 +14,7 @@ class GoodsTypeController extends \yii\web\Controller
         {
             if($model->createGoodsType())
             {
-                Tools::success('类型添加成功.','goods-type/index');
+                Tools::success('类型添加成功.',['goods-type/index']);
             }
             else
             {

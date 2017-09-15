@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\helpers\Tools;
 use yii;
 use common\models\Category;
 
@@ -18,11 +19,11 @@ class CategoryController extends IndexController
                 if($category->save())
                 {
 
-                    $this->success('创建分类成功','category/index');
+                    Tools::success('创建分类成功',['category/index']);
                 }
                 else
                 {
-                    $this->error('创建分类失败');
+                    Tools::error('创建分类失败');
                 }
             }
 
@@ -43,17 +44,17 @@ class CategoryController extends IndexController
         $childCount = Category::find()->where('parent_id=:id',['id'=>$id])->count();
         if($childCount > 0)
         {
-            $this->error('该分类下有孩纸，不能删除.');
+            Tools::error('该分类下有孩纸，不能删除.');
         }
         // 该分类有商品
 
         if(Category::findOne($id)->delete())
         {
-            $this->success('删除分类成功');
+            Tools::success('删除分类成功');
         }
         else
         {
-            $this->error('删除分类失败.');
+            Tools::error('删除分类失败.');
         }
         $this->redirect(['category/index']);
     }
@@ -77,16 +78,16 @@ class CategoryController extends IndexController
                 if($res = $category->save())
                 {
 
-                    $this->success('修改成功.','category/index');
+                    Tools::success('修改成功.','category/index');
                 }
                 else
                 {
-                    $this->error('修改失败.');
+                    Tools::error('修改失败.');
                 }
             }
             else
             {
-                $this->error('数据不合法');
+                Tools::error('数据不合法');
             }
         }
 

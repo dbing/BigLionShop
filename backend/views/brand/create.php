@@ -20,6 +20,7 @@ use \yii\helpers\Html;
                 <h3>添加新品牌</h3>
             </div>
 
+            <?= $this->render('/common/message');?>
             <div class="row-fluid form-wrapper">
                 <!-- left column -->
                 <div class="span9 with-sidebar">
