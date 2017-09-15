@@ -75,4 +75,15 @@ class GoodsType extends \yii\db\ActiveRecord
             return $this->save();
         }
     }
+
+    public function dropDownList()
+    {
+        $result = [];
+        $typeList = self::find()->select('type_id,type_name')->asArray()->all();
+        foreach ($typeList as $value)
+        {
+            $result[$value['type_id']] = $value['type_name'];
+        }
+        return $result;
+    }
 }
