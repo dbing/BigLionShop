@@ -14,9 +14,8 @@ class AttributeController extends \yii\web\Controller
         return $this->render('delete');
     }
 
-    public function actionIndex($tid)
+    public function actionIndex()
     {
-
         return $this->render('index');
     }
 
