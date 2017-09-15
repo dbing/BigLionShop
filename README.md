@@ -29,6 +29,19 @@ PHP 大狮班电商项目
     * 修改管理员信息；
     * 通过Email找回管理员密码；
     
+- v0.6.2
+    * 商品类型管理
+    * 属性与规格管理    
+
+- v0.7.3
+    * 发布商品
+    * 根据属性规格组合货品
+    * 商品的修改与删除
+    
+- v0.8.1
+    * 
+
+
 
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 

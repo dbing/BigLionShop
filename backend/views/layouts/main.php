@@ -205,8 +205,8 @@ use \yii\helpers\Html;
             <ul class="submenu">
                 <li><a href="<?= Url::to(['brand/list']);?>">品牌列表</a></li>
                 <li><a href="<?= Url::to(['category/index']);?>">分类管理</a></li>
-                <li><a href="<?= Url::to(['goodstype/list']);?>">商品类型</a></li>
-                <li><a href="<?= Url::to(['goods/list']);?>">商品管理</a></li>
+                <li><a href="<?= Url::to(['goods-type/index']);?>">商品类型</a></li>
+                <li><a href="<?= Url::to(['goods/index']);?>">商品管理</a></li>
             </ul>
         </li>
         <li>

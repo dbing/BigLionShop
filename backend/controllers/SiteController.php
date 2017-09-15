@@ -162,19 +162,19 @@ class SiteController extends Controller
         $token = Yii::$app->request->get('token');
 
 
-        if((time() - $timestamp) > 1800)
-        {
-            Tools::error('连接已经失效.','',false);
-            $this->redirect(['site/send-mail']);
-        }
+//        if((time() - $timestamp) > 1800)
+//        {
+//            Tools::error('连接已经失效.','',false);
+//            $this->redirect(['site/send-mail']);
+//        }
 
-        $myToken = $this->createToken($timestamp,$email);
-        if($myToken != $token)
-        {
-
-            Tools::error('有问题,小伙子，不要搞事情.','',false);
-            $this->redirect(['site/send-mail']);
-        }
+//        $myToken = $this->createToken($timestamp,$email);
+//        if($myToken != $token)
+//        {
+//
+//            Tools::error('有问题,小伙子，不要搞事情.','',false);
+//            $this->redirect(['site/send-mail']);
+//        }
         $admin = Admin::findOne(['email'=>$email]);
         $admin->scenario = 'resetpwd';
 
