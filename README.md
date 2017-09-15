@@ -46,6 +46,9 @@ PHP 大狮班电商项目
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
+
+[![Latest Stable Version](https://poser.pugx.org/lexik/mailer-bundle-v1.1.0/v/stable)](https://packagist.org/packages/lexik/mailer-bundle-v1.1.0)
+
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
 
