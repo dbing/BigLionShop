@@ -1,8 +1,7 @@
 <?php
-/* @var $this yii\web\View */
-?>
-<h1>attribute/index</h1>
+use yii\helpers\Url;
 
+?>
 
 <div class="content">
     <div class="container-fluid">

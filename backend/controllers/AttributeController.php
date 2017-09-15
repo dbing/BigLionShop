@@ -33,7 +33,7 @@ class AttributeController extends \yii\web\Controller
         return $this->render('delete');
     }
 
-    public function actionIndex()
+    public function actionIndex($tid)
     {
         $query = Attribute::find()->where('type_id=:tid',['tid'=>$tid]);
 
