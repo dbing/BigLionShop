@@ -10,6 +10,7 @@
 
 namespace backend\controllers;
 
+use common\helpers\Tools;
 use yii;
 use common\models\Brand;
 use yii\web\Controller;
@@ -79,11 +80,11 @@ class BrandController extends IndexController
                 $res = $brand->save();
                 if($res)
                 {
-                    $this->success('添加品牌成功');
+                    Tools::success('添加品牌成功',['brand/list']);
                 }
                 else
                 {
-                    $this->error('添加品牌失败');
+                    Tools::error('添加品牌失败');
                 }
 
             }
@@ -111,16 +112,16 @@ class BrandController extends IndexController
                 $res = $brand->save();
                 if($res)
                 {
-                    $this->success('修改成功.','brand/list',5);
+                    Tools::success('修改成功.',['brand/list'],5);
                 }
                 else
                 {
-                    $this->error('没有修改或修改失败');
+                    Tools::error('没有修改或修改失败');
                 }
             }
             else
             {
-                $this->error('数据不合法.');
+                Tools::error('数据不合法.');
             }
         }
 
