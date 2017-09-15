@@ -6,48 +6,33 @@
                 <h3>新增规格属性</h3>
             </div>
 
+            <?= $this->render('/common/message');?>
+
             <div class="row-fluid form-wrapper">
                 <!-- left column -->
                 <div class="span9 with-sidebar">
                     <div class="container">
-                        <form class="new_user_form inline-input" />
+                        <?php $form = \yii\widgets\ActiveForm::begin(['options'=>['class'=>'new_user_form inline-input']]);?>
                         <div class="span12 field-box">
-                            <label>属性名:</label>
-                            <input class="span9" type="text" />
+                            <?= $form->field($model,'attr_name')->textInput(['class'=>'span9'])?>
                         </div>
                         <div class="field-box">
-                            <label>所属商品类型:</label>
-                            <select style="width:200px" class="select2">
-                                <option />
-                                <option value="AK" />Alaska
-                                <option value="HI" />Hawaii
-                                <option value="CA" />California
-                            </select>
+                            <?= $form->field($model,'type_id')->dropDownList($typeList,['class'=>'select2','style'=>'width:200px;height:30px;','prompt'=>'请选择...'])?>
                         </div>
                         <div class="field-box">
-                            <label>是否参与购买:</label>
-                            <div class="span8">
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios" value="option1" checked="" />
-                                    规格
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios" value="option2" />
-                                    属性
-                                </label>
-                            </div>
+                            <?= $form->field($model,'attr_type')->radioList([0=>'属性',1=>'规格'])->label('是否参与购买');?>
                         </div>
                         <div class="span12 field-box textarea">
-                            <label>可选值列表:</label>
-                            <textarea class="span9"></textarea>
+                            <?= $form->field($model,'attr_values')->textarea(['class'=>'span9'])?>
                         </div>
 
                         <div class="span11 field-box actions">
-                            <input type="button" class="btn-glow primary" value="Create user" />
+                            <?= \yii\helpers\Html::submitButton('提交',['class'=>'btn-glow primary'])?>
                             <span>OR</span>
-                            <input type="reset" value="Cancel" class="reset" />
+                            <?= \yii\helpers\Html::resetInput('重置',['class'=>'reset']);?>
                         </div>
-                        </form>
+
+                        <?php \yii\widgets\ActiveForm::end();?>
                     </div>
                 </div>
 

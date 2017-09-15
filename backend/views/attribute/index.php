@@ -28,7 +28,7 @@ use yii\helpers\Url;
                             </select>
                         </div>
                         <input type="text" class="search" />
-                        <a href="<?= Url::to(['attribute/create'])?>" class="btn-flat success new-product">+ 添加属性</a>
+                        <a href="<?= Url::to(['attribute/create','tid'=>$tid])?>" class="btn-flat success new-product">+ 添加属性</a>
                     </div>
                 </div>
 
@@ -59,39 +59,29 @@ use yii\helpers\Url;
                         </thead>
                         <tbody>
                         <!-- row -->
+                        <?php if(!empty($attrList)): foreach ($attrList as $value): ?>
                         <tr class="first">
                             <td>
                                 <input type="checkbox" />
-                                <a href="#" class="name">内存类型 </a>
+                                <?= $value['attr_name'];?>
                             </td>
                             <td class="description">
-                                笔记本电脑
+                                <?= $value['type_id'];?>
                             </td>
-                            <td><span class="label label-success">规格</span></td>
-                            <td>4G 8G 16G</td>
-                            <td>50</td>
-                            <td class="align-left">
-                                <a href="#">修改</a> |
-                                <a href="#">删除</a>
-                            </td>
-                        </tr>
-                        <!-- row -->
-                        <tr>
                             <td>
-                                <input type="checkbox" />
-                                <a href="#" class="name">处理器类型</a>
+                                <?= ($value['attr_type']) ? '<span class="label label-success">规格</span>': '<span class="label label-info">属性</span>';?>
                             </td>
-                            <td class="description">
-                                笔记本电脑
-                            </td>
-                            <td><span class="label label-info">属性</span></td>
-                            <td>I3 I5 I7</td>
+                            <td><?= $value['attr_values'];?></td>
                             <td>50</td>
                             <td class="align-left">
                                 <a href="#">修改</a> |
                                 <a href="#">删除</a>
                             </td>
                         </tr>
+                        <?php endforeach; else: ?>
+                            <tr><td colspan="6">没有数据.....</td></tr>
+                        <?php endif; ?>
+                        <!-- row -->
 
 
                         </tbody>
@@ -101,15 +91,7 @@ use yii\helpers\Url;
             <!-- end products table -->
 
             <div class="pagination pull-right">
-                <ul>
-                    <li><a href="#">&#8249;</a></li>
-                    <li><a class="active" href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&#8250;</a></li>
-                </ul>
+                <?= \yii\widgets\LinkPager::widget(['pagination'=>$page]);?>
             </div>
         </div>
     </div>
