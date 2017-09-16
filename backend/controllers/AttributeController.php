@@ -41,7 +41,7 @@ class AttributeController extends \yii\web\Controller
         {
             $query->andWhere(['like','attr_name',$attr_name]);
         }
-        
+
         $page = new yii\data\Pagination(['totalCount'=>$query->count(),'defaultPageSize'=>Yii::$app->params['pageSize']]);
         $attrList = $query->offset($page->offset)->limit($page->limit)->all();
 
