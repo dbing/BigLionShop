@@ -9,5 +9,5 @@
  */
 
 return [
-    'pageSize'  => 2,
+    'pageSize'  => 1,
 ];

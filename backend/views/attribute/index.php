@@ -16,19 +16,17 @@ use yii\helpers\Url;
                     </div>
                 </div>
 
+                <?= \yii\helpers\Html::beginForm(['attribute/index'],'get');?>
                 <div class="row-fluid filter-block">
                     <div class="pull-right">
                         <div class="ui-select">
-                            <select>
-                                <option />Filter users
-                                <option />Signed last 30 days
-                                <option />Active users
-                            </select>
+                            <?= \yii\helpers\Html::dropDownList('tid',$tid,$typeList,['prompt'=>'请选择...']);?>
                         </div>
-                        <input type="text" class="search" />
+                        <?= \yii\helpers\Html::textInput('attr_name',$attr_name,['class'=>'search'])?>
                         <a href="<?= Url::to(['attribute/create','tid'=>$tid])?>" class="btn-flat success new-product">+ 添加属性</a>
                     </div>
                 </div>
+                <?= \yii\helpers\Html::endForm();?>
 
                 <div class="row-fluid">
                     <table class="table table-hover">
@@ -64,7 +62,7 @@ use yii\helpers\Url;
                                 <?= $value['attr_name'];?>
                             </td>
                             <td class="description">
-                                <?= $value['type_id'];?>
+                                <?= $value->type->type_name;?>
                             </td>
                             <td>
                                 <?= ($value['attr_type']) ? '<span class="label label-success">规格</span>': '<span class="label label-info">属性</span>';?>

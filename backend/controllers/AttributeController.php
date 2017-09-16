@@ -33,13 +33,19 @@ class AttributeController extends \yii\web\Controller
         return $this->render('delete');
     }
 
-    public function actionIndex($tid)
+    public function actionIndex($tid,$attr_name='')
     {
-        $query = Attribute::find()->where('type_id=:tid',['tid'=>$tid]);
 
+        $query = Attribute::find()->where('type_id=:tid',['tid'=>$tid]);
+        if(!empty($attr_name))
+        {
+            $query->andWhere(['like','attr_name',$attr_name]);
+        }
+        
         $page = new yii\data\Pagination(['totalCount'=>$query->count(),'defaultPageSize'=>Yii::$app->params['pageSize']]);
         $attrList = $query->offset($page->offset)->limit($page->limit)->all();
-        return $this->render('index',['tid'=>$tid,'attrList'=>$attrList,'page'=>$page]);
+
+        return $this->render('index',['tid'=>$tid,'attrList'=>$attrList,'page'=>$page,'attr_name'=>$attr_name,'typeList'=>(new GoodsType)->dropDownList()]);
 
     }
 
