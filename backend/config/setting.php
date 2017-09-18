@@ -9,5 +9,6 @@
  */
 
 return [
-    'pageSize'  => 1,
+    'pageSize'  => 1,           // 后台列表每页显示条数
+    'snPrefix'  => 'Yii',       // 货号前缀
 ];

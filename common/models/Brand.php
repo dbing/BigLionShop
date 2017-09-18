@@ -50,4 +50,18 @@ class Brand extends ActiveRecord
         $this->sort = 50;
         return $this;
     }
+
+    /**
+     * 品牌下拉列表
+     */
+    public function dropDownList()
+    {
+        $result = [];
+        $list = self::find()->select('brand_id,brand_name')->asArray()->all();
+        foreach ($list as $value)
+        {
+            $result[$value['brand_id']] = $value['brand_name'];
+        }
+        return $result;
+    }
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use backend\models\GoodsType;
+use common\helpers\Tools;
 use Yii;
 
 /**
@@ -49,6 +50,9 @@ use Yii;
  */
 class Goods extends \yii\db\ActiveRecord
 {
+
+    const IS_PROMOTE = 1;           // 是否促销
+
     /**
      * @inheritdoc
      */
@@ -64,17 +68,17 @@ class Goods extends \yii\db\ActiveRecord
     {
 
         return [
-            [['goods_name', 'type_id', 'cat_id', 'brand_id', 'is_promote'], 'required'],
-            [['type_id', 'cat_id', 'brand_id', 'click_count', 'goods_number', 'warn_number', 'is_on_sale', 'is_shipping', 'add_time', 'sort', 'is_delete', 'is_best', 'is_new', 'is_hot', 'last_update', 'is_promote', 'promote_start_date', 'promote_end_date'], 'integer'],
+            [['goods_name', 'cat_id', 'brand_id', 'is_promote'], 'required'],
+            [['cat_id', 'brand_id', 'click_count', 'goods_number', 'warn_number', 'is_on_sale', 'is_shipping', 'add_time', 'sort', 'is_delete', 'is_best', 'is_new', 'is_hot', 'last_update', 'is_promote', 'promote_start_date', 'promote_end_date'], 'integer'],
             [['goods_weight', 'market_price', 'shop_price', 'promote_price'], 'number'],
             [['goods_desc'], 'string'],
-            [['goods_name'], 'string', 'max' => 60],
+            [['goods_name'], 'string', 'max' => 255],
             [['goods_sn'], 'string', 'max' => 45],
             [['goods_brief'], 'string', 'max' => 255],
             [['goods_thumb', 'goods_img'], 'string', 'max' => 120],
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::className(), 'targetAttribute' => ['brand_id' => 'brand_id']],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'cat_id']],
-            [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => GoodsType::className(), 'targetAttribute' => ['type_id' => 'type_id']],
+
         ];
     }
 
@@ -84,7 +88,6 @@ class Goods extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'goods_id' => 'Goods ID',
             'goods_name' => '商品名称',
             'cat_id' => '分类',
             'brand_id' => '品牌',
@@ -171,5 +174,41 @@ class Goods extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['goods_id' => 'goods_id']);
+    }
+
+
+    public function beforeValidate()
+    {
+        if(parent::beforeValidate())
+        {
+            if(!empty($this->promote_price))
+            {
+                $this->is_promote = self::IS_PROMOTE;
+            }
+
+            // 生成货号
+            $this->goods_sn = Tools::createGoodsSn();
+            // 处理促销时间
+            $this->promote_start_date = strtotime($this->promote_start_date);
+            $this->promote_end_date = strtotime($this->promote_end_date);
+            $this->add_time = time();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 商品添加
+     *
+     * @return bool
+     */
+    public function createGoods()
+    {
+
+        if($this->load(Yii::$app->request->post()) && $this->validate())
+        {
+            return $this->save(false);
+        }
+        return false;
     }
 }

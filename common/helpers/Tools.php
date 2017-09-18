@@ -9,6 +9,7 @@
  */
 namespace common\helpers;
 
+use common\models\Goods;
 use yii;
 
 class Tools
@@ -25,5 +26,23 @@ class Tools
     {
         $url = !empty($url) ? yii\helpers\Url::toRoute($url) : '';
         Yii::$app->session->setFlash('alerts',['msg'=>$msg,'url'=>$url,'state'=>0,'wait'=>$wait,'skip'=>$skip]);
+    }
+
+    /**
+     * 货号
+     * @return string
+     */
+    static function createGoodsSn()
+    {
+        $snPrefix = Yii::$app->params['snPrefix'];
+        $goodsSn =  $snPrefix . strtoupper(uniqid()) . rand(1000,9999);
+
+        if(Goods::find()->select('goods_sn')->where('goods_sn=:sn',[':sn'=>$goodsSn])->count() > 0)
+        {
+            echo '-----------';
+            return self::createGoodsSn();
+        }
+        return $goodsSn;
+
     }
 }

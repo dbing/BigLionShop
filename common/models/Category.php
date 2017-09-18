@@ -75,6 +75,10 @@ class Category extends \yii\db\ActiveRecord
      */
     public function dropDownList($categories=[])
     {
+        if(empty($categories))
+        {
+            $categories = self::getLevelCategories(self::find()->asArray()->all());
+        }
 
         $result = [];
         if(is_array($categories))

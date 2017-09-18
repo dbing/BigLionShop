@@ -55,8 +55,8 @@
                 <!-- right column -->
                 <div class="span4 column pull-right">
 
-                    <?= $form->field($goods,'cat_id',['template'=>'<div class="field-box">{label}<div class="ui-select">{input}</div>{error}</div>'])->dropDownList([0=>'测试数据1',1=>'测试数据2'],['prompt'=>'请选择分类'])?>
-                    <?= $form->field($goods,'brand_id')->dropDownList([0=>'测试品牌1',1=>'测试品牌2'],['prompt'=>'','class'=>'select2','style'=>'width:250px']);?>
+                    <?= $form->field($goods,'cat_id',['template'=>'<div class="field-box">{label}<div class="ui-select">{input}</div>{error}</div>'])->dropDownList($catList,['prompt'=>'请选择分类'])?>
+                    <?= $form->field($goods,'brand_id')->dropDownList($brandList,['prompt'=>'','class'=>'select2','style'=>'width:250px']);?>
 
                     <div class="field-box">
                         <label>加入推荐:</label>
@@ -93,7 +93,7 @@
 
         // select2 plugin for select elements
         $(".select2").select2({
-            placeholder: "Select a State"
+            placeholder: "请选择品牌..."
         });
 
         // datepicker plugin

@@ -29,8 +29,7 @@ class CategoryController extends IndexController
 
         }
         // 下拉菜单
-        $categories = Category::getLevelCategories(Category::find()->asArray()->all());
-        $dropDownList = $category->dropDownList($categories);
+        $dropDownList = $category->dropDownList();
 
         return $this->render('create',['category'=>$category,'dropDownList'=>$dropDownList]);
     }
