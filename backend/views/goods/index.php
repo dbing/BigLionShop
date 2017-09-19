@@ -105,7 +105,7 @@ use yii\widgets\ActiveForm;
                                 <?= $val['promote_price']?>￥
                             </td>
                             <td class="align-right">
-                                <a href="#">相册</a> |
+                                <a href="<?= Url::to(['goods/gallery','gid'=>$val['goods_id'],'gname'=>$val['goods_name']])?>">相册</a> |
                                 <a href="#">货品</a>  <br>
                                 <a href="#">修改</a> |
                                 <a href="#">回收站</a>
