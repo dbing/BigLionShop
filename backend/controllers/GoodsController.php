@@ -46,8 +46,10 @@ class GoodsController extends \yii\web\Controller
 
     public function actionIndex($cid = '', $bid = '', $property = '', $sale = null, $name = null)
     {
-
         $map = ['cid' => $cid, 'bid' => $bid, 'property' => $property, 'name' => $name,'sale'=>$sale]; //搜索条件
+
+        $catList = (new Category)->dropDownList();
+        $brandList = (new Brand())->dropDownList();
 
         $query = $this->_search($map,Goods::find());
 
@@ -57,8 +59,7 @@ class GoodsController extends \yii\web\Controller
             ->limit($page->limit)
             ->all();
 
-        $catList = (new Category)->dropDownList();
-        $brandList = (new Brand())->dropDownList();
+
         return $this->render('index',['map'=>$map,'catList'=>$catList,'brandList'=>$brandList,'page'=>$page,'goodsList'=>$goodsList]);
     }
 
