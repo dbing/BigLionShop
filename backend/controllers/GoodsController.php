@@ -63,6 +63,11 @@ class GoodsController extends \yii\web\Controller
         return $this->render('index',['map'=>$map,'catList'=>$catList,'brandList'=>$brandList,'page'=>$page,'goodsList'=>$goodsList]);
     }
 
+    public function actionGallery($gid,$gname)
+    {
+        return $this->render('gallery');
+    }
+
     public function actionUpdate()
     {
         return $this->render('update');

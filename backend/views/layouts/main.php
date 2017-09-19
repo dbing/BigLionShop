@@ -191,7 +191,7 @@ use \yii\helpers\Html;
                 <div class="arrow"></div>
                 <div class="arrow_border"></div>
             </div>
-            <a href="index.html">
+            <a href="./index.php">
                 <i class="icon-home"></i>
                 <span>后台首页</span>
             </a>
@@ -209,42 +209,28 @@ use \yii\helpers\Html;
                 <li><a href="<?= Url::to(['goods/index']);?>">商品管理</a></li>
             </ul>
         </li>
+
         <li>
-            <a href="chart-showcase.html">
-                <i class="icon-signal"></i>
-                <span>统计</span>
+            <a class="dropdown-toggle" href="#">
+                <i class="icon-group"></i>
+                <span>会员管理</span>
+                <i class="icon-chevron-down"></i>
             </a>
+            <ul class="submenu">
+                <li><a href="user-list.html">会员列表</a></li>
+                <li><a href="new-user.html">加入新会员</a></li>
+            </ul>
         </li>
         <li>
             <a class="dropdown-toggle" href="#">
                 <i class="icon-group"></i>
-                <span>用户管理</span>
+                <span>订单管理</span>
                 <i class="icon-chevron-down"></i>
             </a>
             <ul class="submenu">
-                <li><a href="user-list.html">用户列表</a></li>
-                <li><a href="new-user.html">加入新用户</a></li>
-                <li><a href="user-profile.html">用户信息</a></li>
+                <li><a href="user-list.html">订单列表</a></li>
+                <li><a href="new-user.html">发货单列表</a></li>
             </ul>
-        </li>
-
-        <li>
-            <a href="gallery.html">
-                <i class="icon-picture"></i>
-                <span>相册管理</span>
-            </a>
-        </li>
-        <li>
-            <a href="calendar.html">
-                <i class="icon-calendar-empty"></i>
-                <span>日历事件管理</span>
-            </a>
-        </li>
-        <li>
-            <a href="tables.html">
-                <i class="icon-th-large"></i>
-                <span>表格</span>
-            </a>
         </li>
 
         <li>
@@ -253,7 +239,12 @@ use \yii\helpers\Html;
                 <span>我的信息</span>
             </a>
         </li>
-
+        <li>
+            <a href="chart-showcase.html">
+                <i class="icon-signal"></i>
+                <span>统计</span>
+            </a>
+        </li>
     </ul>
 </div>
 <!-- end sidebar -->
