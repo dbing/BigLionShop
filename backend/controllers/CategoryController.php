@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\helpers\Tools;
+use common\models\Goods;
 use yii;
 use common\models\Category;
 
@@ -45,16 +46,27 @@ class CategoryController extends IndexController
         {
             Tools::error('该分类下有孩纸，不能删除.');
         }
-        // 该分类有商品
-
-        if(Category::findOne($id)->delete())
-        {
-            Tools::success('删除分类成功');
-        }
         else
         {
-            Tools::error('删除分类失败.');
+            // 判断该分类下是否有商品
+            $count = Goods::find()->where('cat_id=:cid',[':cid'=>$id])->count();
+            if($count > 0)
+            {
+                Tools::error('该分类下有商品，不能删除.');
+            }
+            else
+            {
+                if(Category::findOne($id)->delete())
+                {
+                    Tools::success('删除分类成功');
+                }
+                else
+                {
+                    Tools::error('删除分类失败.');
+                }
+            }
         }
+
         $this->redirect(['category/index']);
     }
 
