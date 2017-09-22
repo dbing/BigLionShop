@@ -106,7 +106,7 @@ use yii\widgets\ActiveForm;
                             </td>
                             <td class="align-right">
                                 <a href="<?= Url::to(['goods/gallery','gid'=>$val['goods_id'],'gname'=>$val['goods_name']])?>">相册</a> |
-                                <a href="#">货品</a>  <br>
+                                <a href="<?= Url::to(['goods/product','gid'=>$val['goods_id'],'gname'=>$val['goods_name']])?>">货品</a>  <br>
                                 <a href="#">修改</a> |
                                 <a href="#">回收站</a>
                             </td>

@@ -9,7 +9,11 @@
  */
 
 ?>
-
+<style>
+    .span3{
+        height: 293px;
+    }
+</style>
 <!-- this page specific styles -->
 <link rel="stylesheet" href="/statics/css/compiled/gallery.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/statics/layui/css/layui.css" type="text/css"/>

@@ -109,4 +109,35 @@ class Attribute extends \yii\db\ActiveRecord
         }
         return false;
     }
+
+    /**
+     * 根据类型ID查找属性
+     *
+     * @param $tid
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getAttr($tid)
+    {
+        $attr_list = ['attr'=>[],'spec'=>[]];
+        $attrs = self::find()->select('attr_id,attr_name,attr_values,attr_type')->where('type_id=:tid',[':tid'=>$tid])->asArray()->all();
+        foreach ($attrs as $key=>$value)
+        {
+            if(!empty($value['attr_values']))
+            {
+                $value['attr_values'] = explode("\r\n",$value['attr_values']);
+            }
+            if($value['attr_type'])
+            {
+                // 规格
+                $attr_list['spec'][] = $value;
+            }
+            else
+            {
+                // 属性
+                $attr_list['attr'][] = $value;
+            }
+
+        }
+        return $attr_list;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\GoodsType;
 use common\helpers\Tools;
 use common\models\Brand;
 use common\models\Category;
@@ -126,6 +127,29 @@ class GoodsController extends \yii\web\Controller
     }
 
 
+    /**
+     * 商品属性和组合货品
+     *
+     * @return string
+     */
+    public function actionProduct($gid,$gname='')
+    {
+
+        $typeList = (new GoodsType)->dropDownList();
+
+        $data = [
+            'gid'       =>$gid,
+            'gname'     =>$gname,
+            'typeList'  =>$typeList
+        ];
+        return $this->render('product',$data);
+    }
+
+    /**
+     * 修改商品相片描述
+     *
+     * @return int
+     */
     public function actionEditImg()
     {
         $img_desc = Yii::$app->request->post('img_desc');
