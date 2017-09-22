@@ -21,7 +21,7 @@ class GoodsController extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        $noCsrfActions = ['gallery','xxx'];
+        $noCsrfActions = ['gallery','edit-img'];
 
         if(in_array($action->id,$noCsrfActions))
         {
@@ -80,6 +80,13 @@ class GoodsController extends \yii\web\Controller
         return $this->render('index',['map'=>$map,'catList'=>$catList,'brandList'=>$brandList,'page'=>$page,'goodsList'=>$goodsList]);
     }
 
+    /**
+     * 获取商品相册列表 | 和上传相片
+     *
+     * @param string $gid
+     * @param string $gname
+     * @return array|string
+     */
     public function actionGallery($gid='',$gname='')
     {
 
@@ -108,6 +115,7 @@ class GoodsController extends \yii\web\Controller
         }
         // 该商品下的图片
         $galleries = (new GoodsGallery())->getGalleries($gid);
+//        var_dump($galleries);
 
         return $this->render('gallery',['gname'=>$gname,'gid'=>$gid,'galleries'=>$galleries]);
     }
@@ -115,6 +123,49 @@ class GoodsController extends \yii\web\Controller
     public function actionUpdate()
     {
         return $this->render('update');
+    }
+
+
+    public function actionEditImg()
+    {
+        $img_desc = Yii::$app->request->post('img_desc');
+        $original_img = Yii::$app->request->post('original_img');
+        $result = GoodsGallery::updateAll(['img_desc'=>$img_desc],'original_img=:oimg',[':oimg'=>$original_img]);
+
+        return $result;
+    }
+
+    /**
+     * 删除商品相册
+     *
+     * @param string $key
+     * @return array
+     */
+    public function actionDeleteImg($key)
+    {
+        $result = ['code'=>0,'msg'=>'删除成功.','data'=>[]];
+
+//        $key = '2017/09/11';
+        $error = (new UploadForm)->deleteFile($key);
+        if($error == null)
+        {
+            // 删除成功
+            $goodsGellery = GoodsGallery::find()->where(['original_img'=>$key])->one();
+            if(!is_null($goodsGellery) && !$goodsGellery->delete())
+            {
+                $result['code'] = 300;
+                $result['msg'] = '从数据库删除失败.';
+            }
+        }
+        else
+        {
+            $result['code'] = $error->code();
+            $result['msg'] = $error->message();
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
+
     }
 
     /**
