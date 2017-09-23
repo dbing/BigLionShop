@@ -9,20 +9,20 @@
  */
 ?>
 
-<form class="new_user_form inline-input" >
+
     <!-- 属性 -->
     <div class="span6 column">
         <?php if(!empty($attrs['attr'])): foreach ($attrs['attr'] as $value): ?>
             <?php if(empty($value['attr_values'])): ?>
                 <div class="field-box">
                     <label><?= $value['attr_name'];?>:</label>
-                    <input class="span5" type="text" />
+                    <input class="span5" name="attr_value[<?= $value['attr_id']; ?>]" type="text" />
                 </div>
             <?php else: ?>
                 <div class="field-box">
                     <label><?= $value['attr_name'];?>:</label>
                     <div class="ui-select">
-                        <select>
+                        <select name="attr_value[<?= $value['attr_id']; ?>]">
                             <?php foreach ($value['attr_values'] as $v):?>
                             <option value="<?= $v;?>"><?= $v;?></option>
                             <?php endforeach; ?>
@@ -43,13 +43,13 @@
             <?php if(empty($value['attr_values'])): ?>
             <div class="field-box">
                 <label><?= $value['attr_name'];?>:</label>
-                <input class="span5" type="text" />
+                <input class="span5" name="attr_value[<?= $value['attr_id']; ?>]" type="text" />
             </div>
             <?php else: ?>
             <div class="field-box">
                 <label><?= $value['attr_name'];?>:</label>
                 <div class="ui-select">
-                    <select>
+                    <select name="attr_value[<?= $value['attr_id']; ?>][]">
                         <?php foreach ($value['attr_values'] as $v):?>
                             <option value="<?= $v;?>"><?= $v;?></option>
                         <?php endforeach; ?>
@@ -59,25 +59,14 @@
             </div>
             <?php endif; ?>
         <?php endforeach; endif; ?>
-        <!-- demo -->
-        <div class="field-box">
-            <label>颜色:</label>
-            <div class="ui-select">
-                <select>
-                    <option selected="">土豪金</option>
-                    <option>星空灰</option>
-                    <option>玫瑰红</option>
-                </select>
-            </div>
-            <span class="btn-flat">&#8722;</span>
-        </div>
 
     </div>
 
 
-
-</form>
-
 <div class="span8 field-box actions pull-right">
-    <input type="button" class="btn-glow primary" value="确认保存" />
+    <?= \yii\helpers\Html::submitButton('确认保存',['class'=>'btn-glow primary']);?>
 </div>
+
+
+
+
