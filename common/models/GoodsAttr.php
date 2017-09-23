@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Exception;
 
 /**
  * This is the model class for table "{{%goods_attr}}".
@@ -17,6 +18,8 @@ use Yii;
  */
 class GoodsAttr extends \yii\db\ActiveRecord
 {
+    public $attrValueErr = null;
+
     /**
      * @inheritdoc
      */
@@ -78,32 +81,63 @@ class GoodsAttr extends \yii\db\ActiveRecord
     public function createAllGoodsAttr($gid,$data)
     {
         $temp = ['goods_id'=>$gid,'attr_id'=>'','attr_value'=>''];
-        foreach ($data as $key=>$value)
+        $transaction = Yii::$app->db->beginTransaction();
+        try
         {
-            if(!empty($value) && is_array($value))
+            foreach ($data as $key=>$value)
             {
-                foreach ($value as $val)
+                if(!empty($value) && is_array($value))
+                {
+                    foreach ($value as $val)
+                    {
+                        $temp['attr_id'] = $key;
+                        $temp['attr_value'] = $val;
+
+                        // 规格入库
+                        if(!$this->createOneGoodsAttr($temp))
+                        {
+                            throw new Exception('规格添加失败.'.$this->attrValueErr);
+                        }
+                    }
+
+                }
+                else if(!empty($value) && !is_array($value))
                 {
                     $temp['attr_id'] = $key;
-                    $temp['attr_value'] = $val;
+                    $temp['attr_value'] = $value;
+                    // 属性入库
+                    if(!$this->createOneGoodsAttr($temp))
+                    {
+                        throw new Exception('属性添加失败.'.$this->attrValueErr);
+                    }
                 }
             }
-            else if(!empty($value))
-            {
-                $temp['attr_id'] = $key;
-                $temp['attr_value'] = $value;
+            $transaction->commit();
+        }
+        catch (Exception $e)
+        {
+            $transaction->rollBack();
+            throw  new Exception($e->getMessage());
+        }
+        return true;
+    }
 
-            }
-
-            // 已存在属性不入库
-            if(!self::find()->where($temp)->one())
+    /**
+     * 单个商品规格属性入库
+     *
+     * @param $row
+     * @return bool
+     */
+    public function createOneGoodsAttr($row)
+    {
+        if(!self::find()->where($row)->one())
+        {
+            $goodsAttr =(new GoodsAttr());
+            $goodsAttr->load(['GoodsAttr'=>$row]);
+            if(!$goodsAttr->save())
             {
-                $goodsAttr =(new GoodsAttr());
-                $goodsAttr->load(['GoodsAttr'=>$temp]);
-                if(!$goodsAttr->save())
-                {
-                    return false;
-                }
+                $this->attrValueErr = $goodsAttr->getFirstError('attr_value');
+                return false;
             }
 
         }
