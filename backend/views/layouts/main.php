@@ -223,7 +223,7 @@ use \yii\helpers\Html;
         </li>
         <li>
             <a class="dropdown-toggle" href="#">
-                <i class="icon-group"></i>
+                <i class="icon-th-large"></i>
                 <span>订单管理</span>
                 <i class="icon-chevron-down"></i>
             </a>

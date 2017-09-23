@@ -7,6 +7,7 @@ use common\helpers\Tools;
 use common\models\Brand;
 use common\models\Category;
 use common\models\Goods;
+use common\models\GoodsAttr;
 use common\models\GoodsGallery;
 use common\models\UploadForm;
 use Qiniu\Auth;
@@ -132,11 +133,24 @@ class GoodsController extends \yii\web\Controller
      *
      * @return string
      */
-    public function actionProduct($gid,$gname='')
+    public function actionProduct($gid,$gname='',$act='')
     {
+        if($act == 'attr')
+        {
+            $post = Yii::$app->request->post('attr_value');
 
+            if((new GoodsAttr)->createAllGoodsAttr($gid,$post))
+            {
+                echo 'OK';
+            }
+        }
+        else if($act == 'product')
+        {
+
+        }
+
+//die;
         $typeList = (new GoodsType)->dropDownList();
-
         $data = [
             'gid'       =>$gid,
             'gname'     =>$gname,
