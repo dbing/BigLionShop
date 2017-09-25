@@ -18,6 +18,10 @@ use yii\base\Exception;
  */
 class GoodsAttr extends \yii\db\ActiveRecord
 {
+
+    const IS_ATTR = 0;  // 属性
+    const IS_SPEC = 1;  // 规格
+
     public $attrValueErr = null;
 
     /**
@@ -70,6 +74,32 @@ class GoodsAttr extends \yii\db\ActiveRecord
     public function getGoods()
     {
         return $this->hasOne(Goods::className(), ['goods_id' => 'goods_id']);
+    }
+
+    /**
+     * 根据商品 ID 查询规格
+     *
+     * @param $gid
+     * @return array|null
+     */
+    public function getSpecList($gid)
+    {
+        $result = [];
+        $goodsSpecList = self::find('goods_attr_id','attr_value')->where(['goods_id'=>$gid])->all();
+
+        if(!empty($goodsSpecList))
+        {
+            foreach ($goodsSpecList as $key=>$value)
+            {
+                if($value->attr->attr_type == self::IS_SPEC)
+                {
+                    $result[$value->attr->attr_name][$value['goods_attr_id']] = $value['attr_value'];
+                }
+
+            }
+            return $result;
+        }
+        return null;
     }
 
     /**

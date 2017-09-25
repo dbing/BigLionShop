@@ -55,7 +55,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <span class="btn-flat">+</span>
+                <span class="btn-flat create-spec">+</span>
             </div>
             <?php endif; ?>
         <?php endforeach; endif; ?>

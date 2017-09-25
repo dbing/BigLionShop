@@ -78,17 +78,17 @@
                     </div>
                 </div>
 
+                <?= \yii\helpers\Html::beginForm(['goods/product','act'=>'product','gid'=>$gid],'post');?>
                 <div class="row-fluid">
                     <table class="table table-hover">
                         <thead>
                         <tr>
+                            <?php if(!empty($specsList)): foreach ($specsList as $key=>$value): ?>
                             <th class="span3">
-                                <input type="checkbox" />
-                                <span class="line"></span>颜色
+                                <span class="line"></span><?=$key;?>
                             </th>
-                            <th class="span3">
-                                <span class="line"></span>内存
-                            </th>
+                            <?php endforeach;endif; ?>
+
                             <th class="span3">
                                 <span class="line"></span>货号
                             </th>
@@ -105,66 +105,40 @@
                         </thead>
                         <tbody>
                         <!-- row -->
+                        <?php if (!empty($products)): foreach ($products as $value):?>
                         <tr class="first">
+                            <?php foreach ($value['attr_list_val'] as $v):?>
                             <td>
-                                <input type="checkbox" />
-                                土豪金
+                                <?=$v;?>
                             </td>
-                            <td>
-                                4G
-                            </td>
-                            <td><span class="label label-success">ECS000063</span></td>
-                            <td>888￥</td>
-                            <td>110</td>
+                            <?php endforeach;?>
+
+                            <td><span class="label label-success"><?=$value['product_sn'];?></span></td>
+                            <td><?=$value['product_price'];?>￥</td>
+                            <td><?=$value['product_num'];?></td>
                             <td class="align-left">
                                 <span class="btn-flat new-product">&#8722;</span>
                             </td>
                         </tr>
+                        <?php endforeach;endif;?>
                         <!-- row -->
-                        <!-- row -->
+
                         <tr class="first">
-                            <td>
-                                <input type="checkbox" />
-                                土豪金
-                            </td>
-                            <td>
-                                8G
-                            </td>
-                            <td><span class="label label-success">ECS000064</span></td>
-                            <td>666￥</td>
-                            <td>110</td>
-                            <td class="align-left">
-                                <span class="btn-flat new-product">&#8722;</span>
-                            </td>
-                        </tr>
-                        <!-- row -->
-                        <tr class="first">
-                            <td>
-                                <input type="checkbox" />
-                                <div class="ui-select">
-                                    <select>
-                                        <option />土豪金
-                                        <option />星空灰
-                                        <option />玫瑰红
-                                    </select>
-                                </div>
-                            </td>
+
+                            <?php if(!empty($specsList)): foreach ($specsList as $key=>$value): ?>
                             <td>
                                 <div class="ui-select">
-                                    <select>
-                                        <option />4G
-                                        <option />8G
-                                        <option />16G
-                                    </select>
+                                    <?=\yii\helpers\Html::dropDownList('row[1][attr_list][]','',$value);?>
                                 </div>
                             </td>
+                            <?php endforeach;endif; ?>
                             <td>
-                                <input type="text" class="span10">
+                                <input type="text" name="row[1][product_sn]" class="span10">
                             </td>
-                            <td><input type="text" class="span5"></td>
-                            <td><input type="text" class="span5"></td>
+                            <td><input type="text" name="row[1][product_price]" class="span5"></td>
+                            <td><input type="text" name="row[1][product_num]" class="span5"></td>
                             <td class="align-left">
-                                <span class="btn-flat new-product">+</span>
+                                <span class="btn-flat new-product create-product">+</span>
                             </td>
                         </tr>
                         <!-- row -->
@@ -174,10 +148,11 @@
                     </table>
 
                     <div class="span8 field-box actions pull-right">
-                        <input type="button" class="btn-glow primary" value="确认保存" />
+                        <?= \yii\helpers\Html::submitButton('确认保存',['class'=>'btn-glow primary'])?>
                     </div>
 
                 </div>
+                <?= \yii\helpers\Html::endForm();?>
             </div>
             <!-- end products table -->
         </div>
@@ -189,6 +164,26 @@
     $(function () {
 
         /**
+         * 新增货品组合
+         */
+        $(document).on('click','.create-product', function () {
+            var _this = $(this);
+            var row = _this.parents('tr').clone();
+            row.find('span').html('&#8722;').removeClass('create-product').addClass('delete-product');
+            console.log(row.find('span'));
+            _this.parents('tr').after(row);
+
+        });
+
+        /**
+         * 移除货品组合
+         */
+        $(document).on('click','.delete-product', function () {
+            $(this).parents('tr').remove();
+        });
+
+
+        /**
          * 移除规格
          */
         $(document).on('click','.btn',function () {
@@ -198,10 +193,11 @@
         /**
          * 新增规格
          */
-        $(document).on('click','.btn-flat',function () {
+        $(document).on('click','.create-spec',function () {
             var parent = $(this).parent();
             var node = parent.clone();
-            node.children('span').html('&#8722;').removeClass('btn-flat').addClass('btn');
+            node.children('span').html('&#8722;').removeClass('create-spec').addClass('btn');
+            console.log('-----');
             parent.after(node);
         });
 

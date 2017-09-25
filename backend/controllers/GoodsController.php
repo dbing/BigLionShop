@@ -9,6 +9,7 @@ use common\models\Category;
 use common\models\Goods;
 use common\models\GoodsAttr;
 use common\models\GoodsGallery;
+use common\models\Product;
 use common\models\UploadForm;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
@@ -146,15 +147,27 @@ class GoodsController extends \yii\web\Controller
         }
         else if($act == 'product')
         {
+            $rowList = Yii::$app->request->post('row');
+            $result = (new Product)->createProduct($rowList,$gid);
+            var_dump($result);
 
         }
 
-//die;
+        // 规格组合
+        $specsList =(new GoodsAttr)->getSpecList($gid);
+
+        // 货品展示
+        $products = (new Product)->getProducts($gid);
+//        echo '<pre>';
+//        print_r($products);
+
         $typeList = (new GoodsType)->dropDownList();
         $data = [
             'gid'       =>$gid,
             'gname'     =>$gname,
-            'typeList'  =>$typeList
+            'typeList'  =>$typeList,
+            'specsList' =>$specsList,
+            'products' =>$products,
         ];
         return $this->render('product',$data);
     }
