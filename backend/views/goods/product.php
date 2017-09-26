@@ -163,15 +163,20 @@
 <script>
     $(function () {
 
+        _index = 1;     // 货品组合的下拉索引
+
         /**
          * 新增货品组合
          */
         $(document).on('click','.create-product', function () {
+            _index += 1;
             var _this = $(this);
             var row = _this.parents('tr').clone();
             row.find('span').html('&#8722;').removeClass('create-product').addClass('delete-product');
-            console.log(row.find('span'));
-            _this.parents('tr').after(row);
+            var rowHtml = row.html();
+            var patt = /row\[(\d+)\]/g;
+
+            _this.parents('tr').after('<tr class="first">'+rowHtml.replace(patt,'row['+_index+']')+'</tr>');
 
         });
 
