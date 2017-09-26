@@ -142,32 +142,43 @@ class GoodsController extends \yii\web\Controller
 
             if((new GoodsAttr)->createAllGoodsAttr($gid,$post))
             {
-                echo 'OK';
+                Tools::success('添加属性规格成功.',['goods/product','gid'=>$gid,'gname'=>$gname]);
+            }
+            else
+            {
+                Tools::error('添加属性规格失败');
             }
         }
         else if($act == 'product')
         {
             $rowList = Yii::$app->request->post('row');
             $result = (new Product)->createProduct($rowList,$gid);
-            var_dump($result);
+            if($result)
+            {
+                Tools::success('组合货品成功.',['goods/product','gid'=>$gid,'gname'=>$gname]);
+
+            }
+            else
+            {
+                Tools::error('组合货品失败.');
+            }
 
         }
 
         // 规格组合
-        $specsList =(new GoodsAttr)->getSpecList($gid);
+        $attributes =(new GoodsAttr)->getAttribute($gid);
 
         // 货品展示
         $products = (new Product)->getProducts($gid);
-//        echo '<pre>';
-//        print_r($products);
 
         $typeList = (new GoodsType)->dropDownList();
         $data = [
             'gid'       =>$gid,
             'gname'     =>$gname,
             'typeList'  =>$typeList,
-            'specsList' =>$specsList,
-            'products' =>$products,
+            'specsList' =>$attributes['spec'],
+            'products'  =>$products,
+            'type_id'   =>$attributes['type_id'],
         ];
         return $this->render('product',$data);
     }

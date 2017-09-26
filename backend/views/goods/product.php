@@ -18,6 +18,8 @@
 
         <div id="pad-wrapper">
 
+            <?= $this->render('/common/message');?>
+
             <div class="row-fluid head">
                 <div class="span5">
                     <h5>商品属性规格</h5>
@@ -37,7 +39,7 @@
 
                 <div class="container">
                     <label>商品类型:</label>
-                    <?= \yii\helpers\Html::dropDownList('type_id','',$typeList,['prompt'=>'请选择...','style'=>'height:30px;']);?>
+                    <?= \yii\helpers\Html::dropDownList('type_id',$type_id,$typeList,['prompt'=>'请选择...','style'=>'height:30px;']);?>
 
                     <label class="label">请选择商品的所属类型，进而完善此商品的属性</label>
                     <hr>
@@ -45,7 +47,7 @@
                     <?= \yii\helpers\Html::beginForm(['goods/product','act'=>'attr','gid'=>$gid],'post',['class'=>'new_user_form inline-input']);?>
 
                     <div class="attr_list">
-
+                        数据正在努力加载...
                     </div>
                     <?= \yii\helpers\Html::endForm();?>
 
@@ -78,7 +80,7 @@
                     </div>
                 </div>
 
-                <?= \yii\helpers\Html::beginForm(['goods/product','act'=>'product','gid'=>$gid],'post');?>
+                <?= \yii\helpers\Html::beginForm(['goods/product','act'=>'product','gid'=>$gid,'gname'=>$gname],'post');?>
                 <div class="row-fluid">
                     <table class="table table-hover">
                         <thead>
@@ -163,7 +165,23 @@
 <script>
     $(function () {
 
+        setTimeout(function () {
+            getAttribute('<?=$type_id;?>','<?=$gid;?>');
+        },1500);
+
         _index = 1;     // 货品组合的下拉索引
+
+        /**
+         * 已选属性规格Tab切换
+         */
+        $(document).on('click','.attribute-title label',function () {
+            $(this).addClass('label-success').siblings().removeClass('label-success');
+            var index = $(this).index();
+            var rowFluid = $('.select-attribute').find('.row-fluid');
+            rowFluid.hide();
+            rowFluid.eq(index).show();
+
+        });
 
         /**
          * 新增货品组合
@@ -210,17 +228,18 @@
          * 根据商品类型获取属性规格
          */
         $('select[name="type_id"]').change(function () {
-
             var tid = $(this).val();
-            var url = "<?= \yii\helpers\Url::to(['goods-type/get-attr-by-type-id'])?>";
-            $.get(url,{'tid':tid},function (res) {
+            getAttribute(tid);
+        })
 
-                console.log(res);
+
+        function getAttribute(tid,gid='') {
+            var url = "<?= \yii\helpers\Url::to(['goods-type/get-attr-by-type-id'])?>";
+            $.get(url,{'tid':tid,'gid':gid},function (res) {
                 $('.attr_list').html(res);
 
             });
-
-
-        })
+        }
+        
     })
 </script>

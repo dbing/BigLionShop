@@ -82,18 +82,28 @@ class GoodsAttr extends \yii\db\ActiveRecord
      * @param $gid
      * @return array|null
      */
-    public function getSpecList($gid)
+    public function getAttribute($gid)
     {
-        $result = [];
-        $goodsSpecList = self::find('goods_attr_id','attr_value')->where(['goods_id'=>$gid])->all();
+        $result = ['spec'=>[],'attr'=>[],'type_id'=>''];
+        $attributes = self::find('goods_attr_id','attr_value')->where(['goods_id'=>$gid])->all();
 
-        if(!empty($goodsSpecList))
+        if(!empty($attributes))
         {
-            foreach ($goodsSpecList as $key=>$value)
+            foreach ($attributes as $key=>$value)
             {
+                $result['type_id'] = $value->attr->type_id;
+
                 if($value->attr->attr_type == self::IS_SPEC)
                 {
-                    $result[$value->attr->attr_name][$value['goods_attr_id']] = $value['attr_value'];
+
+                    $result['spec'][$value->attr->attr_name][$value['goods_attr_id']] = $value['attr_value'];
+                }
+                else
+                {
+                    $result['attr'][$key]['goods_attr_id'] = $value['goods_attr_id'];
+                    $result['attr'][$key]['attr_name'] = $value->attr->attr_name;
+                    $result['attr'][$key]['attr_value'] = $value['attr_value'];
+
                 }
 
             }
