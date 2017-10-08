@@ -157,9 +157,7 @@
             ,done: function(res){
                 //上传完毕回调
                 layer.closeAll('loading');
-//                console.log(res);
                 layer.msg(res.msg);
-                "<?= $value['original_img'];?>"
                 var html = "<div class=\"span3 img-container\">\n" +
                 "                        <div class=\"img-box\">\n" +
                 "                                <span class=\"icon edit\">\n" +

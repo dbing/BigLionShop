@@ -10,5 +10,5 @@
 
 return [
     'pageSize'  => 10,           // 后台列表每页显示条数
-    'snPrefix'  => 'Yii',       // 货号前缀
+    'snPrefix'  => 'ECS_',       // 货号前缀
 ];
