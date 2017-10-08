@@ -76,7 +76,7 @@ use yii\widgets\ActiveForm;
 
                         <tr class="first">
                             <td>
-                                <img src="<?= $val['goods_img']?>" class="img-circle avatar hidden-phone" />
+                                <img src="/statics/img/table-img.png" class="img-circle avatar hidden-phone" />
                                 <a href="user-profile.html" class="name"><?= $val['goods_name']?></a>
                                 <span class="subtext"><?= $val['goods_brief']?></span>
                             </td>
