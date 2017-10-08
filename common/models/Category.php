@@ -17,6 +17,10 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+
+    const IS_SHOW = 1;      // 展示
+    const BASE_CATE = 0;    // 根分类
+
     /**
      * @inheritdoc
      */
@@ -117,5 +121,29 @@ class Category extends \yii\db\ActiveRecord
         }
 
         return $result;
+    }
+
+
+    /**
+     * 查询全部商品分类
+     *
+     * @param int $pid
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    static function getNavigation($pid=self::BASE_CATE)
+    {
+        $baseCats = self::find()->select('cat_id,cat_name,parent_id')
+            ->where(['is_show'=>self::IS_SHOW,'parent_id'=>$pid])
+            ->asArray()
+            ->all();
+
+        if(is_array($baseCats))
+        {
+            foreach ($baseCats as $key=>$value)
+            {
+                $baseCats[$key]['son'] = self::getNavigation($value['cat_id']);
+            }
+        }
+        return $baseCats;
     }
 }
