@@ -58,7 +58,7 @@
                                             <div class="col-xs-12 col-lg-4">
                                                 <ul>
                                                     <?php if(is_array($value['son'])): foreach (array_slice($value['son'],0,ceil(count($value['son'])/2)) as $val): ?>
-                                                    <li><a href="#"><?=$val['cat_name'];?></a></li>
+                                                    <li><a href="<?=$val['url'];?>"><?=$val['cat_name'];?></a></li>
                                     <?php endforeach;endif;?>
                                                 </ul>
                                             </div>
@@ -90,48 +90,27 @@
 
                 <div id="hero">
                     <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
-
-                        <div class="item" style="background-image: url(assets/images/sliders/slider01.jpg);">
+                        <?php if(is_array($slider)): foreach ($slider as $value): ?>
+                        <div class="item" style="background-image: url(<?=$value['img_path'];?>);">
                             <div class="container-fluid">
                                 <div class="caption vertical-center text-left">
                                     <div class="big-text fadeInDown-1">
-                                        Save up to a<span class="big"><span class="sign">$</span>400</span>
+                                        <?=$value['big_text'];?>
                                     </div>
 
                                     <div class="excerpt fadeInDown-2">
-                                        on selected laptops<br>
-                                        & desktop pcs or<br>
-                                        smartphones
+                                       <?=$value['excerpt'];?>
                                     </div>
                                     <div class="small fadeInDown-2">
                                         terms and conditions apply
                                     </div>
                                     <div class="button-holder fadeInDown-3">
-                                        <a href="single-product.html" class="big le-button ">shop now</a>
+                                        <a href="<?=$value['jump_url'];?>" class="big le-button ">shop now</a>
                                     </div>
                                 </div><!-- /.caption -->
                             </div><!-- /.container-fluid -->
                         </div><!-- /.item -->
-
-                        <div class="item" style="background-image: url(assets/images/sliders/slider03.jpg);">
-                            <div class="container-fluid">
-                                <div class="caption vertical-center text-left">
-                                    <div class="big-text fadeInDown-1">
-                                        Want a<span class="big"><span class="sign">$</span>200</span>Discount?
-                                    </div>
-
-                                    <div class="excerpt fadeInDown-2">
-                                        on selected <br>desktop pcs<br>
-                                    </div>
-                                    <div class="small fadeInDown-2">
-                                        terms and conditions apply
-                                    </div>
-                                    <div class="button-holder fadeInDown-3">
-                                        <a href="single-product.html" class="big le-button ">shop now</a>
-                                    </div>
-                                </div><!-- /.caption -->
-                            </div><!-- /.container-fluid -->
-                        </div><!-- /.item -->
+                        <?php endforeach;endif;?>
 
                     </div><!-- /.owl-carousel -->
                 </div>
@@ -180,22 +159,29 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="featured">
                         <div class="product-grid-holder">
+                            <?php if(is_array($bestGoods)): foreach ($bestGoods as $goods):?>
                             <div class="col-sm-4 col-md-3  no-margin product-item-holder hover">
                                 <div class="product-item">
-                                    <div class="ribbon red"><span>sale</span></div>
+                                    <?php if($goods['is_new']):?>
+                                    <div class="ribbon blue"><span>new</span></div>
+                                    <?php endif;?>
+                                    <?php if($goods['is_hot']):?>
+                                        <div class="ribbon red"><span>hot</span></div>
+                                    <?php endif;?>
+
                                     <div class="image">
-                                        <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-01.jpg" />
+                                        <img alt="" src="assets/images/blank.gif" data-echo="<?=$goods['thumb'];?>" />
                                     </div>
                                     <div class="body">
-                                        <div class="label-discount green">-50% sale</div>
+                                        <div class="label-discount green"><?=$goods['discount'];?> sale</div>
                                         <div class="title">
-                                            <a href="single-product.html">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
+                                            <a href="<?=$goods['url'];?>"><?=$goods['goods_name'];?></a>
                                         </div>
-                                        <div class="brand">sony</div>
+                                        <div class="brand"><?=$goods['brand_name'];?></div>
                                     </div>
                                     <div class="prices">
-                                        <div class="price-prev">$1399.00</div>
-                                        <div class="price-current pull-right">$1199.00</div>
+                                        <div class="price-prev"><?=$goods['market_price'];?></div>
+                                        <div class="price-current pull-right"><?=$goods['shop_price'];?></div>
                                     </div>
 
                                     <div class="hover-area">
@@ -209,92 +195,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                                <div class="product-item">
-                                    <div class="ribbon blue"><span>new!</span></div>
-                                    <div class="image">
-                                        <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-02.jpg" />
-                                    </div>
-                                    <div class="body">
-                                        <div class="label-discount clear"></div>
-                                        <div class="title">
-                                            <a href="single-product.html">White lumia 9001</a>
-                                        </div>
-                                        <div class="brand">nokia</div>
-                                    </div>
-                                    <div class="prices">
-                                        <div class="price-prev">$1399.00</div>
-                                        <div class="price-current pull-right">$1199.00</div>
-                                    </div>
-                                    <div class="hover-area">
-                                        <div class="add-cart-button">
-                                            <a href="single-product.html" class="le-button">add to cart</a>
-                                        </div>
-                                        <div class="wish-compare">
-                                            <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                            <a class="btn-add-to-compare" href="#">compare</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                                <div class="product-item">
-
-                                    <div class="image">
-                                        <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-03.jpg" />
-                                    </div>
-                                    <div class="body">
-                                        <div class="label-discount clear"></div>
-                                        <div class="title">
-                                            <a href="single-product.html">POV Action Cam</a>
-                                        </div>
-                                        <div class="brand">sony</div>
-                                    </div>
-                                    <div class="prices">
-                                        <div class="price-prev">$1399.00</div>
-                                        <div class="price-current pull-right">$1199.00</div>
-                                    </div>
-                                    <div class="hover-area">
-                                        <div class="add-cart-button">
-                                            <a href="single-product.html" class="le-button">add to cart</a>
-                                        </div>
-                                        <div class="wish-compare">
-                                            <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                            <a class="btn-add-to-compare" href="#">compare</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                                <div class="product-item">
-                                    <div class="ribbon red"><span>sale</span></div>
-                                    <div class="ribbon green"><span>bestseller</span></div>
-                                    <div class="image">
-                                        <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-04.jpg" />
-                                    </div>
-                                    <div class="body">
-                                        <div class="label-discount clear"></div>
-                                        <div class="title">
-                                            <a href="single-product.html">Netbook Acer TravelMate
-                                                B113-E-10072</a>
-                                        </div>
-                                        <div class="brand">acer</div>
-                                    </div>
-                                    <div class="prices">
-                                        <div class="price-prev">$1399.00</div>
-                                        <div class="price-current pull-right">$1199.00</div>
-                                    </div>
-                                    <div class="hover-area">
-                                        <div class="add-cart-button">
-                                            <a href="single-product.html" class="le-button">add to cart</a>
-                                        </div>
-                                        <div class="wish-compare">
-                                            <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                            <a class="btn-add-to-compare" href="#">compare</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endforeach;endif; ?>
                         </div>
                         <div class="loadmore-holder text-center">
                             <a class="btn-loadmore" href="#">

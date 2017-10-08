@@ -43,6 +43,27 @@ class Tools
             return self::createGoodsSn();
         }
         return $goodsSn;
+    }
 
+    /**
+     * 格式化金额
+     *
+     * @param $value
+     * @return string
+     */
+    static function formatMoney($value)
+    {
+        return '￥'.$value;
+    }
+
+    /**
+     * 构建Url
+     *
+     * @param $params
+     * @return string
+     */
+    static function buildUrl($params)
+    {
+        return yii\helpers\Url::to($params);
     }
 }

@@ -5,6 +5,8 @@ namespace common\models;
 use backend\models\GoodsType;
 use common\helpers\Tools;
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%goods}}".
@@ -51,7 +53,10 @@ use Yii;
 class Goods extends \yii\db\ActiveRecord
 {
 
-    const IS_PROMOTE = 1;           // 是否促销
+    const IS_PROMOTE = 1;           // 促销
+    const IS_NOT_PROMOTE = 0;       // 不促销
+    const IS_NOT_DELETE = 0;        // 回收站
+    const IS_ON_SALE = 1;           // 上架
 
     /**
      * @inheritdoc
@@ -210,5 +215,47 @@ class Goods extends \yii\db\ActiveRecord
             return $this->save(false);
         }
         return false;
+    }
+
+
+    /**
+     * 查询推荐商品
+     *
+     * @param string $type
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    static public function getRecommendGoods($type='is_best',$offset=0,$limit=4)
+    {
+        if(!in_array($type,['is_best','is_new','is_hot']))
+        {
+            return [];
+        }
+
+        $query = self::find()
+            ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
+            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1,'is_promote'=>self::IS_NOT_PROMOTE])
+            ->all();
+
+        $result = [];
+        if(is_array($query))
+        {
+            $upload = (new UploadForm());
+            foreach ($query as $key=>$value)
+            {
+                $result[$key] = ArrayHelper::toArray($value);
+                $result[$key]['brand_name'] = $value->brand->brand_name;
+                $result[$key]['discount'] = ceil(($value['shop_price'] / $value['market_price'])*100).'%';
+                $result[$key]['thumb'] = $upload->getDownloadUrl($value['goods_img'],'recommend');
+                $result[$key]['shop_price'] = Tools::formatMoney($value['shop_price']);
+                $result[$key]['market_price'] = Tools::formatMoney($value['market_price']);
+                $result[$key]['url'] = Tools::buildUrl(['product/index','gid'=>$value['goods_id']]);
+
+            }
+
+        }
+
+        return $result;
     }
 }

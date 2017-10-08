@@ -64,10 +64,10 @@ class UploadForm extends Model
      * @param $fileName
      * @return string
      */
-    public function getDownloadUrl($fileName)
+    public function getDownloadUrl($fileName,$thumb='')
     {
         $auth = new Auth($this->qiniuConfig['accessKey'],$this->qiniuConfig['secretKey']);
-        $baseUrl = $this->qiniuConfig['domain'].$fileName;
+        $baseUrl = empty($thumb) ? $this->qiniuConfig['domain'].$fileName : $this->qiniuConfig['domain'].$fileName . '?'. $this->qiniuConfig['imageView'][$thumb];
         return $auth->privateDownloadUrl($baseUrl);
     }
 

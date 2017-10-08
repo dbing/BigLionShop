@@ -11,6 +11,10 @@ return [
         'bucket'    =>'biglionshop',
         'basePath'  =>'/uploads/',
         'domain'    =>'http://owirr329r.bkt.clouddn.com/',
+        'imageView' =>[
+            'recommend'      =>'imageView2/1/w/246/h/186/q/75|imageslim',
+            'mini'           =>'imageView2/1/w/67/h/60/q/75|imageslim'
+        ]
     ]
 
 ];

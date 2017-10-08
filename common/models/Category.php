@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%category}}".
@@ -141,6 +142,7 @@ class Category extends \yii\db\ActiveRecord
         {
             foreach ($baseCats as $key=>$value)
             {
+                $baseCats[$key]['url'] = Url::to(['category/index','cid'=>$value['cat_id']]);
                 $baseCats[$key]['son'] = self::getNavigation($value['cat_id']);
             }
         }
