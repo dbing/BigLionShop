@@ -217,6 +217,33 @@ class Goods extends \yii\db\ActiveRecord
         return false;
     }
 
+    /**
+     * 处理商品列表数据
+     *
+     * @param $query
+     * @return array
+     */
+    static function disposeGoodsData($query)
+    {
+        $result = [];
+        if(is_array($query))
+        {
+            $upload = (new UploadForm());
+            foreach ($query as $key=>$value)
+            {
+                $result[$key] = ArrayHelper::toArray($value);
+                $result[$key]['brand_name'] = $value->brand->brand_name;
+                $result[$key]['discount'] = ceil(($value['shop_price'] / $value['market_price'])*100).'%';
+                $result[$key]['thumb'] = $upload->getDownloadUrl($value['goods_img'],'recommend');
+                $result[$key]['prothumb'] = $upload->getDownloadUrl($value['goods_img'],'thumb');
+                $result[$key]['shop_price'] = Tools::formatMoney($value['shop_price']);
+                $result[$key]['market_price'] = Tools::formatMoney($value['market_price']);
+                $result[$key]['url'] = Tools::buildUrl(['product/index','gid'=>$value['goods_id']]);
+
+            }
+        }
+        return $result;
+    }
 
     /**
      * 查询推荐商品
@@ -236,26 +263,29 @@ class Goods extends \yii\db\ActiveRecord
         $query = self::find()
             ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
             ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1,'is_promote'=>self::IS_NOT_PROMOTE])
+            ->offset($offset)
+            ->limit($limit)
             ->all();
 
-        $result = [];
-        if(is_array($query))
-        {
-            $upload = (new UploadForm());
-            foreach ($query as $key=>$value)
-            {
-                $result[$key] = ArrayHelper::toArray($value);
-                $result[$key]['brand_name'] = $value->brand->brand_name;
-                $result[$key]['discount'] = ceil(($value['shop_price'] / $value['market_price'])*100).'%';
-                $result[$key]['thumb'] = $upload->getDownloadUrl($value['goods_img'],'recommend');
-                $result[$key]['shop_price'] = Tools::formatMoney($value['shop_price']);
-                $result[$key]['market_price'] = Tools::formatMoney($value['market_price']);
-                $result[$key]['url'] = Tools::buildUrl(['product/index','gid'=>$value['goods_id']]);
+        return self::disposeGoodsData($query);
+    }
 
-            }
-
-        }
-
-        return $result;
+    /**
+     * 查询促销商品
+     *
+     * @param string $catId
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    static function getPromoteGoods($catId='',$offset=0,$limit=7)
+    {
+        $query = self::find()
+            ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
+            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,'is_promote'=>self::IS_PROMOTE])
+            ->offset($offset)
+            ->limit($limit)
+            ->all();
+        return self::disposeGoodsData($query);
     }
 }

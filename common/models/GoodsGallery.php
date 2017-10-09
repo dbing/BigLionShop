@@ -58,6 +58,12 @@ class GoodsGallery extends \yii\db\ActiveRecord
         return $this->hasOne(Goods::className(), ['goods_id' => 'goods_id']);
     }
 
+    /**
+     * 查询该商品的相册图
+     *
+     * @param $gid
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public function getGalleries($gid)
     {
         $galleries = GoodsGallery::find()->select('img_desc,original_img')->where(['goods_id'=>$gid])->asArray()->all();
@@ -66,6 +72,8 @@ class GoodsGallery extends \yii\db\ActiveRecord
         foreach ($galleries as $key=>$value)
         {
             $galleries[$key]['url'] = $upForm->getDownloadUrl($value['original_img']);
+            $galleries[$key]['middle'] = $upForm->getDownloadUrl($value['original_img'],'middle');
+            $galleries[$key]['mini'] = $upForm->getDownloadUrl($value['original_img'],'mini');
         }
         return $galleries;
     }

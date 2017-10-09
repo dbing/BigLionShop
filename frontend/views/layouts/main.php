@@ -623,6 +623,9 @@
 <script src="assets/js/wow.min.js"></script>
 <script src="assets/js/scripts.js"></script>
 
+<script src="assets/layer/layer.js"></script>
+<script src="assets/js/common.js"></script>
+
 <!-- <script src="http://w.sharethis.com/button/buttons.js"></script> -->
 
 </body>
