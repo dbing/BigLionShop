@@ -52,7 +52,7 @@
 
 </head>
 <body>
-
+<?php $this->beginBody() ?>
 <div class="wrapper">
     <!-- ============================================================= TOP NAVIGATION ============================================================= -->
     <nav class="top-bar animate-dropdown">
@@ -703,6 +703,6 @@
 <script src="assets/js/scripts.js"></script>
 
 <!-- <script src="http://w.sharethis.com/button/buttons.js"></script> -->
-
+<?php $this->endBody() ?>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace common\models;
 use backend\models\GoodsType;
 use common\helpers\Tools;
 use Yii;
+use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
@@ -236,6 +237,7 @@ class Goods extends \yii\db\ActiveRecord
                 $result[$key]['discount'] = ceil(($value['shop_price'] / $value['market_price'])*100).'%';
                 $result[$key]['thumb'] = $upload->getDownloadUrl($value['goods_img'],'recommend');
                 $result[$key]['prothumb'] = $upload->getDownloadUrl($value['goods_img'],'thumb');
+                $result[$key]['catbest'] = $upload->getDownloadUrl($value['goods_img'],'catbest');
                 $result[$key]['shop_price'] = Tools::formatMoney($value['shop_price']);
                 $result[$key]['market_price'] = Tools::formatMoney($value['market_price']);
                 $result[$key]['url'] = Tools::buildUrl(['product/index','gid'=>$value['goods_id']]);
@@ -253,7 +255,7 @@ class Goods extends \yii\db\ActiveRecord
      * @param int $limit
      * @return array
      */
-    static public function getRecommendGoods($type='is_best',$offset=0,$limit=4)
+    static public function getRecommendGoods($type='is_best',$offset=0,$limit=4,$cid='')
     {
         if(!in_array($type,['is_best','is_new','is_hot']))
         {
@@ -262,12 +264,18 @@ class Goods extends \yii\db\ActiveRecord
 
         $query = self::find()
             ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
-            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1,'is_promote'=>self::IS_NOT_PROMOTE])
-            ->offset($offset)
+            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1,'is_promote'=>self::IS_NOT_PROMOTE]);
+
+        // 指定分类
+        if(!empty($cid))
+        {
+            $query->andWhere(Category::buildInCondition($cid));
+        }
+        $queryObj = $query->offset($offset)
             ->limit($limit)
             ->all();
 
-        return self::disposeGoodsData($query);
+        return self::disposeGoodsData($queryObj);
     }
 
     /**
@@ -288,4 +296,29 @@ class Goods extends \yii\db\ActiveRecord
             ->all();
         return self::disposeGoodsData($query);
     }
+
+    /**
+     * 查询指定分类下商品列表
+     *
+     * @param $catId
+     * @return array
+     */
+    static function getGoodsByCatId($catId)
+    {
+
+        $query = self::find()
+            ->select('goods_id,goods_name,goods_brief,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
+            ->where(Category::buildInCondition($catId))
+            ->andWhere(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE]);
+
+        // 分页
+        $pagination = new Pagination(['totalCount'=>$query->count(),'defaultPageSize'=>3]);
+
+        // 根据分页限制查询数据
+        $goodsQuery = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+
+        return ['goodsList'=>self::disposeGoodsData($goodsQuery),'pagination'=>$pagination];
+    }
+
+
 }

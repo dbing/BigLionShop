@@ -246,6 +246,7 @@ class GoodsController extends \yii\web\Controller
         if(!empty($map['cid']))
         {
             $childs = Category::getLevelCategories(Category::find()->select('cat_id,parent_id,cat_name')->asArray()->all(),'',$map['cid']);
+var_dump($childs);
 
             $cids = ArrayHelper::getColumn($childs,'cat_id');
             array_push($cids,$map['cid']);

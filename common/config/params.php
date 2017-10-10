@@ -16,6 +16,7 @@ return [
             'mini'          =>'imageView2/1/w/67/h/60/q/75|imageslim',
             'thumb'         =>'imageView2/1/w/194/h/143/q/75|imageslim',
             'middle'        =>'imageView2/1/w/433/h/325/q/75|imageslim',
+            'catbest'       =>'imageView2/1/w/73/h/73/q/75|imageslim',
         ]
     ]
 

@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\helpers\Tools;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 /**
@@ -199,5 +200,23 @@ class Category extends \yii\db\ActiveRecord
         $catInfo = self::getCategoryInfo($cid);
         $urHere[] = $catInfo;
         return self::getParentsCategory($catInfo['parent_id']);
+    }
+
+
+    /**
+     * 查询指定分类下子分类并构造成In条件
+     *
+     * @param $catId
+     * @return array
+     */
+    static function buildInCondition($catId)
+    {
+
+        $allCategories = self::find()->select('cat_id,parent_id,cat_name')->asArray()->all();
+        $childs = self::getLevelCategories($allCategories,'',$catId);
+        $cids = ArrayHelper::getColumn($childs,'cat_id');
+        array_push($cids,$catId);
+
+        return ['in','cat_id',$cids];
     }
 }
