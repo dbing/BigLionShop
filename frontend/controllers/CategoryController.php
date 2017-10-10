@@ -18,7 +18,7 @@ class CategoryController extends \yii\web\Controller
         $catInfo = Category::getCategoryInfo($cid);
         if(!$catInfo)
         {
-            Yii::$app->response->redirect(['index/index']);eixt;
+            Yii::$app->response->redirect(['index/index']);
         }
 
         // 查询主导航

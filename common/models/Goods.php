@@ -250,9 +250,10 @@ class Goods extends \yii\db\ActiveRecord
     /**
      * 查询推荐商品
      *
-     * @param string $type
-     * @param int $offset
-     * @param int $limit
+     * @param string $type      // 类型 is_best,is_new,is_hot
+     * @param int $offset       // 偏移量
+     * @param int $limit        // 限制条数
+     * @param int $cid          // 分类ID
      * @return array
      */
     static public function getRecommendGoods($type='is_best',$offset=0,$limit=4,$cid='')

@@ -68,10 +68,10 @@ class GoodsController extends \yii\web\Controller
     {
         $map = ['cid' => $cid, 'bid' => $bid, 'property' => $property, 'name' => $name,'sale'=>$sale]; //搜索条件
 
+        $query = $this->_search($map,Goods::find());
+
         $catList = (new Category)->dropDownList();
         $brandList = (new Brand())->dropDownList();
-
-        $query = $this->_search($map,Goods::find());
 
         $page = new Pagination(['defaultPageSize' => yii::$app->params['pageSize'], 'totalCount' => $query->count()]);
 
@@ -245,13 +245,7 @@ class GoodsController extends \yii\web\Controller
         // 处理分类搜索条件
         if(!empty($map['cid']))
         {
-            $childs = Category::getLevelCategories(Category::find()->select('cat_id,parent_id,cat_name')->asArray()->all(),'',$map['cid']);
-var_dump($childs);
-
-            $cids = ArrayHelper::getColumn($childs,'cat_id');
-            array_push($cids,$map['cid']);
-
-            $query->andWhere(['in','cat_id',$cids]);
+            $query->andWhere(Category::buildInCondition($map['cid']));
             // $query->andWhere('cat_id=:cid',[':cid'=>$map['cid']]);
         }
 
