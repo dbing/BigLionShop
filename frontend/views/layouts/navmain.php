@@ -334,9 +334,7 @@
                 <div class="container">
                     <div class="breadcrumb-nav-holder minimal">
                         <ul class="breadcrumb-item">
-                            <a href="/index.html">shop by department </a>&rsaquo;
-                            <a href="category-grid.html">Gaming</a> &rsaquo;
-                            <a href="#" class="active">VAIO Fit Laptop - Windows</a>
+                            <?php if(!empty($this->params['breadcrumb'])): ?><?=$this->params['breadcrumb'];?><?php endif;?>
                         </ul>
                     </div>
                 </div><!-- /.container -->

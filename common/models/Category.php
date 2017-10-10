@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\Tools;
 use Yii;
 use yii\helpers\Url;
 
@@ -147,5 +148,56 @@ class Category extends \yii\db\ActiveRecord
             }
         }
         return $baseCats;
+    }
+
+    /**
+     * 根据ID查询分类信息
+     *
+     * @param $cid
+     */
+    static public function getCategoryInfo($cid)
+    {
+        return self::find()->select('cat_id,cat_name,parent_id')
+            ->where('cat_id=:cid',[':cid'=>$cid])
+            ->asArray()
+            ->one();
+    }
+
+
+    /**
+     * 获取分类下面包屑导航
+     *
+     * @param $cid
+     * @return string
+     */
+    static public function getBreadcrumb($cid)
+    {
+        $parents = self::getParentsCategory($cid);
+        $breadUrl = '<a href="'.Tools::buildUrl(['index/index']).'">首页 </a>';
+
+        while($catInfo = array_pop($parents))
+        {
+            $breadUrl .= '&rsaquo; <a href="'.Tools::buildUrl(['category/index','cid'=>$catInfo['cat_id']]).'">'.$catInfo['cat_name'].' </a>';
+        }
+        return $breadUrl;
+    }
+
+    /**
+     * 根据分类ID查询父级
+     *
+     * @param $cid
+     * @return array
+     */
+    static function getParentsCategory($cid)
+    {
+        static $urHere = [];
+
+        if($cid == self::BASE_CATE)
+        {
+            return $urHere;
+        }
+        $catInfo = self::getCategoryInfo($cid);
+        $urHere[] = $catInfo;
+        return self::getParentsCategory($catInfo['parent_id']);
     }
 }
