@@ -22,13 +22,16 @@ class CategoryController extends \yii\web\Controller
         }
 
         // 查询主导航
-        $this->view->params['navigation'] = Category::getNavigation();
+        $navigation = Category::getNavigation();
+        $this->view->params['navigation'] = $navigation;
 
         // 查询面包屑
         $this->view->params['breadcrumb'] = Category::getBreadcrumb($cid);
 
+        // 加工搜索条件
+
         // 查询分类商品
-        $goods = Goods::getGoodsByCatId($cid);
+        $goods = Goods::getGoodsByCatId($cid,$this->buildFilter());
 
         // 查询指定分类下精品列表
         $cateRecommond = Goods::getRecommendGoods('is_best','','5',$cid);
@@ -37,13 +40,42 @@ class CategoryController extends \yii\web\Controller
         $filter = Category::getFilter($cid);
 
         $data = [
+            'navigation'    =>$navigation,
             'goodsList'     =>$goods['goodsList'],
             'pagination'    =>$goods['pagination'],
             'cateRecommond' =>$cateRecommond,
-            'filter'        =>$filter
+            'filter'        =>$filter,
+            'cid'           =>$cid
         ];
 
         return $this->render('index',$data);
+    }
+
+    /**
+     * 构造搜索条件
+     *
+     * @return array
+     */
+    private function buildFilter()
+    {
+        $filter = [];
+        $bids = Yii::$app->request->get('bid','');
+        $price = Yii::$app->request->get('price');
+
+        // 品牌搜索
+        if(!empty($bids))
+        {
+            $filter[] = ['in','brand_id',$bids];
+        }
+
+        // 价格区间
+        if(!empty($price))
+        {
+            $rangePrice = explode(',',$price);
+            $filter[] = ['between','shop_price',$rangePrice[0],$rangePrice[1]];
+        }
+
+        return $filter;
     }
 
 }

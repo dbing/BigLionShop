@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 ?>
+
 <section id="category-grid">
         <div class="container">
 
@@ -10,6 +11,7 @@
                 <!-- ========================================= PRODUCT FILTER ========================================= -->
                 <div class="widget">
                     <h1>商品筛选</h1>
+                    <?= \yii\helpers\Html::beginForm(['category/index','cid'=>$cid],'get')?>
                     <div class="body bordered">
 
                         <div class="category-filter">
@@ -17,7 +19,7 @@
                             <hr>
                             <ul>
                                 <?php if(is_array($filter['filterBrand'])): foreach ($filter['filterBrand'] as $brand):?>
-                                <li><input checked="checked" class="le-checkbox" type="checkbox"  /> <label><?=$brand['brand_name'];?></label> <span class="pull-right">(<?=$brand['num'];?>)</span></li>
+                                <li><input name="bid[]" <?php if(isset($brand['checked'])&&$brand['checked']):?>checked="checked" <?php endif;?> value="<?=$brand['brand_id'];?>" class="le-checkbox" type="checkbox"  /> <label><?=$brand['brand_name'];?></label> <span class="pull-right">(<?=$brand['num'];?>)</span></li>
 <?php endforeach;endif;?>
                             </ul>
                         </div><!-- /.category-filter -->
@@ -27,125 +29,65 @@
                             <hr>
                             <div class="price-range-holder">
 
-                                <input type="text" class="price-slider" value="" >
+                                <input type="text" data-slider-min="<?=$filter['filterPrice']['min_price']?>" data-slider-max="<?=$filter['filterPrice']['max_price']?>" class="price-slider" data-slider-value="<?=$filter['filterPrice']['slider_value'];?>" name="price" value="" >
 
                                 <span class="min-max">
                     Price: ￥<?=$filter['filterPrice']['min_price']?> - ￥<?=$filter['filterPrice']['max_price'];?>
                 </span>
                                 <span class="filter-button">
-                    <a href="#">Filter</a>
+                                    <?= \yii\helpers\Html::submitButton('搜索',['class'=>'btn btn-danger btn-sm']);?>
                 </span>
                             </div>
                         </div><!-- /.price-filter -->
 
                     </div><!-- /.body -->
+                    <?= \yii\helpers\Html::endForm();?>
                 </div><!-- /.widget -->
                 <!-- ========================================= PRODUCT FILTER : END ========================================= -->
                 <!-- ========================================= CATEGORY TREE ========================================= -->
                 <div class="widget accordion-widget category-accordions">
                     <h1 class="border">全部分类</h1>
                     <div class="accordion">
+                        <?php if(is_array($navigation)): foreach ($navigation as $navKey=>$nav):?>
                         <div class="accordion-group">
                             <div class="accordion-heading">
-                                <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
-                                    laptops &amp; computers
+                                <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapse<?=$navKey;?>">
+                                    <?=$nav['cat_name'];?>
                                 </a>
                             </div>
-                            <div id="collapseOne" class="accordion-body collapse in">
+                            <div id="collapse<?=$navKey;?>" class="accordion-body collapse">
                                 <div class="accordion-inner">
                                     <ul>
+                            <?php if(is_array($nav['son'])): foreach ($nav['son'] as $key=>$value):?>
                                         <li>
                                             <div class="accordion-heading">
-                                                <a href="#collapseSub1" data-toggle="collapse">laptop</a>
+                                                <a href="#collapseSub<?=$navKey.$key;?>" data-toggle="collapse"><?=$value['cat_name'];?></a>
                                             </div>
-                                            <div id="collapseSub1" class="accordion-body collapse in">
+                                            <div id="collapseSub<?=$navKey.$key;?>" class="accordion-body collapse in">
                                                 <ul>
-                                                    <li><a href="#">Two Level Accordion</a></li>
-                                                </ul>
-                                            </div><!-- /.accordion-body -->
-                                        </li>
-                                        <li>
-                                            <div class="accordion-heading">
-                                                <a href="#collapseSub2" data-toggle="collapse">tablet</a>
-                                            </div>
-                                            <div id="collapseSub2" class="accordion-body collapse in">
-                                                <ul>
+                                <?php if(is_array($value['son'])): foreach ($value['son'] as $ke=>$val):?>
                                                     <li>
                                                         <div class="accordion-heading">
-                                                            <a href="#collapseSub3" data-toggle="collapse">Three Level Accordion</a>
+                                                            <a href="#collapseSub<?=$navKey.$key.$ke;?>" data-toggle="collapse"><?=$val['cat_name'];?></a>
                                                         </div>
-                                                        <div id="collapseSub3" class="accordion-body collapse in">
+                                                        <div id="collapseSub<?=$navKey.$key.$ke;?>" class="accordion-body collapse in">
                                                             <ul>
-                                                                <li><a href="#">PDA</a></li>
-                                                                <li><a href="#">notebook</a></li>
-                                                                <li><a href="#">mini notebook</a></li>
+                                    <?php if(is_array($val['son'])): foreach ($val['son'] as $k=>$v):?>
+                                                                <li><a href="<?=$v['url'];?>"><?=$v['cat_name'];?></a></li>
+                                    <?php endforeach;endif;?>
                                                             </ul>
                                                         </div><!-- /.accordion-body -->
                                                     </li>
+                                <?php endforeach;endif;?>
                                                 </ul>
                                             </div>
                                         </li>
-                                        <li><a href="#">PDA</a></li>
-                                        <li><a href="#">notebook</a></li>
-                                        <li><a href="#">mini notebook</a></li>
+                            <?php endforeach;endif;?>
                                     </ul>
                                 </div><!-- /.accordion-inner -->
                             </div>
                         </div><!-- /.accordion-group -->
-
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapseTwo">
-                                    desktop PC
-                                </a>
-                            </div>
-                            <div id="collapseTwo" class="accordion-body collapse">
-                                <div class="accordion-inner">
-                                    <ul>
-                                        <li><a href="#">gaming</a></li>
-                                        <li><a href="#">office</a></li>
-                                        <li><a href="#">kids</a></li>
-                                        <li><a href="#">for women</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- /.accordion-group -->
-
-
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapse3">
-                                    laptops
-                                </a>
-                            </div>
-                            <div id="collapse3" class="accordion-body collapse">
-                                <div class="accordion-inner">
-                                    <ul>
-                                        <li><a href="#">light weight</a></li>
-                                        <li><a href="#">wide monitor</a></li>
-                                        <li><a href="#">ultra laptop</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- /.accordion-group -->
-
-
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapse4">
-                                    notebooks
-                                </a>
-                            </div>
-                            <div id="collapse4" class="accordion-body collapse">
-                                <div class="accordion-inner">
-                                    <ul>
-                                        <li><a href="#">light weight</a></li>
-                                        <li><a href="#">wide monitor</a></li>
-                                        <li><a href="#">ultra laptop</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- /.accordion-group -->
+                        <?php endforeach;endif;?>
 
                     </div><!-- /.accordion -->
                 </div><!-- /.category-accordions -->
@@ -374,3 +316,4 @@
             <!-- ========================================= CONTENT : END ========================================= -->
         </div><!-- /.container -->
     </section><!-- /#category-grid -->
+

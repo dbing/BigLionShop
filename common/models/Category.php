@@ -228,6 +228,7 @@ class Category extends \yii\db\ActiveRecord
      */
     static function getFilter($cid)
     {
+
         // 查询品牌筛选条件
         $filterBrand = Goods::find()->select('b.brand_id,brand_name,count(1) AS num')
             ->joinWith('brand AS b',false,'INNER JOIN')
@@ -240,15 +241,36 @@ class Category extends \yii\db\ActiveRecord
             ->limit(20)
             ->all();
 
+        // 标识选中的品牌
+        $bids = Yii::$app->request->get('bid','');
+        if(is_array($filterBrand) && !empty($bids))
+        {
+            foreach ($filterBrand as $key=>$value)
+            {
+                $filterBrand[$key]['checked'] = in_array($value['brand_id'],$bids);
+            }
+        }
+
         // 价格区间
         $filterPrice = Goods::find()
-            ->select('MIN(shop_price) AS min_price,MAX(shop_price) AS max_price ')
+            ->select('floor(MIN(shop_price)) AS min_price,round(MAX(shop_price)) AS max_price ')
             ->where(self::buildInCondition($cid))
             ->andWhere(['is_delete'=>Goods::IS_NOT_DELETE,'is_on_sale'=>Goods::IS_ON_SALE])
             ->asArray()
             ->one();
 
-        var_dump($filterPrice);
+        // 单个商品时或多个商品价格区间相同时
+        if($filterPrice['min_price'] == $filterPrice['max_price'])
+        {
+            $filterPrice['min_price'] = 1;
+            $filterPrice['slider_value'] = '[1'.','.$filterPrice['max_price'].']';
+        }
+        else
+        {
+            $filterPrice['slider_value'] = '['.$filterPrice['min_price'].','.intval($filterPrice['max_price']/2).']';
+
+        }
+
         return ['filterBrand'=>$filterBrand,'filterPrice'=>$filterPrice];
     }
 }

@@ -304,13 +304,22 @@ class Goods extends \yii\db\ActiveRecord
      * @param $catId
      * @return array
      */
-    static function getGoodsByCatId($catId)
+    static function getGoodsByCatId($catId,$map=[])
     {
 
         $query = self::find()
             ->select('goods_id,goods_name,goods_brief,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
             ->where(Category::buildInCondition($catId))
             ->andWhere(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE]);
+
+        // 使用搜索条件
+        if(!empty($map))
+        {
+            foreach ($map as $value)
+            {
+                $query->andWhere($value);
+            }
+        }
 
         // 分页
         $pagination = new Pagination(['totalCount'=>$query->count(),'defaultPageSize'=>3]);
