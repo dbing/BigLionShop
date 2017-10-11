@@ -33,10 +33,14 @@ class CategoryController extends \yii\web\Controller
         // 查询指定分类下精品列表
         $cateRecommond = Goods::getRecommendGoods('is_best','','5',$cid);
 
+        // 获取指定分类下筛选条件
+        $filter = Category::getFilter($cid);
+
         $data = [
             'goodsList'     =>$goods['goodsList'],
             'pagination'    =>$goods['pagination'],
-            'cateRecommond' =>$cateRecommond
+            'cateRecommond' =>$cateRecommond,
+            'filter'        =>$filter
         ];
 
         return $this->render('index',$data);

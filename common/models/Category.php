@@ -219,4 +219,36 @@ class Category extends \yii\db\ActiveRecord
 
         return ['in','cat_id',$cids];
     }
+
+    /**
+     * 查询指定分类下搜索条件
+     *
+     * @param $cid
+     * @return array
+     */
+    static function getFilter($cid)
+    {
+        // 查询品牌筛选条件
+        $filterBrand = Goods::find()->select('b.brand_id,brand_name,count(1) AS num')
+            ->joinWith('brand AS b',false,'INNER JOIN')
+            ->where(self::buildInCondition($cid))
+            ->andWhere(['is_delete'=>Goods::IS_NOT_DELETE,'is_on_sale'=>Goods::IS_ON_SALE])
+            ->groupBy('b.brand_id')
+            ->having('num>=1')
+            ->orderBy(['b.sort'=>SORT_ASC])
+            ->asArray()
+            ->limit(20)
+            ->all();
+
+        // 价格区间
+        $filterPrice = Goods::find()
+            ->select('MIN(shop_price) AS min_price,MAX(shop_price) AS max_price ')
+            ->where(self::buildInCondition($cid))
+            ->andWhere(['is_delete'=>Goods::IS_NOT_DELETE,'is_on_sale'=>Goods::IS_ON_SALE])
+            ->asArray()
+            ->one();
+
+        var_dump($filterPrice);
+        return ['filterBrand'=>$filterBrand,'filterPrice'=>$filterPrice];
+    }
 }

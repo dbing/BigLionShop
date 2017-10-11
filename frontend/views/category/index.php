@@ -13,13 +13,12 @@
                     <div class="body bordered">
 
                         <div class="category-filter">
-                            <h2>Brands</h2>
+                            <h2>品牌</h2>
                             <hr>
                             <ul>
-                                <li><input checked="checked" class="le-checkbox" type="checkbox"  /> <label>Samsung</label> <span class="pull-right">(2)</span></li>
-                                <li><input  class="le-checkbox" type="checkbox" /> <label>Dell</label> <span class="pull-right">(8)</span></li>
-                                <li><input  class="le-checkbox" type="checkbox" /> <label>Toshiba</label> <span class="pull-right">(1)</span></li>
-                                <li><input  class="le-checkbox" type="checkbox" /> <label>Apple</label> <span class="pull-right">(5)</span></li>
+                                <?php if(is_array($filter['filterBrand'])): foreach ($filter['filterBrand'] as $brand):?>
+                                <li><input checked="checked" class="le-checkbox" type="checkbox"  /> <label><?=$brand['brand_name'];?></label> <span class="pull-right">(<?=$brand['num'];?>)</span></li>
+<?php endforeach;endif;?>
                             </ul>
                         </div><!-- /.category-filter -->
 
@@ -31,7 +30,7 @@
                                 <input type="text" class="price-slider" value="" >
 
                                 <span class="min-max">
-                    Price: $89 - $2899
+                    Price: ￥<?=$filter['filterPrice']['min_price']?> - ￥<?=$filter['filterPrice']['max_price'];?>
                 </span>
                                 <span class="filter-button">
                     <a href="#">Filter</a>
