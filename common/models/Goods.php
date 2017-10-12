@@ -369,4 +369,22 @@ class Goods extends \yii\db\ActiveRecord
         return $result;
     }
 
+    static function historyList($gids)
+    {
+        if(!empty($gids))
+        {
+            $query = self::find()
+                ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
+                ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE])
+                ->andWhere(['in','goods_id',$gids])
+                ->all();
+
+            if(!empty($query))
+            {
+                return self::disposeGoodsData($query);
+            }
+        }
+        return [];
+    }
+
 }

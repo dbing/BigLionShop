@@ -22,5 +22,15 @@ $(function () {
         });
     });
 
-
 });
+
+// ------------- Product page ---------------
+$(function () {
+    // 规格选择
+    $('.des_choice ul li').click(function () {
+        $(this).toggleClass('checked').siblings().removeClass('checked');
+
+    })
+
+
+})

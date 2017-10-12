@@ -66,4 +66,43 @@ class Tools
     {
         return yii\helpers\Url::to($params);
     }
+
+
+    /**
+     * 读取或存储历史
+     *
+     * @param string $gid
+     */
+    static function history($gid='')
+    {
+        $requestCookies = Yii::$app->request->cookies;
+        if(!empty($gid))
+        {
+            // 存储历史记录
+            if($requestCookies->has('gid'))
+            {
+                // 有记录
+                $gids = $requestCookies->getValue('gid');
+                array_unshift($gids,$gid);
+                $gids = array_unique($gids);
+                while(count($gids) > 12)
+                {
+                    array_pop($gids);
+                }
+                $responseCookies = Yii::$app->response->cookies;
+                $responseCookies->add(new yii\web\Cookie(['name'=>'gid','value'=>$gids]));
+            }
+            else
+            {
+                // 第一次存入
+                $responseCookies = Yii::$app->response->cookies;
+                $responseCookies->add(new yii\web\Cookie(['name'=>'gid','value'=>[$gid]]));
+            }
+        }
+        else
+        {
+            // 读取历史记录
+            return $requestCookies->getValue('gid');
+        }
+    }
 }
