@@ -330,5 +330,43 @@ class Goods extends \yii\db\ActiveRecord
         return ['goodsList'=>self::disposeGoodsData($goodsQuery),'pagination'=>$pagination];
     }
 
+    /**
+     * 查询商品详情
+     *
+     * @param $gid
+     * @return array
+     */
+    static function getGoodsInfo($gid)
+    {
+        $result = [];
+
+        $query = self::find()
+            ->select('goods_id,goods_name,goods_brief,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best,goods_desc')
+            ->where('goods_id=:gid',[':gid'=>$gid])
+            ->andWhere(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE])
+            ->one();
+
+        // 关联查询品牌
+        if(isset($query) && !empty($query))
+        {
+            $result = ArrayHelper::toArray($query);
+
+            $result['shop_price'] = Tools::formatMoney($result['shop_price']);
+            $result['market_price'] = Tools::formatMoney($result['market_price']);
+            $result['url'] = Tools::buildUrl(['product/index','gid'=>$result['goods_id']]);
+            $result['brand_name'] = $query->brand->brand_name;
+
+            // 关联查询相册
+            $result['galleries'] = (new GoodsGallery)->getGalleries($gid);
+
+            // 关联查询规格属性
+            $arrtibute = (new GoodsAttr)->getAttribute($gid);
+            $result['spec'] = isset($arrtibute['spec']) ? $arrtibute['spec'] : '';
+            $result['attr'] = isset($arrtibute['attr']) ? $arrtibute['attr'] : '';
+
+            // 关联查询评论
+        }
+        return $result;
+    }
 
 }
