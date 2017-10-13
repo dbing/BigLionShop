@@ -32,6 +32,11 @@ class Product extends \yii\db\ActiveRecord
         return '{{%product}}';
     }
 
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
+
     /**
      * @inheritdoc
      */

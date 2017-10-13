@@ -30,7 +30,62 @@ $(function () {
     $('.des_choice ul li').click(function () {
         $(this).toggleClass('checked').siblings().removeClass('checked');
 
-    })
+    });
+
+    // 加入购物车
+    $('#addto-cart').click(function () {
+        var num = $('input[name="quantity"]').val();
+        var gid = $(this).data('content');
+        var spec = [];
+        var specLen = $('.des_choice').length;
+        if(specLen > 0)
+        {
+            $('.checked').each(function (k,v) {
+
+                // console.log($(this).data('content'));
+                spec.push($(v).data('content'));
+            });
+
+            if(spec.length != specLen)
+            {
+                layer.msg('请选择规格.');
+                return null;
+            }
+
+            // 加入购物车(带规格)
+            addToCart(gid,num,spec);
+        }
+        else
+        {
+            // 加入购物车(无规格)
+            addToCart(gid,num,'')
+        }
+
+
+
+    });
+
+
+    function addToCart(gid,num,spec) {
+        var url = '/index.php?r=product/add-to-cart';
+        $.get(url,{'gid':gid,'num':num,'spec':spec},function (result) {
+            console.log(result);
+            if(result.code)
+            {
+                layer.confirm('是否立即支付？', {
+                    btn: ['果断支付','继续购物'] //按钮
+                }, function(){
+                    window.location.href = '/index.php?r=cart/index';
+                }, function(){
+
+                });
+            }
+            else
+            {
+                layer.msg(result.msg);
+            }
+        },'json')
+    }
 
 
 })

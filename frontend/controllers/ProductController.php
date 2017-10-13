@@ -4,8 +4,10 @@ namespace frontend\controllers;
 
 use common\helpers\Tools;
 use common\models\Goods;
+use frontend\models\Cart;
 use Yii;
 use common\models\Category;
+use yii\web\Response;
 
 class ProductController extends \yii\web\Controller
 {
@@ -39,5 +41,14 @@ class ProductController extends \yii\web\Controller
     }
 
 
+    public function actionAddToCart()
+    {
+        $gid = intval(Yii::$app->request->get('gid'));
+        $num = intval(Yii::$app->request->get('num',1));
+        $spec = empty(Yii::$app->request->get('spec','')) ? '' : json_encode(Yii::$app->request->get('spec',''));
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->data = Cart::addToCart($gid,$num,$spec);
+    }
 
 }

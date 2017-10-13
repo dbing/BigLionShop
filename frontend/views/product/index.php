@@ -88,7 +88,7 @@
                                 <a class="plus" href="#add"></a>
                             </form>
                         </div>
-                        <a id="addto-cart" href="cart.html" class="le-button huge">add to cart</a>
+                        <a id="addto-cart" data-content="<?=$goodsInfo['goods_id'];?>" href="javascript:void(0);" class="le-button huge">加入购物车</a>
                     </div><!-- /.qnt-holder -->
                 </div><!-- /.body -->
 
