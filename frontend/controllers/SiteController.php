@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Category;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -43,7 +44,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+//                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -91,8 +92,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('login', [
+            return $this->render('auth', [
                 'model' => $model,
+                'signupModel'      => new SignupForm()
             ]);
         }
     }
@@ -150,6 +152,12 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = 'navmain';
+
+        // 查询主导航
+        $navigation = Category::getNavigation();
+        $this->view->params['navigation'] = $navigation;
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -159,8 +167,9 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
-            'model' => $model,
+        return $this->render('auth', [
+            'signupModel' => $model,
+            'model'       =>new LoginForm()
         ]);
     }
 

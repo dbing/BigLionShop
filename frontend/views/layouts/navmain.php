@@ -87,21 +87,25 @@
 
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul class="right">
-                    <!-- 已登录 -->
-                    <li>您好 , 欢迎您回来 bing </li>
-                    <li><a href="authentication.html">我的订单</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-language">个人中心</a>
-                        <ul class="dropdown-menu" role="menu" >
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的关注</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">降价商品</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">消息</a></li>
-                        </ul>
-                    </li>
+                    <?php if(Yii::$app->user->isGuest): ?>
+                        <!-- 未登录 -->
+                        <li><a href="<?=\yii\helpers\Url::to(['site/signup']);?>">注册</a></li>
+                        <li><a href="<?=\yii\helpers\Url::to(['site/signup']);?>">登录</a></li>
+                    <?php else: ?>
+                        <!-- 已登录 -->
+                        <li>您好 , 欢迎您回来 <?=Yii::$app->user->identity->username;?> </li>
+                        <li><a href="<?=\yii\helpers\Url::to(['site/logout']);?>">安全退出</a></li>
+                        <li><a href="authentication.html">我的订单</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-language">个人中心</a>
+                            <ul class="dropdown-menu" role="menu" >
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的关注</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">降价商品</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">消息</a></li>
+                            </ul>
+                        </li>
+                    <?php endif;?>
 
-                    <!-- 未登录 -->
-                    <li><a href="authentication.html">注册</a></li>
-                    <li><a href="authentication.html">登录</a></li>
                 </ul>
             </div><!-- /.col -->
         </div><!-- /.container -->

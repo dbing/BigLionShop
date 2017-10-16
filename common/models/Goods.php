@@ -341,7 +341,7 @@ class Goods extends \yii\db\ActiveRecord
         $result = [];
 
         $query = self::find()
-            ->select('goods_id,goods_name,goods_brief,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best,goods_desc')
+            ->select('goods_id,cat_id,goods_name,goods_brief,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best,goods_desc')
             ->where('goods_id=:gid',[':gid'=>$gid])
             ->andWhere(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE])
             ->one();

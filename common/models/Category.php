@@ -171,7 +171,7 @@ class Category extends \yii\db\ActiveRecord
      * @param $cid
      * @return string
      */
-    static public function getBreadcrumb($cid)
+    static public function getBreadcrumb($cid,$trail='')
     {
         $parents = self::getParentsCategory($cid);
         $breadUrl = '<a href="'.Tools::buildUrl(['index/index']).'">首页 </a>';
@@ -180,7 +180,7 @@ class Category extends \yii\db\ActiveRecord
         {
             $breadUrl .= '&rsaquo; <a href="'.Tools::buildUrl(['category/index','cid'=>$catInfo['cat_id']]).'">'.$catInfo['cat_name'].' </a>';
         }
-        return $breadUrl;
+        return empty($trail) ? $breadUrl : $breadUrl . '&rsaquo; &nbsp;&nbsp;' . $trail;
     }
 
     /**

@@ -49,7 +49,7 @@ class Cart extends \yii\db\ActiveRecord
             [['goods_name'], 'string', 'max' => 120],
             [['attr_list'], 'string', 'max' => 45],
             [['goods_id'], 'exist', 'skipOnError' => true, 'targetClass' => Goods::className(), 'targetAttribute' => ['goods_id' => 'goods_id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'user_id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -82,10 +82,10 @@ class Cart extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
-    }
+//    public function getUser()
+//    {
+//        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+//    }
 
     public static function addToCart($gid,$num,$spec)
     {
@@ -93,16 +93,14 @@ class Cart extends \yii\db\ActiveRecord
         // $result = ['msg'=>'','code'=>1];
 
         // 假设用户已登录 UID = 1;
-        $userId = 1;
-
-        /**
-         * 1.先判断当前登录会员是否已加入该商品至购物车
-         * 2.Yes： 更新购买数量，（判断该商品【商品或货品】的库存是否满足购买量）
-         * 3.No：新增一条购买购买记录。
-         *      根据规格是否为空，判断购买的是商品还是货品，
-         *      规格为空：（商品）
-         *      规格不为空：（货品+商品）
-         */
+        if(Yii::$app->user->isGuest)
+        {
+            return ['msg'=>'请先登录后再操作.','code'=>0];
+        }
+        else
+        {
+            $userId = Yii::$app->user->getId();
+        }
 
         // 1.验证库存
         $info = self::getInfo($gid,$spec);

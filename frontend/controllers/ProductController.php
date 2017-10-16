@@ -26,6 +26,9 @@ class ProductController extends \yii\web\Controller
             return $this->goBack();
         }
 
+        // 查询面包屑
+        $this->view->params['breadcrumb'] = Category::getBreadcrumb($goodsInfo['cat_id'],$goodsInfo['goods_name']);
+
         // 查询主导航
         $navigation = Category::getNavigation();
         $this->view->params['navigation'] = $navigation;
