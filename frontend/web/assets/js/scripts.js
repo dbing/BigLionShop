@@ -311,7 +311,9 @@
         });
 
         // Quantity Spinner
-        $('.le-quantity a').click(function(e){
+        $(document).on('click','.le-quantity a',function (e) {
+
+        // $('.le-quantity a').click(function(e){
             e.preventDefault();
             var currentQty= $(this).parent().parent().find('input').val();
             if( $(this).hasClass('minus') && currentQty>0){

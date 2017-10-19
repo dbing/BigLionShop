@@ -2,8 +2,11 @@
 
 namespace frontend\models;
 
+use common\helpers\Tools;
 use common\models\Goods;
+use common\models\GoodsAttr;
 use common\models\Product;
+use common\models\UploadForm;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -193,4 +196,51 @@ class Cart extends \yii\db\ActiveRecord
         }
     }
 
+
+
+    static function getCartList()
+    {
+        $goodsAmount = 0;       // 商品总金额
+        $orderAmount = 0;       // 订单总金额
+        $shipFee = 0;           // 配送费用
+
+        $data = ['goodsList'=>[],'format_ship_fee'=>0,'format_order_amount'=>0,'format_goods_amount'=>0];     // 返回的购物车数据
+
+        $uid = Yii::$app->user->getId();
+
+        $carts = self::findAll(['user_id'=>$uid]);
+        if(!is_null($carts))
+        {
+            $upload = new UploadForm();
+            $goodsList = [];
+            foreach ($carts as $key=>$goods)
+            {
+                $tempGoods = ArrayHelper::toArray($goods);
+                $tempGoods['brand_name'] = $goods->goods->brand->brand_name;
+                $tempGoods['thumb'] = $upload->getDownloadUrl($goods->goods->goods_img,'catbest');
+
+                $tempGoods['format_goods_total'] = Tools::formatMoney($tempGoods['goods_price']*$tempGoods['buy_number']);
+                if(!empty($tempGoods['attr_list']))
+                {
+                    $tempGoods['spec'] = GoodsAttr::getFormatSpec($tempGoods['attr_list']);
+                }
+
+                $tempGoods['url'] = Tools::buildUrl(['product/index','gid'=>$goods['goods_id']]);
+                $goodsAmount += $tempGoods['goods_price']*$tempGoods['buy_number'];
+
+                $goodsList[] = $tempGoods;
+            }
+
+            // 配送费用
+            $shipFee = ($goodsAmount >= 88) ? 0 : 10;
+
+            // 订单费用
+            $orderAmount = $shipFee + $goodsAmount;
+            return ['goodsList'=>$goodsList,'format_ship_fee'=>Tools::formatMoney($shipFee),'format_order_amount'=>Tools::formatMoney($orderAmount),'format_goods_amount'=>Tools::formatMoney($goodsAmount)];
+        }
+        else
+        {
+            return $data;
+        }
+    }
 }

@@ -6,141 +6,52 @@
             <!-- ========================================= CONTENT ========================================= -->
             <div class="col-xs-12 col-md-9 items-holder no-margin">
 
+                <?php if(is_array($cart['goodsList'])&&!empty($cart['goodsList'])): foreach ($cart['goodsList'] as $goods):?>
                 <div class="row no-margin cart-item">
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <a href="#" class="thumb-holder">
-                            <img class="lazy" alt="" src="http://placehold.it/73x73" />
+                    <div class="col-xs-12 col-sm-1 no-margin">
+                        <a href="<?=$goods['url'];?>" class="thumb-holder">
+                            <img class="lazy" alt="" src="<?=$goods['thumb'];?>" />
                         </a>
                     </div>
 
-                    <div class="col-xs-12 col-sm-5 ">
+                    <div class="col-xs-12 col-sm-4 ">
                         <div class="title">
-                            <a href="#">white lumia 9001</a>
+                            <a href="<?=$goods['url'];?>"><?=$goods['goods_name'];?></a>
                         </div>
-                        <div class="brand">sony</div>
+                        <div class="brand"><?=$goods['brand_name'];?></div>
                     </div>
 
                     <div class="col-xs-12 col-sm-3 no-margin">
                         <div class="quantity">
                             <div class="le-quantity">
                                 <form>
-                                    <a class="minus" href="#reduce"></a>
-                                    <input name="quantity" readonly="readonly" type="text" value="1" />
-                                    <a class="plus" href="#add"></a>
+                                    <a class="minus cartchange" type="0" href="#reduce"></a>
+                                    <input name="quantity" readonly="readonly" type="text" value="<?=$goods['buy_number'];?>" data-content="<?=$goods['cart_id'];?>" />
+                                    <a class="plus cartchange" type="1" href="#add"></a>
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-2 no-margin">
-                        <div class="price">
-                            $2000.00
-                        </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </div><!-- /.cart-item -->
-
-                <div class="row no-margin cart-item">
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <a href="#" class="thumb-holder">
-                            <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                        </a>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-5">
                         <div class="title">
-                            <a href="#">white lumia 9001 </a>
-                        </div>
-                        <div class="brand">sony</div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-3 no-margin">
-                        <div class="quantity">
-                            <div class="le-quantity">
-                                <form>
-                                    <a class="minus" href="#reduce"></a>
-                                    <input name="quantity" readonly="readonly" type="text" value="1" />
-                                    <a class="plus" href="#add"></a>
-                                </form>
-                            </div>
+                            <?= isset($goods['spec']) ? $goods['spec'] : '无规格';?>
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-2 no-margin">
                         <div class="price">
-                            $2000.00
+                            <?=$goods['format_goods_total'];?>
                         </div>
-                        <a class="close-btn" href="#"></a>
+                        <a class="close-btn" href="javascript:deleteCart(<?=$goods['cart_id'];?>);"></a>
                     </div>
+
+
                 </div><!-- /.cart-item -->
+                <?php endforeach;else:?>
 
-                <div class="row no-margin cart-item">
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <a href="#" class="thumb-holder">
-                            <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                        </a>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-5">
-                        <div class="title">
-                            <a href="#">white lumia 9001 </a>
-                        </div>
-                        <div class="brand">sony</div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-3 no-margin">
-                        <div class="quantity">
-                            <div class="le-quantity">
-                                <form>
-                                    <a class="minus" href="#reduce"></a>
-                                    <input name="quantity" readonly="readonly" type="text" value="1" />
-                                    <a class="plus" href="#add"></a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <div class="price">
-                            $2000.00
-                        </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </div><!-- /.cart-item -->
-
-                <div class="row no-margin cart-item">
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <a href="#" class="thumb-holder">
-                            <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                        </a>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-5">
-                        <div class="title">
-                            <a href="#">white lumia 9001 </a>
-                        </div>
-                        <div class="brand">sony</div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-3 no-margin">
-                        <div class="quantity">
-                            <div class="le-quantity">
-                                <form>
-                                    <a class="minus" href="#reduce"></a>
-                                    <input name="quantity" readonly="readonly" type="text" value="1" />
-                                    <a class="plus" href="#add"></a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <div class="price">
-                            $2000.00
-                        </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </div><!-- /.cart-item -->
+                    <div class="row no-margin cart-item"><h2>购物车空空</h2></div>
+                <?php endif;?>
             </div>
             <!-- ========================================= CONTENT : END ========================================= -->
 
@@ -153,17 +64,17 @@
                         <ul class="tabled-data no-border inverse-bold">
                             <li>
                                 <label>商品总金额</label>
-                                <div class="value pull-right">$8434.00</div>
+                                <div class="value pull-right"><?=$cart['format_goods_amount'];?></div>
                             </li>
                             <li>
                                 <label>配送费</label>
-                                <div class="value pull-right">free shipping</div>
+                                <div class="value pull-right"><?=$cart['format_ship_fee'];?></div>
                             </li>
                         </ul>
                         <ul id="total-price" class="tabled-data inverse-bold no-border">
                             <li>
                                 <label>订单总金额</label>
-                                <div class="value pull-right">$8434.00</div>
+                                <div class="value pull-right"><?=$cart['format_order_amount'];?></div>
                             </li>
                         </ul>
                         <div class="buttons-holder">

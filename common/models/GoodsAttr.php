@@ -184,4 +184,38 @@ class GoodsAttr extends \yii\db\ActiveRecord
         return true;
     }
 
+
+    /**
+     * 查询购物车商品规格
+     *
+     * @param $attrList
+     * @return string
+     */
+    static public function getFormatSpec($attrList)
+    {
+
+        if(!empty($attrList))
+        {
+            $goodAttr = self::findAll(json_decode($attrList,true));
+
+            if(!is_null($goodAttr))
+            {
+                $spec = '';
+                foreach ($goodAttr as $key=>$value)
+                {
+                    $spec .= $value->attr->attr_name .':'.$value->attr_value.'<br>';
+                }
+                return $spec;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 }

@@ -87,5 +87,49 @@ $(function () {
         },'json')
     }
 
+});
 
-})
+// ------------- Cart page ---------------
+$(function () {
+
+    // 累加
+    $(document).on('click','.cartchange',function () {
+        var _this = $(this);
+        var type = _this.attr('type');
+        var num = _this.siblings('input[name="quantity"]').val();
+        var cid = _this.siblings('input[name="quantity"]').data('content');
+        console.log(num+"  "+cid);
+        var url = '/index.php?r=cart/change-num';
+        $.get(url,{'num':num,'cid':cid,'type':type},function (result) {
+            console.log(result);
+            if(result.code == 1)
+            {
+                $('#cart-page').remove();
+                $('#footer').before(result.data);
+            }
+            else
+            {
+                _this.siblings('input[name="quantity"]').val(parseInt(num)-1);
+                layer.msg(result.msg);
+            }
+        },'json')
+    });
+
+});
+
+function deleteCart(cid)
+{
+    var url = '/index.php?r=cart/delete';
+    $.get(url,{'cid':cid},function (result) {
+
+        if(result.code)
+        {
+            $('#cart-page').remove();
+            $('#footer').before(result.data);
+        }
+        else
+        {
+            layer.msg(result.msg);
+        }
+    },'json')
+}
