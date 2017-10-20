@@ -26,7 +26,6 @@ class CartController extends \yii\web\Controller
     {
         // 查询购物车商品
         $cart = Cart::getCartList();
-//        var_dump($cartList);
         return $this->render('index',['cart'=>$cart]);
     }
 
@@ -43,7 +42,9 @@ class CartController extends \yii\web\Controller
         {
             if($cart->delete())
             {
-                $data = $this->renderPartial('index',['cart'=>Cart::getCartList()]);
+                $cart = Cart::getCartList();
+                $data['navcart'] = $this->renderPartial('loadcart',['cart'=>$cart]);
+                $data['viewcart'] = $this->renderPartial('index',['cart'=>$cart]);
                 (new AjaxReturn(AjaxReturn::SUCCESS,'删除操作成功',$data))->send();
             }
             else
@@ -81,7 +82,9 @@ class CartController extends \yii\web\Controller
                 $cart->buy_number = $num;
                 if($cart->save())
                 {
-                    $data = $this->renderPartial('index',['cart'=>Cart::getCartList()]);
+                    $cart = Cart::getCartList();
+                    $data['navcart'] = $this->renderPartial('loadcart',['cart'=>$cart]);
+                    $data['viewcart'] = $this->renderPartial('index',['cart'=>$cart]);
                     (new AjaxReturn(AjaxReturn::SUCCESS,'操作成功',$data))->send();
                 }
                 else
@@ -95,6 +98,18 @@ class CartController extends \yii\web\Controller
             (new AjaxReturn(AjaxReturn::ERROR,'参数有误'))->send();
         }
 
+    }
+
+    /**
+     * 加载导航栏购物车
+     *
+     * @return string
+     */
+    public function actionLoadCart()
+    {
+        // 查询购物车商品
+        $cart = Cart::getCartList();
+        return $this->renderPartial('loadcart',['cart'=>$cart]);
     }
 
 

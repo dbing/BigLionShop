@@ -224,7 +224,7 @@ class Cart extends \yii\db\ActiveRecord
                 {
                     $tempGoods['spec'] = GoodsAttr::getFormatSpec($tempGoods['attr_list']);
                 }
-
+                $tempGoods['format_goods_price'] = Tools::formatMoney($tempGoods['goods_price']);
                 $tempGoods['url'] = Tools::buildUrl(['product/index','gid'=>$goods['goods_id']]);
                 $goodsAmount += $tempGoods['goods_price']*$tempGoods['buy_number'];
 

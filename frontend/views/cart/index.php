@@ -4,9 +4,10 @@
 <section id="cart-page">
         <div class="container">
             <!-- ========================================= CONTENT ========================================= -->
+            <?php if(is_array($cart['goodsList'])&&!empty($cart['goodsList'])): ?>
             <div class="col-xs-12 col-md-9 items-holder no-margin">
 
-                <?php if(is_array($cart['goodsList'])&&!empty($cart['goodsList'])): foreach ($cart['goodsList'] as $goods):?>
+                <?php foreach ($cart['goodsList'] as $goods):?>
                 <div class="row no-margin cart-item">
                     <div class="col-xs-12 col-sm-1 no-margin">
                         <a href="<?=$goods['url'];?>" class="thumb-holder">
@@ -48,10 +49,7 @@
 
 
                 </div><!-- /.cart-item -->
-                <?php endforeach;else:?>
-
-                    <div class="row no-margin cart-item"><h2>购物车空空</h2></div>
-                <?php endif;?>
+                <?php endforeach;?>
             </div>
             <!-- ========================================= CONTENT : END ========================================= -->
 
@@ -97,6 +95,12 @@
                 </div><!-- /.widget -->
             </div><!-- /.sidebar -->
 
+            <?php else: ?>
+            <div class="col-xs-12 col-md-12 items-holder no-margin">
+
+                <center><a href="/"><img src="/assets/images/null_cart.jpg" alt=""></a></center>
+            </div>
+            <?php endif;?>
             <!-- ========================================= SIDEBAR : END ========================================= -->
         </div>
 </section>
