@@ -7,84 +7,29 @@
         <div class="container">
             <div class="col-xs-12 no-margin">
 
-                <div class="billing-address">
-                    <h2 class="border h1">收货人信息</h2>
-                    <form>
-                        <div class="row field-row">
-                            <div class="col-xs-12 col-sm-6">
-                                <label>full name*</label>
-                                <input class="le-input" >
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <label>last name*</label>
-                                <input class="le-input" >
-                            </div>
-                        </div><!-- /.field-row -->
-
-                        <div class="row field-row">
-                            <div class="col-xs-12">
-                                <label>company name</label>
-                                <input class="le-input" >
-                            </div>
-                        </div><!-- /.field-row -->
-
-                        <div class="row field-row">
-                            <div class="col-xs-12 col-sm-6">
-                                <label>address*</label>
-                                <input class="le-input" data-placeholder="street address" >
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <label>&nbsp;</label>
-                                <input class="le-input" data-placeholder="town" >
-                            </div>
-                        </div><!-- /.field-row -->
-
-                        <div class="row field-row">
-                            <div class="col-xs-12 col-sm-4">
-                                <label>postcode / Zip*</label>
-                                <input class="le-input"  >
-                            </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <label>email address*</label>
-                                <input class="le-input" >
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4">
-                                <label>phone number*</label>
-                                <input class="le-input" >
-                            </div>
-                        </div><!-- /.field-row -->
-
-                        <div class="row field-row">
-                            <div id="create-account" class="col-xs-12">
-                                <input  class="le-checkbox big" type="checkbox"  />
-                                <a class="simple-link bold" href="#">Create Account?</a> - you will receive email with temporary generated password after login you need to change it.
-                            </div>
-                        </div><!-- /.field-row -->
-
-                    </form>
-                </div><!-- /.billing-address -->
-
-
                 <section id="shipping-address">
                     <h2 class="border h1">收货人信息</h2>
-                    <form>
 
-                        <div class="row field-row">
-                            <div class="col-xs-12">
-                                <input class="le-radio" type="radio" name="group2" value="cheque">
-                                <div class="radio-label bold "> Dingbing 万家创业园C区7203 100001 Itbing@Sina.Cn 13641131494</div>
-                            </div>
-                        </div><!-- /.field-row -->
-
-                        <div class="row field-row">
-                            <div class="col-xs-12">
-                                <input class="le-radio" type="radio" name="group2" value="cheque">
-                                <div class="radio-label bold "> Dingbing 万家创业园C区7203 100001 Itbing@Sina.Cn 13641131494</div>
-                            </div>
-                        </div><!-- /.field-row -->
-
-                    </form>
+                    <?php if(!empty($address)): foreach ($address as $value):?>
+                    <div class="row field-row">
+                        <div class="col-xs-12 col-sm-2">
+                            <input class="le-radio" type="radio" name="group2" value="cheque">
+                            <div class="radio-label bold "> <?=$value['address_name'];?> </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <div class="radio-label bold ">收货人： <?=$value['consignee'];?> </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="radio-label bold ">地址： <?=$value['region_name'].$value['address'];?> </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <div class="radio-label bold "> <?=$value['mobile'];?> </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <div class="radio-label bold "><a href="">修改</a>  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </div>
+                        </div>
+                    </div><!-- /.field-row -->
+                    <?php endforeach;endif;?>
 
                 </section><!-- /#shipping-address -->
 
@@ -92,50 +37,23 @@
                 <section id="your-order">
                     <h2 class="border h1">订单信息</h2>
                     <form>
+                        <?php if(is_array($cart['goodsList'])): foreach ($cart['goodsList'] as $goods): ?>
                         <div class="row no-margin order-item">
                             <div class="col-xs-12 col-sm-1 no-margin">
-                                <a href="#" class="qty">1 x</a>
+                                <a href="#" class="qty"><?=$goods['buy_number'];?> x</a>
                             </div>
 
                             <div class="col-xs-12 col-sm-9 ">
-                                <div class="title"><a href="#">white lumia 9001 </a></div>
-                                <div class="brand">sony</div>
+                                <div class="title"><a href="<?=$goods['url'];?>"><?=$goods['goods_name'];?> </a></div>
+                                <div class="brand"><?=$goods['brand_name'];?></div>
                             </div>
 
                             <div class="col-xs-12 col-sm-2 no-margin">
-                                <div class="price">$2000.00</div>
+                                <div class="price"><?=$goods['format_goods_price'];?></div>
                             </div>
                         </div><!-- /.order-item -->
+                        <?php endforeach;endif;?>
 
-                        <div class="row no-margin order-item">
-                            <div class="col-xs-12 col-sm-1 no-margin">
-                                <a href="#" class="qty">1 x</a>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-9 ">
-                                <div class="title"><a href="#">white lumia 9001 </a></div>
-                                <div class="brand">sony</div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-2 no-margin">
-                                <div class="price">$2000.00</div>
-                            </div>
-                        </div><!-- /.order-item -->
-
-                        <div class="row no-margin order-item">
-                            <div class="col-xs-12 col-sm-1 no-margin">
-                                <a href="#" class="qty">1 x</a>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-9 ">
-                                <div class="title"><a href="#">white lumia 9001 </a></div>
-                                <div class="brand">sony</div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-2 no-margin">
-                                <div class="price">$2000.00</div>
-                            </div>
-                        </div><!-- /.order-item -->
                     </form>
                 </section><!-- /#your-order -->
 
@@ -144,24 +62,27 @@
                         <div id="subtotal-holder">
                             <ul class="tabled-data inverse-bold no-border">
                                 <li>
-                                    <label>cart subtotal</label>
-                                    <div class="value ">$8434.00</div>
+                                    <label>商品总金额</label>
+                                    <div class="value "><?=$cart['format_goods_amount'];?></div>
                                 </li>
                                 <li>
-                                    <label>shipping</label>
+                                    <label>运费</label>
                                     <div class="value">
+                                        <?=$cart['format_ship_fee'];?>
+                                        <!--
                                         <div class="radio-group">
                                             <input class="le-radio" type="radio" name="group1" value="free"> <div class="radio-label bold">free shipping</div><br>
                                             <input class="le-radio" type="radio" name="group1" value="local" checked>  <div class="radio-label">local delivery<br><span class="bold">$15</span></div>
                                         </div>
+                                        -->
                                     </div>
                                 </li>
                             </ul><!-- /.tabled-data -->
 
                             <ul id="total-field" class="tabled-data inverse-bold ">
                                 <li>
-                                    <label>order total</label>
-                                    <div class="value">$8434.00</div>
+                                    <label>订单总金额</label>
+                                    <div class="value"><?=$cart['format_order_amount'];?></div>
                                 </li>
                             </ul><!-- /.tabled-data -->
 
@@ -171,22 +92,15 @@
 
                 <div id="payment-method-options">
                     <form>
+                        <?php if(is_array($paies) && !empty($paies)): foreach ($paies as $pay):?>
                         <div class="payment-method-option">
                             <input class="le-radio" type="radio" name="group2" value="Direct">
-                            <div class="radio-label bold ">Direct Bank Transfer<br>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum tempus elit, vestibulum vestibulum erat ornare id.</p>
+                            <div class="radio-label bold "><?=$pay['pay_name'];?><br>
+                                <p><?=$pay['pay_desc'];?></p>
                             </div>
                         </div><!-- /.payment-method-option -->
+                        <?php endforeach;endif;?>
 
-                        <div class="payment-method-option">
-                            <input class="le-radio" type="radio" name="group2" value="cheque">
-                            <div class="radio-label bold ">cheque payment</div>
-                        </div><!-- /.payment-method-option -->
-
-                        <div class="payment-method-option">
-                            <input class="le-radio" type="radio" name="group2" value="paypal">
-                            <div class="radio-label bold ">paypal system</div>
-                        </div><!-- /.payment-method-option -->
                     </form>
                 </div><!-- /#payment-method-options -->
 

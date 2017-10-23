@@ -197,7 +197,11 @@ class Cart extends \yii\db\ActiveRecord
     }
 
 
-
+    /**
+     * 获取当前登录用户的购物车信息
+     *
+     * @return array
+     */
     static function getCartList()
     {
         $goodsAmount = 0;       // 商品总金额
