@@ -65,5 +65,11 @@ class AjaxReturn
     }
 
 
+    public function returned()
+    {
+        return $this;
+    }
+
+
 
 }

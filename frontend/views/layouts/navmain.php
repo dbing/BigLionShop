@@ -8,6 +8,13 @@
  * @Time:   10:16
  */
 
+use frontend\models\Cart;
+
+
+// 查询购物车商品
+$cart = Cart::getCartList();
+$this->params['cart'] = $cart;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,85 +199,18 @@
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     <div class="basket-item-count">
-                                        <span class="count">0</span>
+                                        <span class="count"><?=count($this->params['cart']['goodsList'])?></span>
                                         <img src="assets/images/icon-cart.png" alt="" />
                                     </div>
 
                                     <div class="total-price-basket">
                                         <span class="lbl">your cart:</span>
                                         <span class="total-price">
-                        <span class="sign">￥</span><span class="value">0,00</span>
+                        <span class="sign"></span><span class="value"><?= $this->params['cart']['format_goods_amount']?></span>
                     </span>
                                     </div>
                                 </a>
 
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="basket-item">
-                                            <div class="row">
-                                                <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                                    <div class="thumb">
-                                                        <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-8 col-sm-8 no-margin">
-                                                    <div class="title">Blueberry</div>
-                                                    <div class="price">$270.00</div>
-                                                </div>
-                                            </div>
-                                            <a class="close-btn" href="#"></a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="basket-item">
-                                            <div class="row">
-                                                <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                                    <div class="thumb">
-                                                        <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-8 col-sm-8 no-margin">
-                                                    <div class="title">Blueberry</div>
-                                                    <div class="price">$270.00</div>
-                                                </div>
-                                            </div>
-                                            <a class="close-btn" href="#"></a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="basket-item">
-                                            <div class="row">
-                                                <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                                    <div class="thumb">
-                                                        <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-8 col-sm-8 no-margin">
-                                                    <div class="title">Blueberry</div>
-                                                    <div class="price">$270.00</div>
-                                                </div>
-                                            </div>
-                                            <a class="close-btn" href="#"></a>
-                                        </div>
-                                    </li>
-
-
-                                    <li class="checkout">
-                                        <div class="basket-item">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-6">
-                                                    <a href="cart.html" class="le-button inverse">View cart</a>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-6">
-                                                    <a href="checkout.html" class="le-button">Checkout</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                </ul>
                             </div><!-- /.basket -->
                         <?php endif; ?>
                     </div><!-- /.top-cart-holder -->

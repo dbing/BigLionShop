@@ -240,11 +240,30 @@ class Cart extends \yii\db\ActiveRecord
 
             // 订单费用
             $orderAmount = $shipFee + $goodsAmount;
-            return ['goodsList'=>$goodsList,'format_ship_fee'=>Tools::formatMoney($shipFee),'format_order_amount'=>Tools::formatMoney($orderAmount),'format_goods_amount'=>Tools::formatMoney($goodsAmount)];
+            return ['goodsList'             =>$goodsList,
+                    'format_ship_fee'       =>Tools::formatMoney($shipFee),
+                    'format_order_amount'   =>Tools::formatMoney($orderAmount),
+                    'format_goods_amount'   =>Tools::formatMoney($goodsAmount),
+                    'shipping_fee'          =>$shipFee,
+                    'order_amount'          =>$orderAmount,
+                    'goods_amount'          =>$goodsAmount
+            ];
         }
         else
         {
             return $data;
         }
+    }
+
+
+    /**
+     * 清空购物车
+     *
+     * @return int
+     */
+    static function clearAll()
+    {
+        $uid = Yii::$app->user->getId();
+        return self::deleteAll(['user_id'=>$uid]);
     }
 }

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%user_address}}".
@@ -101,6 +102,24 @@ class UserAddress extends \yii\db\ActiveRecord
                 $result[$key]['region_name'] = Region::getRegionName([$value['country'],$value['province'],$value['district'],$value['city']]);
             }
             return $result;
+        }
+    }
+
+    /**
+     * 查询收获地址信息
+     *
+     * @param $aid   主键
+     * @return array|null
+     */
+    static public function getInfo($aid)
+    {
+        if($address = self::findOne($aid))
+        {
+            return ArrayHelper::toArray($address);
+        }
+        else
+        {
+            return null;
         }
     }
 

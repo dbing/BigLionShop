@@ -13,7 +13,7 @@
                     <?php if(!empty($address)): foreach ($address as $value):?>
                     <div class="row field-row">
                         <div class="col-xs-12 col-sm-2">
-                            <input class="le-radio" type="radio" name="group2" value="cheque">
+                            <input class="le-radio" type="radio" name="address" value="<?=$value['address_id'];?>">
                             <div class="radio-label bold "> <?=$value['address_name'];?> </div>
                         </div>
                         <div class="col-xs-12 col-sm-2">
@@ -94,7 +94,7 @@
                     <form>
                         <?php if(is_array($paies) && !empty($paies)): foreach ($paies as $pay):?>
                         <div class="payment-method-option">
-                            <input class="le-radio" type="radio" name="group2" value="Direct">
+                            <input class="le-radio" type="radio" name="pay" value="<?=$pay['pay_id'];?>">
                             <div class="radio-label bold "><?=$pay['pay_name'];?><br>
                                 <p><?=$pay['pay_desc'];?></p>
                             </div>
@@ -105,7 +105,7 @@
                 </div><!-- /#payment-method-options -->
 
                 <div class="place-order-button">
-                    <button class="le-button big">提交订单</button>
+                    <button class="le-button big submit_order">提交订单</button>
                 </div><!-- /.place-order-button -->
 
             </div><!-- /.col -->

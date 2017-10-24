@@ -164,6 +164,47 @@ function deleteCart(cid)
     }, function(){
 
     });
-
-
 }
+
+// ------------- Order page ---------------
+$(function () {
+    $('.submit_order').click(function () {
+
+        var aid,pid;
+        // 验证是否选中 2处
+
+        aid = $('input[name="address"]:checked').val();
+        if(!aid)
+        {
+            layer.msg('必须选择一个收获地址');
+        }
+
+        pid = $('input[name="pay"]:checked').val();
+        console.log(pid);
+        if(!pid)
+        {
+            layer.msg('必须选择一种支付方式');
+        }
+
+        var url = '/index.php?r=order/order-down';
+        $.get(url,{'aid':aid,'pid':pid},function (result) {
+            if(result.code)
+            {
+                layer.confirm('您是否立即支付？', {
+                    btn: ['去支付','再看看'] //按钮
+                }, function(){
+                    layer.msg('的确很重要', {icon: 6});
+
+                }, function(){
+
+                });
+            }
+            else
+            {
+                layer.msg(result.msg,{icon: 5});
+            }
+        })
+
+
+    });
+});

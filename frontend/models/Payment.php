@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%payment}}".
@@ -59,5 +60,23 @@ class Payment extends \yii\db\ActiveRecord
     static function getPay()
     {
         return self::find()->where(['enabled'=>self::IS_ONLINE])->asArray()->all();
+    }
+
+    /**
+     * 查询支付详情
+     *
+     * @param $pid
+     * @return array|null
+     */
+    static function getPayInfo($pid)
+    {
+        if($pay = self::findOne($pid))
+        {
+            return ArrayHelper::toArray($pay);
+        }
+        else
+        {
+            return null;
+        }
     }
 }
