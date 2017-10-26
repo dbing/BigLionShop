@@ -649,7 +649,7 @@ $this->params['cart'] = $cart;
 <script src="assets/js/scripts.js"></script>
 
 <script src="assets/layer/layer.js"></script>
-<script src="assets/js/common.js"></script>
+<script src="assets/js/common.js?v=1.1"></script>
 
 <!-- <script src="http://w.sharethis.com/button/buttons.js"></script> -->
 <?php $this->endBody() ?>

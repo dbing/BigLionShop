@@ -193,7 +193,11 @@ $(function () {
                 layer.confirm('您是否立即支付？', {
                     btn: ['去支付','再看看'] //按钮
                 }, function(){
-                    layer.msg('的确很重要', {icon: 6});
+
+                    layer.msg('是否支付成功？', {
+                        time: 100000, //20s后自动关闭
+                        btn: ['已支付成功', '遇到支付问题']
+                    });
 
                 }, function(){
 
@@ -204,7 +208,35 @@ $(function () {
                 layer.msg(result.msg,{icon: 5});
             }
         })
+    });
 
+    /** 城市区联动 */
+    $('select.le-input').change(function () {
+        var _this = $(this);
+        var rid = _this.val();
+        var url = '/index.php?r=order/region';
+        if(rid == 0)
+        {
+            _this.parents('.col-xs-12').nextAll().find('select').html('<option>请选择...</option>');
+            return false;
+        }
+        $.get(url,{'rid':rid},function (result) {
+            console.log(result);
+            if(result.code)
+            {
+                var option = '<option>请选择...</option>';
+                $.each(result.data,function (k,v) {
+                    option += '<option value="'+k+'">'+v+'</option>';
+                });
 
+                _this.parents('.col-xs-12').nextAll().find('select').html('<option>请选择...</option>');
+                _this.parents('.col-xs-12').next().find('select').html(option);
+
+            }
+            else
+            {
+                layer.msg(result.msg);
+            }
+        },'json');
     });
 });

@@ -7,12 +7,24 @@
  */
 
 use \yii\widgets\ActiveForm;
+
+use yii\bootstrap\Alert;
+$error = Yii::$app->session->getFlash('error');
+
 ?>
 
 <!-- ========================================= CONTENT ========================================= -->
 
 <section id="checkout-page">
+
     <div class="container">
+        <?php if(isset($error)): echo Alert::widget([
+            'options' => [
+                'class' => 'alert-warning',
+            ],
+            'body' => $error,
+        ]); endif;?>
+
         <div class="col-xs-12 no-margin">
 
             <div class="billing-address">
@@ -39,27 +51,18 @@ use \yii\widgets\ActiveForm;
                     </div>
 
                     <div class="col-xs-12 col-sm-2">
-                        <?= $form->field($userAdd,'country')->dropDownList($region,['class'=>'le-input form-control','prompt'=>'请选择...'])->label('');?>
+                        <?= $form->field($userAdd,'country')->dropDownList($region,['class'=>'le-input form-control','prompt'=>'请选择...','value'=>0])->label('');?>
                     </div>
 
                     <div class="col-xs-12 col-sm-2">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                        <?= $form->field($userAdd,'province')->dropDownList([0=>'请选择...'],['class'=>'le-input form-control'])->label('');?>
                     </div>
 
                     <div class="col-xs-12 col-sm-2">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                        <?= $form->field($userAdd,'city')->dropDownList([0=>'请选择...'],['class'=>'le-input form-control'])->label('');?>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <?= $form->field($userAdd,'district')->dropDownList([0=>'请选择...'],['class'=>'le-input form-control'])->label('');?>
                     </div>
 
                 </div><!-- /.field-row -->
