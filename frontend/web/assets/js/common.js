@@ -1,4 +1,12 @@
 // 全站公共JS文件
+
+function buildUrl(param) {
+    var is_rewrite = true;
+    return is_rewrite ? '/'+param : '/index.php?r='+param;
+}
+
+
+
 // ------------- Index page ---------------
 $(function () {
 
@@ -7,7 +15,9 @@ $(function () {
         var _this = $(this);
         var type = _this.attr('datatype');
         var page = _this.attr('page');
-        var url = '/index.php?r=index/load-more';
+        var url = buildUrl('index/load-more');
+
+        //var url = '/index/load-more';
         $.get(url,{'type':type,'page':page},function (result) {
             console.log(result);
             if(result)
@@ -67,7 +77,8 @@ $(function () {
 
 
     function addToCart(gid,num,spec) {
-        var url = '/index.php?r=product/add-to-cart';
+        //var url = '/index.php?r=product/add-to-cart';
+        var url = buildUrl('product/add-to-cart');
         $.get(url,{'gid':gid,'num':num,'spec':spec},function (result) {
             console.log(result);
             if(result.code)
@@ -75,7 +86,7 @@ $(function () {
                 layer.confirm('是否立即支付？', {
                     btn: ['果断支付','继续购物'] //按钮
                 }, function(){
-                    window.location.href = '/index.php?r=cart/index';
+                    window.location.href = buildUrl('cart/index');
                 }, function(){
 
                 });
@@ -96,7 +107,8 @@ $(function () {
     $('.basket').click(function () {
         layer.load();
         var _this = $(this);
-        var url = '/index.php?r=cart/load-cart';
+        // var url = '/index.php?r=cart/load-cart';
+        var url = buildUrl('cart/load-cart');
         $.get(url,function (result) {
             layer.closeAll();
             _this.empty();
@@ -115,7 +127,8 @@ $(function () {
         var cid = _this.siblings('input[name="quantity"]').data('content');
         console.log(num+"  "+cid);
 
-        var url = '/index.php?r=cart/change-num';
+        // var url = '/index.php?r=cart/change-num';
+        var url = buildUrl('cart/change-num');
         if(num == 0 )
         {
             layer.msg('购买数量至少为一');
@@ -145,7 +158,8 @@ function deleteCart(cid)
     layer.confirm('您确认要删除吗？', {
         btn: ['确定','取消'] //按钮
     }, function(){
-        var url = '/index.php?r=cart/delete';
+        // var url = '/index.php?r=cart/delete';
+        var url = buildUrl('cart/delete');
         $.get(url,{'cid':cid},function (result) {
             if(result.code)
             {
@@ -186,7 +200,8 @@ $(function () {
             layer.msg('必须选择一种支付方式');
         }
 
-        var url = '/index.php?r=order/order-down';
+        // var url = '/index.php?r=order/order-down';
+        var url = buildUrl('order/order-down');
         $.get(url,{'aid':aid,'pid':pid},function (result) {
             if(result.code)
             {
@@ -214,14 +229,14 @@ $(function () {
     $('select.le-input').change(function () {
         var _this = $(this);
         var rid = _this.val();
-        var url = '/index.php?r=order/region';
+        // var url = '/index.php?r=order/region';
+        var url = buildUrl('order/region');
         if(rid == 0)
         {
             _this.parents('.col-xs-12').nextAll().find('select').html('<option>请选择...</option>');
             return false;
         }
         $.get(url,{'rid':rid},function (result) {
-            console.log(result);
             if(result.code)
             {
                 var option = '<option>请选择...</option>';
