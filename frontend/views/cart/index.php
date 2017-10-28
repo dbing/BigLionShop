@@ -76,8 +76,8 @@
                             </li>
                         </ul>
                         <div class="buttons-holder">
-                            <a class="le-button big" href="http://localhost/~ibrahim/themeforest/HTML/mediacenter/upload/PHP/checkout" >去结算</a>
-                            <a class="simple-link block" href="http://localhost/~ibrahim/themeforest/HTML/mediacenter/upload/PHP/home" >继续购买</a>
+                            <a class="le-button big" href="<?=\yii\helpers\Url::to(['order/checkout'])?>" >去结算</a>
+                            <a class="simple-link block" href="/" >继续购买</a>
                         </div>
                     </div>
                 </div><!-- /.widget -->
