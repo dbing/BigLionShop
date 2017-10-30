@@ -238,17 +238,14 @@ class OrderInfo extends \yii\db\ActiveRecord
         $order = self::findOne(['order_sn'=>$orderSn]);
         if(!is_null($order))
         {
-            if($order->pay_status == self::PAY_SUCCESS)
-            {
-                return true;
-            }
-            else
-            {
-                $order->pay_status = self::PAY_SUCCESS;
-                $order->money_paid = $totalFee;
-                $order->pay_time = time();
-                return $order->save();
-            }
+            // 判断该笔订单是否处理过
+            if($order->pay_status == self::PAY_SUCCESS) return true;
+
+            $order->pay_status = self::PAY_SUCCESS;
+            $order->money_paid = $totalFee;
+            $order->pay_time = time();
+            return $order->save();
+
         }
         else
         {

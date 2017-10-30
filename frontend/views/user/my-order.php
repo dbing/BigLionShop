@@ -9,15 +9,16 @@
 
 use yii\bootstrap\Alert;
 $alert = Yii::$app->session->getFlash('alert');
-var_dump($alert);
 
-echo Alert::widget([
-    'options' => [
-        'class' => 'alert-success',
-    ],
-    'body' => '<p class="text-center">恭喜您支付成功，订单：74378436262136！</p>',
-]);
-
+if(is_object($alert))
+{
+    echo Alert::widget([
+        'options' => [
+            'class' => $alert->code ? 'alert-success' : 'alert-danger',
+        ],
+        'body' => '<p class="text-center">'.$alert->msg.'</p>',
+    ]);
+}
 
 ?>
 <br>
