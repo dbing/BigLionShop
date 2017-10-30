@@ -47,6 +47,10 @@ use yii\base\Exception;
  */
 class OrderInfo extends \yii\db\ActiveRecord
 {
+    const PAY_SUCCESS = 1;
+    const PAY_ERROR = 0;
+
+
     /**
      * @inheritdoc
      */
@@ -202,7 +206,9 @@ class OrderInfo extends \yii\db\ActiveRecord
                 }
 
                 $transaction->commit();
-                return (new AjaxReturn(AjaxReturn::SUCCESS,'操作成功.'))->returned();
+                // $this->order_amount
+                $payUrl = Yii::$app->alipay->payUrl($this->order_sn,'必应商城订单',0.11,'必应商城的商品');
+                return (new AjaxReturn(AjaxReturn::SUCCESS,'操作成功.',['url'=>$payUrl]))->returned();
 
             }
             catch (Exception $e)
@@ -216,6 +222,37 @@ class OrderInfo extends \yii\db\ActiveRecord
         {
 
             return (new AjaxReturn(AjaxReturn::ERROR,$this->getFirstErrors()))->returned();
+        }
+    }
+
+
+    /**
+     * 跟新订单支付状态
+     *
+     * @param $orderSn
+     * @param $totalFee
+     * @return bool
+     */
+    static function updateOrder($orderSn,$totalFee)
+    {
+        $order = self::findOne(['order_sn'=>$orderSn]);
+        if(!is_null($order))
+        {
+            if($order->pay_status == self::PAY_SUCCESS)
+            {
+                return true;
+            }
+            else
+            {
+                $order->pay_status = self::PAY_SUCCESS;
+                $order->money_paid = $totalFee;
+                $order->pay_time = time();
+                return $order->save();
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 }

@@ -146,8 +146,51 @@ class OrderController extends \yii\web\Controller
 
     public function actionAlipay()
     {
+
+        $payUrl = Yii::$app->alipay->compose('go pay')->payUrl(time() . rand(10000,99999),'必应商城订单',0.01,'买了一个栗子');
+        var_dump($payUrl);
+        echo $payUrl;
+
+    }
+
+    /**
+     *  同步地址处理
+     */
+    public function actionReturn()
+    {
         $get = Yii::$app->request->get();
         var_dump($get);
+        // 验签
+        $result = Yii::$app->alipay->verifyReturn();
+
+//        if($result)
+//        {
+            if($get['trade_status'] == 'TRADE_SUCCESS' || $get['trade_status'] == 'TRADE_FINISHED')
+            {
+                // 判断该笔订单是否已经处理过
+
+                if(OrderInfo::updateOrder($get['out_trade_no'],$get['total_fee']))
+                {
+                    Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::SUCCESS,'恭喜您支付成功，订单：'.$get['out_trade_no'].'！'))->returned());
+                }
+                else
+                {
+                    Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::ERROR,'订单状态处理异常，请联系客服.'))->returned());
+                }
+
+            }
+            else
+            {
+                Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::ERROR,'订单支付失败,订单号：'.$get['out_trade_no']))->returned());
+            }
+//        }
+//        else
+//        {
+//            Yii::$app->session->setFlash('alert',['code'=>1,'msg'=>'xxx']);
+//
+//        }
+        Yii::$app->response->redirect(['user/my-order']);
+
     }
 
 }

@@ -208,6 +208,7 @@ $(function () {
                 layer.confirm('您是否立即支付？', {
                     btn: ['去支付','再看看'] //按钮
                 }, function(){
+                    window.open(result.data.url);
 
                     layer.msg('是否支付成功？', {
                         time: 100000, //20s后自动关闭
