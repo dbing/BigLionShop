@@ -256,3 +256,12 @@ $(function () {
         },'json');
     });
 });
+
+
+// ------------- myOrder page ---------------
+// tooltip 展示联系人地址
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+
+
+});

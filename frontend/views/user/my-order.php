@@ -21,6 +21,21 @@ if(is_object($alert))
 }
 
 ?>
+
+<style>
+        /*表格列内容居中*/
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle!important;
+    }
+    /*物流弹出层样式定制*/
+    body .demo-class .layui-layer-title{background:#E74C3C; color:#fff; border: none;}
+    body .demo-class .layui-layer-btn{border-top:1px solid #E9E7E7}
+    body .demo-class .layui-layer-btn a{background:#333;}
+    body .demo-class .layui-layer-btn .layui-layer-btn1{background:#999;}
+</style>
+
+
 <br>
 <div class="container">
     <div class="col-xs-12 col-sm-3 no-margin sidebar narrow">
@@ -95,52 +110,39 @@ if(is_object($alert))
                 </thead>
                 <tbody>
                 <!-- 单个订单开始处 -->
+                <?php if(is_array($orderList) && !empty($orderList)): foreach($orderList as $order):?>
                 <tr>
                     <td>
                         <table class="table">
                             <!-- 订单详情头信息 -->
                             <thead>
                             <tr>
-                                <th>下单时间：2017-08-21 23:13:49</th>
-                                <th>订单号： 60395972701</th>
+                                <th>下单时间：<?=date('Y-m-d H:i:s',$order['create_time']);?></th>
+                                <th>订单号： <?=$order['order_sn'];?></th>
                             </tr>
                             </thead>
                             <!-- 订单商品 -->
                             <tbody>
+                            <?php if(is_array($order['order_goods']) && !empty($order['order_goods'])): foreach($order['order_goods'] as $goods):?>
                             <tr>
-                                <td style="text-align:left;">
-                                    <img src="assets/images/products/gallery-thumb-01.jpg" alt="..." class="pull-left" class="img-thumbnail">
-                                    <a href="#" class="pull-left" style="width:250px;margin-left:5px;">新美心（maxin ）M3无线鼠标键盘M3无线鼠标键盘</a>
+                                <td>
+                                    <img src="<?=$goods['mini'];?>" alt="<?=$goods['goods_name'];?>" class="pull-left" class="img-thumbnail">
+                                    <a href="<?=$goods['url'];?>" style="width:180px;"><?=$goods['goods_name'];?></a>
 
                                 </td>
-                                <td>&#935;2</td>
+                                <td>&#935;<?=$goods['buy_number'];?></td>
                             </tr>
-                            <tr>
-                                <td style="text-align:left;">
-                                    <img src="assets/images/products/gallery-thumb-01.jpg" alt="..." class="pull-left" class="img-thumbnail">
-                                    <a href="#" class="pull-left" style="width:250px;margin-left:5px;">新美心（maxin ）M3无线鼠标键盘M3无线鼠标键盘</a>
-
-                                </td>
-                                <td>&#935;1</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:left;">
-                                    <img src="assets/images/products/gallery-thumb-01.jpg" alt="..." class="pull-left" class="img-thumbnail">
-                                    <a href="#" class="pull-left" style="width:250px;margin-left:5px;">新美心（maxin ）M3无线鼠标键盘M3无线鼠标键盘</a>
-
-                                </td>
-                                <td>&#935;1</td>
-                            </tr>
+                            <?php endforeach;endif;?>
                             </tbody>
                         </table>
                     </td>
                     <td>
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="" data-toggle="tooltip" data-placement="left" title="丁冰 13641131494 北京昌平区六环以内沙河镇 万家创业园 C区 7203">Mark</a>
+                        <a href="" data-toggle="tooltip" data-placement="left" title="<?=$order['consignee'].$order['mobile'].$order['region'].$order['address'];?>"><?=$order['user_name'];?></a>
                     </td>
                     <td>
-                        <p class="text-center">总额 ¥1490.00</p>
-                        <p class="text-center">在线支付<br>(支付宝)</p>
+                        <p class="text-center">总额 <?=$order['format_order_amount'];?></p>
+                        <p class="text-center">在线支付<br>(<?=$order['pay_name'];?>)</p>
                     </td>
                     <td>
                         <div class="center-block">
@@ -160,57 +162,10 @@ if(is_object($alert))
                         </div>
                     </td>
                 </tr>
+                <?php endforeach;endif;?>
                 <!-- 单个订单结束处 -->
 
-                <!-- 单个订单开始处 -->
-                <tr>
-                    <td>
-                        <table class="table">
-                            <!-- 订单详情头信息 -->
-                            <thead>
-                            <tr>
-                                <th>下单时间：2017-08-21 23:13:49</th>
-                                <th>订单号： 60395972701</th>
-                            </tr>
-                            </thead>
-                            <!-- 订单商品 -->
-                            <tbody>
-                            <tr>
-                                <td style="text-align:left;">
-                                    <img src="assets/images/products/gallery-thumb-01.jpg" alt="..." class="pull-left" class="img-thumbnail">
-                                    <a href="#" class="pull-left" style="width:250px;margin-left:5px;">新美心（maxin ）M3无线鼠标键盘M3无线鼠标键盘</a>
 
-                                </td>
-                                <td>&#935;2</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:left;">
-                                    <img src="assets/images/products/gallery-thumb-01.jpg" alt="..." class="pull-left" class="img-thumbnail">
-                                    <a href="#" class="pull-left" style="width:250px;margin-left:5px;">新美心（maxin ）M3无线鼠标键盘M3无线鼠标键盘</a>
-
-                                </td>
-                                <td>&#935;1</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <a href="" data-toggle="tooltip" data-placement="left" title="丁冰 13641131494 北京昌平区六环以内沙河镇 万家创业园 C区 7203">Mark</a>
-                    </td>
-                    <td>
-                        <p class="text-center">总额 ¥1490.00</p>
-                        <p class="text-center">在线支付<br>(支付宝)</p>
-                    </td>
-                    <td>
-                        <div class="center-block">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <span class="label label-default">已关闭</span><br>
-                    </td>
-                    <td><a href="">评价</a></td>
-                </tr>
-                <!-- 单个订单结束处 -->
                 </tbody>
             </table>
         </div> <!-- /.row -->
@@ -219,3 +174,44 @@ if(is_object($alert))
 
 </div><!-- /.container -->
 </div><!-- /.single-product -->
+
+
+<script>
+
+
+    // 查询物流
+    function shipping()
+    {
+        // 物流弹窗
+        layer.open({
+            title:'物流信息',
+            type: 1,
+            skin: 'demo-class', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: '<ul class="text-left" style="padding:10px;"><b>中通快递：458157653582</b>'
+            +'<li>快件已从 深圳中心 发出2017-10-14 02:32:35</li>'
+            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
+            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
+            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
+            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li></ul>'
+        });
+    }
+
+    // 确认收货提示层
+    function confirmRece()
+    {
+
+        layer.confirm('您是确定要这么做吗？', {
+            btn: ['确定','再想想'] //按钮
+        }, function(){
+            layer.msg('操作成功.', {icon: 1});
+        }, function(){
+            layer.msg('哈哈，小贼再给你一次机会', {
+                time: 20000, //20s后自动关闭
+                btn: ['明白了', '知道了']
+            });
+        });
+    }
+</script>

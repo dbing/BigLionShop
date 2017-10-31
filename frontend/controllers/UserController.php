@@ -10,6 +10,7 @@
 namespace frontend\controllers;
 
 
+use common\models\OrderInfo;
 use frontend\models\Cart;
 use Yii;
 
@@ -38,7 +39,8 @@ class UserController extends \yii\web\Controller
 
     public function actionMyOrder()
     {
-        return $this->render('my-order');
+        $orderlist = OrderInfo::getMyOrder($this->userId);
+        return $this->render('my-order',['orderList'=>$orderlist]);
     }
 
 

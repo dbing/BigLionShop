@@ -35,7 +35,7 @@ class OrderGoods extends \yii\db\ActiveRecord
     {
         return [
             [['order_id'], 'required'],
-            [['product_id', 'buy_number', 'order_id'], 'integer'],
+            [['product_id', 'buy_number', 'order_id','goods_id'], 'integer'],
             [['goods_price'], 'number'],
             [['goods_name'], 'string', 'max' => 120],
             [['attr_list'], 'string', 'max' => 45],
@@ -67,6 +67,14 @@ class OrderGoods extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(OrderInfo::className(), ['order_id' => 'order_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGoods()
+    {
+        return $this->hasOne(Goods::className(), ['goods_id' => 'goods_id']);
     }
 
     /**

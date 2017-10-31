@@ -2,10 +2,13 @@
 
 namespace common\models;
 
+use common\helpers\Tools;
 use frontend\components\AjaxReturn;
+use frontend\models\Region;
 use frontend\models\User;
 use Yii;
 use yii\base\Exception;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -133,6 +136,7 @@ class OrderInfo extends \yii\db\ActiveRecord
         return $this->hasMany(OrderGoods::className(), ['order_id' => 'order_id']);
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -251,5 +255,56 @@ class OrderInfo extends \yii\db\ActiveRecord
         {
             return false;
         }
+    }
+
+
+    /**
+     * 查询我的订单列表
+     *
+     * @param $userId
+     * @return array
+     */
+    static function getMyOrder($userId)
+    {
+        $result = [];
+        $myOrderList = self::findAll(['user_id'=>$userId]);
+        //var_dump($myOrderList);
+        if(!is_null($myOrderList))
+        {
+            $up = new UploadForm();
+            foreach ($myOrderList as $key=>$order)
+            {
+                $result[$key] = ArrayHelper::toArray($order);
+                // 处理地区
+                $result[$key]['region'] = Region::getRegionName([$order['country'],$order['province'],$order['city'],$order['district']]);
+                // 处理金额
+                $result[$key]['format_order_amount'] = Tools::formatMoney($order['order_amount']);
+                // 查询会员名
+                $result[$key]['user_name'] = $order->user->username;
+                // 查询订单商品
+                $temp = $order->orderGoods;
+
+                if(is_array($temp) && !empty($temp))
+                {
+                    $orderGoods = [];
+                    foreach ($temp as $k=>$v)
+                    {
+                        $orderGoods[$k]['goods_name'] = $v->goods_name;
+                        $orderGoods[$k]['buy_number'] = $v->buy_number;
+                        $orderGoods[$k]['url'] = Tools::buildUrl(['product/index',$v->goods_id]);
+
+                        if(isset($v->goods->goods_img) && !empty($v->goods->goods_img))
+                        {
+                            $orderGoods[$k]['mini'] = $up->getDownloadUrl($v->goods->goods_img,'mini');
+
+                        }
+                    }
+                }
+                $result[$key]['order_goods'] = $orderGoods;
+
+            }
+        }
+
+        return $result;
     }
 }
