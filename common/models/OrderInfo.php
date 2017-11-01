@@ -8,6 +8,7 @@ use frontend\models\Region;
 use frontend\models\User;
 use Yii;
 use yii\base\Exception;
+use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 
 
@@ -50,8 +51,20 @@ use yii\helpers\ArrayHelper;
  */
 class OrderInfo extends \yii\db\ActiveRecord
 {
+    const ORDER_UNCONFIRM = 0;  //
+    const ORDER_CONFIRM = 1;
+    const ORDER_FINISH = 2;
+    const ORDER_CANCEL = 3;
+    const ORDER_BRACE = 4;
+    const ORDER_RETURN = 5;
+
     const PAY_SUCCESS = 1;
     const PAY_ERROR = 0;
+
+    const SHIP_UNSHIP = 0;
+    const SHIP_SHIPED = 1;
+    const SHIP_SINGNED = 2;
+
 
 
     /**
@@ -306,5 +319,26 @@ class OrderInfo extends \yii\db\ActiveRecord
         }
 
         return $result;
+    }
+
+
+    /**
+     * 查询后台订单列表
+     *
+     * @return array
+     */
+    static function getOrderList()
+    {
+        $query = self::find();
+        $page = new Pagination(['totalCount'=>$query->count(),'defaultPageSize'=>Yii::$app->params['pageSize']]);
+        
+        $orderList = $query->select('order_id,order_sn,order_status,pay_status,consignee,shipping_status,pay_name,order_amount,create_time')
+            ->asArray()
+            ->orderBy('order_id DESC')
+            ->offset($page->offset)
+            ->limit($page->limit)
+            ->all();
+
+        return ['page'=>$page,'orderList'=>$orderList];
     }
 }

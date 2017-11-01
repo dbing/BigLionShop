@@ -228,7 +228,7 @@ use \yii\helpers\Html;
                 <i class="icon-chevron-down"></i>
             </a>
             <ul class="submenu">
-                <li><a href="user-list.html">订单列表</a></li>
+                <li><a href="<?= Url::to(['order/index']);?>">订单列表</a></li>
                 <li><a href="new-user.html">发货单列表</a></li>
             </ul>
         </li>
