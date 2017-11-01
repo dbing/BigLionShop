@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use backend\models\OrderAction;
+use backend\models\Shipping;
 use common\helpers\Tools;
 use frontend\components\AjaxReturn;
 use frontend\models\Region;
@@ -51,6 +53,8 @@ use yii\helpers\ArrayHelper;
  */
 class OrderInfo extends \yii\db\ActiveRecord
 {
+    public $goods;
+
     const ORDER_UNCONFIRM = 0;  //
     const ORDER_CONFIRM = 1;
     const ORDER_FINISH = 2;
@@ -87,10 +91,11 @@ class OrderInfo extends \yii\db\ActiveRecord
             [['order_sn', 'mobile'], 'string', 'max' => 20],
             [['message', 'address'], 'string', 'max' => 120],
             [['pay_name', 'shipping_name'], 'string', 'max' => 60],
+            [['remarks'], 'string', 'max' => 2],
             [['consignee', 'invoice_no'], 'string', 'max' => 45],
             [['zipcode'], 'string', 'max' => 6],
             [['order_sn'], 'unique'],
-//            [['shipping_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shipping::className(), 'targetAttribute' => ['shipping_id' => 'shipping_id']],
+            [['shipping_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shipping::className(), 'targetAttribute' => ['shipping_id' => 'shipping_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
 
@@ -149,6 +154,16 @@ class OrderInfo extends \yii\db\ActiveRecord
         return $this->hasMany(OrderGoods::className(), ['order_id' => 'order_id']);
     }
 
+    /**
+     * 订单操作日志
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAction()
+    {
+
+        return $this->hasMany(OrderAction::className(),['order_id'=>'order_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -340,5 +355,41 @@ class OrderInfo extends \yii\db\ActiveRecord
             ->all();
 
         return ['page'=>$page,'orderList'=>$orderList];
+    }
+
+    /**
+     * 查询订单详情
+     *
+     * @param $id
+     * @return array|null
+     */
+    static function getOrderInfo($id)
+    {
+        $result = [];
+        $info = self::findOne($id);
+
+        if(!is_null($info))
+        {
+            $result = ArrayHelper::toArray($info);
+            $result['address'] = Region::getRegionName([$info['country'],$info['province'],$info['city'],$info['district']]) . $info['address'];
+            $tempGoods = ArrayHelper::toArray($info->orderGoods);
+            if(!is_null($tempGoods))
+            {
+                foreach ($tempGoods as $key=>$goods)
+                {
+                    if(!empty($goods['attr_list']))
+                    {
+                        $tempGoods[$key]['spec'] = GoodsAttr::getFormatSpec($goods['attr_list']);
+                    }
+                }
+            }
+            $result['goods'] = $tempGoods;
+            $result['action'] = ArrayHelper::toArray($info->action);
+            return $result;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

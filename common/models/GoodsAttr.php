@@ -186,7 +186,7 @@ class GoodsAttr extends \yii\db\ActiveRecord
 
 
     /**
-     * 查询购物车商品规格
+     * 查询商品规格
      *
      * @param $attrList
      * @return string

@@ -65,8 +65,8 @@ use common\models\OrderInfo;
                     <tr class="first">
                         <td>
 
-                            <a href="" class="name"><?=$order['order_sn'];?></a>
-                            <span class="subtext">订单留言xxx</span>
+                            <a href="<?= Url::to(['order/detail','oid'=>$order['order_id']]);?>" class="name"><?=$order['order_sn'];?></a>
+                            <!--<span class="subtext">订单留言：</span>-->
                         </td>
                         <td>
                             <?=$order['consignee'];?>
@@ -106,15 +106,12 @@ use common\models\OrderInfo;
                             <?=date('Y/m/d H:i:s',$order['create_time']);?>
                         </td>
                         <td class="align-right">
-                            <a href="<?= Url::to(['order/detail']);?>">查看</a> |
+                            <a href="<?= Url::to(['order/detail','oid'=>$order['order_id']]);?>">查看</a> |
                             <a href="#">回收站</a>
                         </td>
                     </tr>
                     <?php endforeach;endif;?>
                     <!-- row -->
-
-
-
 
                     </tbody>
                 </table>

@@ -11,27 +11,38 @@
                 <h3>添加发货单号</h3>
             </div>
 
+            <?= $this->render('/common/message');?>
+
             <div class="row-fluid form-wrapper">
                 <!-- left column -->
                 <div class="span9 with-sidebar">
                     <div class="container">
-                        <form class="new_user_form inline-input" />
+                        <!--<form class="new_user_form inline-input" />-->
+                        <?= \yii\helpers\Html::beginForm(['order/ship','oid'=>$oid],'post',['class'=>'new_user_form inline-input']);?>
+
+                        <div class="span12 field-box">
+                            <label>快递公司:</label>
+                            <?= \yii\helpers\Html::dropDownList('shipping_id',0,$shipList);?>
+                        </div>
+
                         <div class="span12 field-box">
                             <label>发货单:</label>
-                            <input class="span9" type="text" />
+                            <?= \yii\helpers\Html::textInput('invoice_no','',['class'=>'span9']);?>
                         </div>
 
                         <div class="span12 field-box textarea">
                             <label>管理员备注:</label>
-                            <textarea class="span9"></textarea>
+                            <?= \yii\helpers\Html::textarea('remarks','',['class'=>'span9']);?>
                             <span class="charactersleft">剩余90个字符。字段限制在254个字符</span>
                         </div>
                         <div class="span11 field-box actions">
-                            <input type="button" class="btn-glow primary" value="确认发货" />
+                            <?= \yii\helpers\Html::submitButton('确认发货',['class'=>'btn-glow primary']);?>
                             <span>OR</span>
                             <input type="reset" value="Cancel" class="reset" />
                         </div>
-                        </form>
+                        <?= \yii\helpers\Html::errorSummary($order);?>
+
+                        <?= \yii\helpers\Html::endForm();?>
                     </div>
                 </div>
 
