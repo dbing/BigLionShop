@@ -7,19 +7,12 @@ use common\models\OrderInfo;
 <!-- main container -->
 <div class="content">
 
-    <!-- settings changer -->
-    <div class="skins-nav">
-        <a href="#" class="skin first_nav selected">
-            <span class="icon"></span><span class="text">Default</span>
-        </a>
-        <a href="#" class="skin second_nav" data-file="css/skins/dark.css">
-            <span class="icon"></span><span class="text">Dark skin</span>
-        </a>
-    </div>
 
     <div class="container-fluid">
 
         <div id="pad-wrapper">
+            <?= $this->render('/common/message');?>
+
             <div class="row-fluid section btns">
                 <!-- flat buttons -->
                 <!-- these styles are located in css/elements.css -->
@@ -165,12 +158,15 @@ use common\models\OrderInfo;
 
                     </table>
                 </div>
-                <div class="span3 pull-right">
-                    <a class="btn-flat">取消订单</a>
+                <div class="span4 pull-right">
+                    <a href="<?=\yii\helpers\Url::to(['order/confirm','oid'=>$orderInfo['order_id']])?>" class="btn-flat">确认订单</a>
+
+                    <a href="<?=\yii\helpers\Url::to(['order/cancel','oid'=>$orderInfo['order_id']])?>" class="btn-flat">取消订单</a>
 
                     <a href="<?=\yii\helpers\Url::to(['order/ship','oid'=>$orderInfo['order_id']])?>" class="btn-flat">去发货</a>
 
-                    <a class="btn-flat">支付</a>
+                    <a href="<?=\yii\helpers\Url::to(['order/pay','oid'=>$orderInfo['order_id']])?>" class="btn-flat">支付</a>
+
                 </div>
             </div>
             <div class="separator">
