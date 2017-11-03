@@ -295,7 +295,8 @@ class OrderInfo extends \yii\db\ActiveRecord
     static function getMyOrder($userId)
     {
         $result = [];
-        $myOrderList = self::findAll(['user_id'=>$userId]);
+
+        $myOrderList = self::find()->where(['user_id'=>$userId])->orderBy('order_id DESC')->all();
         //var_dump($myOrderList);
         if(!is_null($myOrderList))
         {

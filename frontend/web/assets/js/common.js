@@ -264,4 +264,38 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
 
+    $('.query-express').click(function () {
+        var no = $(this).attr('data');
+        var ship = $(this).attr('ship');
+        var url = buildUrl('user/express');
+        $.get(url,{'no':no},function (result) {
+            console.log(result);
+
+            if(result.status == '200')
+            {
+                var html = '<ul class="text-left" style="padding:10px;"><b>'+ship+'：'+no+'</b>';
+                $.each(result.data,function (k,v) {
+                   html += '<li><b>'+v.time + '</b><br>'+ v.context+'</li>';
+                });
+                html += '</ul>';
+
+                // 物流弹窗
+                layer.open({
+                    title:'物流信息',
+                    maxWidth:480,
+                    type: 1,
+                    skin: 'demo-class', //样式类名
+                    closeBtn: 0, //不显示关闭按钮
+                    anim: 2,
+                    shadeClose: true, //开启遮罩关闭
+                    content: html
+                });
+            }
+            else
+            {
+                layer.msg('查询异常，请稍后重试.');
+            }
+        },'json')
+    });
+
 });

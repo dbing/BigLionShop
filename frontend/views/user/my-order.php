@@ -6,6 +6,7 @@
  *
  */
 
+use common\models\OrderInfo;
 
 use yii\bootstrap\Alert;
 $alert = Yii::$app->session->getFlash('alert');
@@ -146,24 +147,55 @@ if(is_object($alert))
                     </td>
                     <td>
                         <p class="text-center">总额 <?=$order['format_order_amount'];?></p>
-                        <p class="text-center">在线支付<br>(<?=$order['pay_name'];?>)</p>
+                        <p class="text-center">(<?=$order['pay_name'];?>)</p>
+                    </td>
+                    <td>
+                        <?php if($order['shipping_status'] == OrderInfo::SHIP_SHIPED):?>
+                        <div class="center-block">
+                            <a href="javascript:void(0);" ship="<?=$order['shipping_name'];?>" data="<?=$order['invoice_no'];?>" class="query-express" >查看物流</a>
+                        </div>
+                        <?php endif;?>
+
+                        <?php if($order['pay_status'] == OrderInfo::PAY_ERROR):?>
+                            <span class="label label-default">未支付</span><hr>
+                        <?php elseif($order['pay_status'] == OrderInfo::PAY_SUCCESS):?>
+                            <span class="label label-success">已支付</span><hr>
+                        <?php endif;?>
+
+                        <?php if($order['order_status'] == OrderInfo::ORDER_FINISH):?>
+                        <span class="label label-success">已完成</span><hr>
+                        <?php elseif($order['order_status'] == OrderInfo::ORDER_CANCEL):?>
+                            <span class="label label-default">已取消</span><hr>
+                        <?php elseif($order['order_status'] == OrderInfo::ORDER_UNCONFIRM):?>
+                            <span class="label label-warning">待确认</span><hr>
+                        <?php elseif($order['order_status'] == OrderInfo::ORDER_CONFIRM):?>
+                            <span class="label label-success">已确认</span><hr>
+                        <?php elseif($order['order_status'] == OrderInfo::ORDER_BRACE):?>
+                            <span class="label label-danger">已作废</span><hr>
+                        <?php endif;?>
+
                     </td>
                     <td>
                         <div class="center-block">
                             <a href="#">订单详情</a>
                         </div>
-                        <div class="center-block">
-                            <a href="javascript:shipping();" >查看物流</a>
-                        </div>
-                        <span class="label label-success">已完成</span><br>
-                    </td>
-                    <td>
+                        <?php if($order['order_status'] == OrderInfo::ORDER_UNCONFIRM):?>
                         <div class="center-block">
                             <a href="javascript:confirmRece();">取消订单</a>
                         </div>
+                        <?php endif;?>
+
+                        <?php if($order['shipping_status'] == OrderInfo::SHIP_SHIPED):?>
                         <div class="center-block">
                             <a href="javascript:confirmRece();">确认收货</a>
                         </div>
+                        <?php endif;?>
+
+                        <?php if($order['shipping_status'] == OrderInfo::SHIP_SINGNED):?>
+                        <div class="center-block">
+                            <a href="#">评价</a>
+                        </div>
+                        <?php endif;?>
                     </td>
                 </tr>
                 <?php endforeach;endif;?>
@@ -183,25 +215,7 @@ if(is_object($alert))
 <script>
 
 
-    // 查询物流
-    function shipping()
-    {
-        // 物流弹窗
-        layer.open({
-            title:'物流信息',
-            type: 1,
-            skin: 'demo-class', //样式类名
-            closeBtn: 0, //不显示关闭按钮
-            anim: 2,
-            shadeClose: true, //开启遮罩关闭
-            content: '<ul class="text-left" style="padding:10px;"><b>中通快递：458157653582</b>'
-            +'<li>快件已从 深圳中心 发出2017-10-14 02:32:35</li>'
-            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
-            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
-            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li>'
-            +'<li>快件到达 深圳中心2017-10-14 02:30:14</li></ul>'
-        });
-    }
+
 
     // 确认收货提示层
     function confirmRece()

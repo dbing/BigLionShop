@@ -11,8 +11,10 @@ namespace frontend\controllers;
 
 
 use common\models\OrderInfo;
+use dzer\express\Express;
 use frontend\models\Cart;
 use Yii;
+use yii\web\Response;
 
 class UserController extends \yii\web\Controller
 {
@@ -41,6 +43,13 @@ class UserController extends \yii\web\Controller
     {
         $orderlist = OrderInfo::getMyOrder($this->userId);
         return $this->render('my-order',['orderList'=>$orderlist]);
+    }
+
+
+    public function actionExpress()
+    {
+        $express = Express::search('458157653582');
+        exit($express);
     }
 
 
