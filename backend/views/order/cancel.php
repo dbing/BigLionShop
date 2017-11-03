@@ -28,7 +28,7 @@
 
                         <div class="span12 field-box textarea">
                             <label>操作备注:</label>
-                            <?= \yii\helpers\Html::textarea('xxx','',['class'=>'span9']);?>
+                            <?= \yii\helpers\Html::textarea('node','',['class'=>'span9']);?>
                             <span class="charactersleft">剩余90个字符。字段限制在254个字符</span>
                         </div>
                         <div class="span11 field-box actions">

@@ -17,7 +17,7 @@ use common\models\OrderInfo;
                 <!-- flat buttons -->
                 <!-- these styles are located in css/elements.css -->
                 <!-- they also include .small and .large classes to change their size -->
-                <h4 class="title">订单信息</h4>
+                <h5 class="title">订单信息</h5>
                 <div class="span6">
                     <table class="table table-hover">
                         <tr>
@@ -88,7 +88,7 @@ use common\models\OrderInfo;
                 <!-- glow buttons -->
                 <!-- these styles are located in css/elements.css -->
                 <!-- they also include .small and .large classes to change their size -->
-                <h4 class="title">订单商品</h4>
+                <h5 class="title">订单商品</h5>
                 <div class="span11">
 
                     <table class="table table-hover">
@@ -120,8 +120,8 @@ use common\models\OrderInfo;
 
             </div>
             <div class="row-fluid section btns">
-                <h4 class="title">订单操作日志</h4>
-                <div class="span6">
+                <h5 class="title">订单操作日志</h5>
+                <div class="span12">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -129,43 +129,41 @@ use common\models\OrderInfo;
                             <th>操作人员</th>
                             <th>动作</th>
                             <th>结果</th>
+                            <th>详情</th>
                             <th>备注</th>
                         </tr>
                         </thead>
                         <!--BING提示循环开始处-->
+                        <?php if(!empty($orderInfo['action'])): foreach ($orderInfo['action'] as $action):?>
                         <tr class="first">
-                            <td>2017-3-9 22:36:51</td>
-                            <td>BING</td>
-                            <td>作废</td>
-                            <td>成功</td>
-                            <td>订单【20160906214326805294】作废成功</td>
+                            <td><?= date('Y-m-d H:i:s',$action['create_time']);?></td>
+                            <td><?=$action['action_user'];?></td>
+                            <td><?=$action['action_do'];?></td>
+                            <td><?=$action['result'];?></td>
+                            <td><?=$action['action_content'];?></td>
+                            <td><?=$action['action_node'];?></td>
                         </tr>
+                        <?php endforeach;endif;?>
                         <!--BING提示循环结束处-->
-                        <tr class="first">
-                            <td>2017-3-9 22:36:51</td>
-                            <td>BING</td>
-                            <td>确认</td>
-                            <td>成功</td>
-                            <td>订单【20160906214326805294】确认成功</td>
-                        </tr>
-                        <tr class="first">
-                            <td>2017-3-9 22:36:51</td>
-                            <td>BING</td>
-                            <td>发货</td>
-                            <td>成功</td>
-                            <td>订单【20160906214326805294】发货成功</td>
-                        </tr>
+
 
                     </table>
                 </div>
                 <div class="span4 pull-right">
+                    <?php if(($orderInfo['pay_status'] == OrderInfo::PAY_SUCCESS) && ($orderInfo['shipping_status'] == OrderInfo::SHIP_UNSHIP)):?>
                     <a href="<?=\yii\helpers\Url::to(['order/confirm','oid'=>$orderInfo['order_id']])?>" class="btn-flat">确认订单</a>
-
+                    <?php endif;?>
+                    <?php if($orderInfo['shipping_status'] == OrderInfo::SHIP_UNSHIP):?>
                     <a href="<?=\yii\helpers\Url::to(['order/cancel','oid'=>$orderInfo['order_id']])?>" class="btn-flat">取消订单</a>
+                    <?php endif;?>
 
+                    <?php if(($orderInfo['pay_status'] == OrderInfo::PAY_SUCCESS) && ($orderInfo['shipping_status'] == OrderInfo::SHIP_UNSHIP)):?>
                     <a href="<?=\yii\helpers\Url::to(['order/ship','oid'=>$orderInfo['order_id']])?>" class="btn-flat">去发货</a>
+                    <?php endif;?>
 
+                    <?php if($orderInfo['pay_status'] == OrderInfo::PAY_ERROR):?>
                     <a href="<?=\yii\helpers\Url::to(['order/pay','oid'=>$orderInfo['order_id']])?>" class="btn-flat">支付</a>
+                    <?php endif;?>
 
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\OrderAction;
 use backend\models\Shipping;
 use common\helpers\Tools;
 use frontend\models\User;
@@ -46,18 +47,21 @@ class OrderController extends \yii\web\Controller
         {
             // 已经支付订单-取消操作
             $type = Yii::$app->request->post('cancel_type');
+            $node = Yii::$app->request->post('node');
             if(Yii::$app->request->isPost)
             {
 
                 if($type  == 'SEND_BACK')
                 {
                     // 原路退款
+
+
                 }
                 elseif($type  == 'MONEY_BACK')
                 {
                     // 退到用户余额
                     $user = User::findOne($order->user_id);
-                    $user->user_money = $order->order_amount;
+                    $user->user_money += $order->order_amount;
                     $transaction = Yii::$app->db->beginTransaction();
                     try
                     {
@@ -68,18 +72,23 @@ class OrderController extends \yii\web\Controller
                         }
                         // 订单状态置为取消
                         $order->order_status = OrderInfo::ORDER_CANCEL;
+                        $order->pay_status = OrderInfo::PAY_ERROR;
                         if(!$order->save())
                         {
                             throw new yii\base\Exception('操作失败.');
                         }
 
                         $transaction->commit();
+                        // 记录日志
+                        OrderAction::write($oid,'取消','成功',$node);
                         Tools::success('订单取消成功.',['order/detail','oid'=>$oid]);
 
                     }
                     catch (yii\base\Exception $e)
                     {
                         $transaction->rollBack();
+                        // 记录日志
+                        OrderAction::write($oid,'取消','失败',$node);
                         Tools::error('操作失败.',['order/ship','oid'=>$oid]);
 
                     }
@@ -89,12 +98,17 @@ class OrderController extends \yii\web\Controller
                 {
                     // 不处理
                     $order->order_status = OrderInfo::ORDER_CANCEL;
+                    $order->pay_status = OrderInfo::PAY_ERROR;
                     if($order->save())
                     {
+                        // 记录日志
+                        OrderAction::write($oid,'取消','成功',$node);
                         Tools::success('订单取消成功.',['order/detail','oid'=>$oid],false);
                     }
                     else
                     {
+                        // 记录日志
+                        OrderAction::write($oid,'取消','失败',$node);
                         Tools::error('操作失败.',['order/ship','oid'=>$oid],false);
                     }
 
@@ -111,10 +125,14 @@ class OrderController extends \yii\web\Controller
             $order->order_status = OrderInfo::ORDER_CANCEL;
             if($order->save())
             {
+                // 记录日志
+                OrderAction::write($oid,'取消','成功');
                 Tools::success('订单取消成功.',['order/detail','oid'=>$oid],false);
             }
             else
             {
+                // 记录日志
+                OrderAction::write($oid,'取消','失败');
                 Tools::error('操作失败.',['order/ship','oid'=>$oid],false);
             }
         }
@@ -131,11 +149,15 @@ class OrderController extends \yii\web\Controller
         $oid = Yii::$app->request->get('oid');
         if(OrderInfo::payOrder($oid))
         {
+            // 记录日志
+            OrderAction::write($oid,'支付','成功');
             Tools::success('订单支付成功.',['order/detail','oid'=>$oid],false);
 
         }
         else
         {
+            // 记录日志
+            OrderAction::write($oid,'支付','失败');
             Tools::error('操作失败.',['order/ship','oid'=>$oid],false);
         }
         Yii::$app->response->redirect(['order/detail','oid'=>$oid]);
@@ -149,11 +171,15 @@ class OrderController extends \yii\web\Controller
         $oid = Yii::$app->request->get('oid');
         if(OrderInfo::confirmOrder($oid))
         {
+            // 记录日志
+            OrderAction::write($oid,'确认','成功');
             Tools::success('订单已确认.',['order/detail','oid'=>$oid],false);
 
         }
         else
         {
+            // 记录日志
+            OrderAction::write($oid,'确认','失败');
             Tools::error('操作失败.',['order/ship','oid'=>$oid],false);
         }
         Yii::$app->response->redirect(['order/detail','oid'=>$oid]);
@@ -180,10 +206,14 @@ class OrderController extends \yii\web\Controller
                 $order->shipping_status = OrderInfo::SHIP_SHIPED;
                 if($order->save())
                 {
+                    // 记录日志
+                    OrderAction::write($oid,'发货','成功');
                     Tools::success('发货成功.',['order/detail','oid'=>$oid]);
                 }
                 else
                 {
+                    // 记录日志
+                    OrderAction::write($oid,'发货','失败');
                     Tools::error('发货失败.',['order/ship','oid'=>$oid]);
                 }
             }

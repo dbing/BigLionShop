@@ -22,17 +22,17 @@
 
                         <div class="span12 field-box">
                             <label>快递公司:</label>
-                            <?= \yii\helpers\Html::dropDownList('shipping_id',0,$shipList);?>
+                            <?= \yii\helpers\Html::dropDownList('shipping_id',$order->shipping_id,$shipList);?>
                         </div>
 
                         <div class="span12 field-box">
                             <label>发货单:</label>
-                            <?= \yii\helpers\Html::textInput('invoice_no','',['class'=>'span9']);?>
+                            <?= \yii\helpers\Html::textInput('invoice_no',$order->invoice_no,['class'=>'span9']);?>
                         </div>
 
                         <div class="span12 field-box textarea">
                             <label>管理员备注:</label>
-                            <?= \yii\helpers\Html::textarea('remarks','',['class'=>'span9']);?>
+                            <?= \yii\helpers\Html::textarea('remarks',$order->remarks,['class'=>'span9']);?>
                             <span class="charactersleft">剩余90个字符。字段限制在254个字符</span>
                         </div>
                         <div class="span11 field-box actions">

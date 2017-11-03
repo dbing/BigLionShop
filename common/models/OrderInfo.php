@@ -194,7 +194,7 @@ class OrderInfo extends \yii\db\ActiveRecord
             2016082311 51 57 2285-2
         */
 
-        $sn = date('YmdHis') . rand(1000,9999);
+        $sn = date('mdHis') . rand(1000,9999);
         if(self::find()->where(['order_sn'=>$sn])->count() > 0)
         {
             return self::createOrderSn();

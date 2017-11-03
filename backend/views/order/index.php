@@ -18,9 +18,9 @@ use common\models\OrderInfo;
                         <button class="btn">Search</button>
                     </div>
 
-                    <a href="new-user.html" class="btn-flat success pull-right">
+                    <a href="javascript:alert('未开发');" class="btn-flat success pull-right">
                         <span>&#43;</span>
-                        发布新商品
+                        搜索订单
                     </a>
                 </div>
             </div>

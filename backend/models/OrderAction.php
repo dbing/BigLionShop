@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\models\OrderInfo;
 use Yii;
 
 /**
@@ -35,6 +36,7 @@ class OrderAction extends \yii\db\ActiveRecord
             [['create_time', 'order_id'], 'integer'],
             [['order_id'], 'required'],
             [['action_user'], 'string', 'max' => 45],
+            [['action_do','result'], 'string', 'max' => 20],
             [['action_content', 'action_node'], 'string', 'max' => 255],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrderInfo::className(), 'targetAttribute' => ['order_id' => 'order_id']],
         ];
@@ -61,5 +63,32 @@ class OrderAction extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(OrderInfo::className(), ['order_id' => 'order_id']);
+    }
+
+    /**
+     * 写订单操作日志
+     *
+     * @param $oid
+     * @param $actionDo
+     * @param $result
+     * @param string $node
+     * @return mixed
+     */
+    static function write($oid,$actionDo,$result,$node='')
+    {
+        $order = OrderInfo::find()->select('order_sn')->where(['order_id'=>$oid])->one();
+
+        $data = [
+            'action_user'   => Yii::$app->user->identity->username,
+            'create_time'   => time(),
+            'action_node'   => $node,
+            'action_content'=>'订单【'.$order->order_sn.'】'.$actionDo.$result,
+            'order_id'      => $oid,
+            'action_do'     => $actionDo,
+            'result'        => $result
+        ];
+        $action = (new self());
+        $action->load(['OrderAction'=>$data]);
+        return $action->save();
     }
 }

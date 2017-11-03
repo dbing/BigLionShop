@@ -93,7 +93,7 @@ $this->params['cart'] = $cart;
                         <!-- 已登录 -->
                         <li>您好 , 欢迎您回来 <?=Yii::$app->user->identity->username;?> </li>
                         <li><a href="<?=\yii\helpers\Url::to(['site/logout']);?>">安全退出</a></li>
-                        <li><a href="authentication.html">我的订单</a></li>
+                        <li><a href="<?=\yii\helpers\Url::to(['user/my-order'])?>">我的订单</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-language">个人中心</a>
                             <ul class="dropdown-menu" role="menu" >

@@ -37,7 +37,6 @@ class CartController extends \yii\web\Controller
     {
 
         $cid = Yii::$app->request->get('cid') + 0;
-
         if($cart = Cart::findOne(['cart_id'=>$cid,'user_id'=>$this->userId]))
         {
             if($cart->delete())

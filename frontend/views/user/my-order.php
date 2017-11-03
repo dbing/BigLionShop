@@ -24,8 +24,10 @@ if(is_object($alert))
 
 <style>
         /*表格列内容居中*/
+
     .table th, .table td {
         text-align: center;
+        /*white-space: nowrap;*/
         vertical-align: middle!important;
     }
     /*物流弹出层样式定制*/
@@ -104,7 +106,7 @@ if(is_object($alert))
                     <th>订单详情</th>
                     <th>收货人</th>
                     <th>订单总金额</th>
-                    <th>订单状态</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -117,7 +119,7 @@ if(is_object($alert))
                             <!-- 订单详情头信息 -->
                             <thead>
                             <tr>
-                                <th>下单时间：<?=date('Y-m-d H:i:s',$order['create_time']);?></th>
+                                <th>下单时间：<?=date('Y/m/d H:i:s',$order['create_time']);?></th>
                                 <th>订单号： <?=$order['order_sn'];?></th>
                             </tr>
                             </thead>
@@ -127,7 +129,9 @@ if(is_object($alert))
                             <tr>
                                 <td>
                                     <img src="<?=$goods['mini'];?>" alt="<?=$goods['goods_name'];?>" class="pull-left" class="img-thumbnail">
-                                    <a href="<?=$goods['url'];?>" style="width:180px;"><?=$goods['goods_name'];?></a>
+                                    <p style="width:190px;padding-left: 5px;text-align: left;overflow: hidden;white-space:normal;">
+                                        <a href="<?=$goods['url'];?>"><?=$goods['goods_name'];?></a>
+                                    </p>
 
                                 </td>
                                 <td>&#935;<?=$goods['buy_number'];?></td>
