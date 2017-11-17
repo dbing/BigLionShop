@@ -24,6 +24,13 @@ class OrderController extends \yii\web\Controller
         return $this->render('detail',['orderInfo'=>$orderInfo]);
     }
 
+    public function actionRefund()
+    {
+        var_dump(Yii::$app->alipay);die;
+        $refundUrl = Yii::$app->alipay->refund(0000001,1,'2017111221001104770549058379^0.01^协商退款');
+        var_dump($refundUrl);
+    }
+
     /**
      * 订单列表
      *

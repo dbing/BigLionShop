@@ -25,6 +25,11 @@ class Slider extends \yii\db\ActiveRecord
         return '{{%slider}}';
     }
 
+    public static function getDb()
+    {
+        return Yii::$app->db;
+    }
+
     /**
      * @inheritdoc
      */
@@ -60,10 +65,16 @@ class Slider extends \yii\db\ActiveRecord
      */
     static function getSlider()
     {
+        $duration = 7200;     // cache query results for 60 seconds.
+        $dependency = new \yii\caching\DbDependency(['sql'=>'select count(1) from yii_slider where is_show=1']);  // optional dependency
+
+        $result = self::getDb()->cache(function($db){
         return self::find()
             ->where(['is_show'=>1])
             ->asArray()
             ->orderBy(['sort'=>SORT_DESC])
             ->all();
+        },$duration,$dependency);
+        return $result;
     }
 }

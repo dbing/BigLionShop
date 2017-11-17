@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "96e861cab1051b4e4ac9e12e0eb6af76",
+    "content-hash": "16900b9ebca00a17d6031721c8b2d1e9",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -274,16 +274,16 @@
         },
         {
             "name": "dbing/yii2-alipay",
-            "version": "v1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbing/yii2-alipay.git",
-                "reference": "188f926c19699c399b24aa96abd63d2ada57abb5"
+                "reference": "26d9c8608ea110372c094d8dabc1f66d634e6c30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/dbing/yii2-alipay/188f926c19699c399b24aa96abd63d2ada57abb5.zip",
-                "reference": "188f926c19699c399b24aa96abd63d2ada57abb5",
+                "url": "https://files.phpcomposer.com/files/dbing/yii2-alipay/26d9c8608ea110372c094d8dabc1f66d634e6c30.zip",
+                "reference": "26d9c8608ea110372c094d8dabc1f66d634e6c30",
                 "shasum": ""
             },
             "require": {
@@ -308,7 +308,7 @@
                 }
             ],
             "description": "Yii2 framework alipay",
-            "time": "2017-10-29T03:52:20+00:00"
+            "time": "2017-11-12T12:20:55+00:00"
         },
         {
             "name": "dzer/yii2-express",
@@ -699,6 +699,54 @@
                 "yii2"
             ],
             "time": "2016-12-20T13:26:02+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-redis",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-redis.git",
+                "reference": "5dc55d5187923219e9db86d149d56acf1f5a6ee8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/yiisoft/yii2-redis/5dc55d5187923219e9db86d149d56acf1f5a6ee8.zip",
+                "reference": "5dc55d5187923219e9db86d149d56acf1f5a6ee8",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.11"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\redis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "cache",
+                "redis",
+                "session",
+                "yii2"
+            ],
+            "time": "2017-04-05T13:42:11+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",

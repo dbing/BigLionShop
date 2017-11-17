@@ -22,17 +22,36 @@ class CategoryController extends \yii\web\Controller
         }
 
         // 查询主导航
-        $navigation = Category::getNavigation();
+        $navigation = Yii::$app->cache->get('navigation');
+        if($navigation === false)
+        {
+            $navigation = Category::getNavigation();
+            Yii::$app->cache->set('navigation',$navigation);
+        }
+
         $this->view->params['navigation'] = $navigation;
 
         // 查询面包屑
-        $this->view->params['breadcrumb'] = Category::getBreadcrumb($cid);
+        //Yii::$ap->cache->set('crumb_',);
+        $breadcrumb = Yii::$app->cache->get('crumb_'.$cid);
+        if($breadcrumb === false)
+        {
+            $breadcrumb = Category::getBreadcrumb($cid);
+            Yii::$app->cache->set('crumb_'.$cid,$breadcrumb);
+        }
+        $this->view->params['breadcrumb'] = $breadcrumb;
 
         // 加工搜索条件
 
         // 查询分类商品
-        $goods = Goods::getGoodsByCatId($cid,$this->buildFilter());
-
+        $key = [$this->buildFilter(),$cid];
+        $goods = Yii::$app->cache->get($key);
+        if($goods === false)
+        {
+            $goods = Goods::getGoodsByCatId($cid,$this->buildFilter());
+            Yii::$app->cache->set($key,$goods);
+        }
+        
         // 查询指定分类下精品列表
         $cateRecommond = Goods::getRecommendGoods('is_best','','5',$cid);
 

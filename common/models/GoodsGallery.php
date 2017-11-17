@@ -24,6 +24,7 @@ class GoodsGallery extends \yii\db\ActiveRecord
         return '{{%goods_gallery}}';
     }
 
+
     /**
      * @inheritdoc
      */
@@ -66,8 +67,8 @@ class GoodsGallery extends \yii\db\ActiveRecord
      */
     public function getGalleries($gid)
     {
+        
         $galleries = GoodsGallery::find()->select('img_desc,original_img')->where(['goods_id'=>$gid])->asArray()->all();
-
         $upForm = new UploadForm();
         foreach ($galleries as $key=>$value)
         {

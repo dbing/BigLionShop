@@ -10,11 +10,35 @@ use frontend\models\Slider;
 
 class IndexController extends \yii\web\Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => 'yii\filters\PageCache',
+                'only' => ['index'],
+                'duration' => 50,
+                /*
+                'dependency' => [
+                    'class' => 'yii\caching\DbDependency',
+                    'sql' => 'SELECT COUNT(*) FROM post',
+                ],
+                */
+            ],
+        ];
+    }
+    
     public function actionIndex()
     {
         // 查询全部商品分类
-        $navigation = Category::getNavigation();
-
+        $navigation = Yii::$app->cache->get('navigation');
+    
+        if($navigation === false)
+        {
+            $navigation = Category::getNavigation();
+            Yii::$app->cache->set('navigation',$navigation);
+        }
+        
         // 查询轮播图
         $slider = Slider::getSlider();
 
@@ -50,4 +74,23 @@ class IndexController extends \yii\web\Controller
         return !empty($goodsList) ? $this->renderPartial('loadmore',['goodsList'=>$goodsList]) : '';
     }
 
+
+    public function actionTest()
+    {
+        $dependency = new \yii\caching\FileDependency(['fileName' => 'example.txt']);
+        var_dump($dependency);
+
+        var_dump(Yii::$app->cache);
+
+        Yii::$app->cache->set('key','braem',7200,$dependency);
+
+
+
+    }
+
+    public function actionGet()
+    {
+        $key = Yii::$app->cache->get('key');
+        var_dump($key);
+    }
 }

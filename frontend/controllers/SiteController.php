@@ -55,6 +55,7 @@ class SiteController extends Controller
      */
     public function actions()
     {
+        //\ob_clean();
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -65,6 +66,10 @@ class SiteController extends Controller
             ],
         ];
     }
+
+
+
+
 
     /**
      * Displays homepage.

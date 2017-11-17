@@ -157,21 +157,22 @@ if(is_object($alert))
                         <?php endif;?>
 
                         <?php if($order['pay_status'] == OrderInfo::PAY_ERROR):?>
-                            <span class="label label-default">未支付</span><hr>
+                            <span class="label label-default">未支付</span><p></p>
                         <?php elseif($order['pay_status'] == OrderInfo::PAY_SUCCESS):?>
-                            <span class="label label-success">已支付</span><hr>
+                            <span class="label label-success">已支付</span><p></p>
+                            
                         <?php endif;?>
 
                         <?php if($order['order_status'] == OrderInfo::ORDER_FINISH):?>
-                        <span class="label label-success">已完成</span><hr>
+                            <span class="label label-success">已完成</span><p></p>
                         <?php elseif($order['order_status'] == OrderInfo::ORDER_CANCEL):?>
-                            <span class="label label-default">已取消</span><hr>
+                            <span class="label label-default">已取消</span><p></p>
                         <?php elseif($order['order_status'] == OrderInfo::ORDER_UNCONFIRM):?>
-                            <span class="label label-warning">待确认</span><hr>
+                            <span class="label label-warning">待确认</span><p></p>
                         <?php elseif($order['order_status'] == OrderInfo::ORDER_CONFIRM):?>
-                            <span class="label label-success">已确认</span><hr>
+                            <span class="label label-success">已确认</span><p></p>
                         <?php elseif($order['order_status'] == OrderInfo::ORDER_BRACE):?>
-                            <span class="label label-danger">已作废</span><hr>
+                            <span class="label label-danger">已作废</span><p></p>
                         <?php endif;?>
 
                     </td>
@@ -189,6 +190,10 @@ if(is_object($alert))
                         <div class="center-block">
                             <a href="javascript:confirmRece();">确认收货</a>
                         </div>
+                        <?php endif;?>
+                        
+                        <?php if($order['pay_status'] == OrderInfo::PAY_SUCCESS):?>
+                            <span class="btn btn-default">退款</span><p></p>
                         <?php endif;?>
 
                         <?php if($order['shipping_status'] == OrderInfo::SHIP_SINGNED):?>
