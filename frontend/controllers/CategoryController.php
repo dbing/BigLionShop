@@ -11,6 +11,7 @@ class CategoryController extends \yii\web\Controller
 {
     public $layout = 'navmain';
 
+    
     public function actionIndex()
     {
         // 查询分类信息

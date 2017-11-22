@@ -154,73 +154,8 @@ class OrderController extends \yii\web\Controller
 
     }
 
-    /**
-     *  同步地址处理
-     */
-    public function actionReturn()
-    {
-        $get = Yii::$app->request->get();
-        // 验签
-        $result = Yii::$app->alipay->verifyReturn();
-        if($result)
-        {
-            // 记录支付日志
-            PayLog::write('R',$get['out_trade_no'],$get);
-
-            if($get['trade_status'] == 'TRADE_SUCCESS' || $get['trade_status'] == 'TRADE_FINISHED')
-            {
-                // 判断该笔订单是否已经处理过
-                if(OrderInfo::updateOrder($get['out_trade_no'],$get['total_fee']))
-                {
-                    Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::SUCCESS,'恭喜您支付成功，订单：'.$get['out_trade_no'].'！'))->returned());
-                }
-                else
-                {
-                    Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::ERROR,'订单状态处理异常，请联系客服.'))->returned());
-                }
-
-            }
-            else
-            {
-                Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::ERROR,'订单支付失败,订单号：'.$get['out_trade_no']))->returned());
-            }
-        }
-        else
-        {
-            Yii::$app->session->setFlash('alert',(new AjaxReturn(AjaxReturn::ERROR,'签名校验失败，订单支付失败,订单号：'.$get['out_trade_no']))->returned());
-
-        }
-        Yii::$app->response->redirect(['user/my-order']);
-
-    }
 
 
-    /**
-     * 异步通知处理
-     */
-    public function actionNotify()
-    {
-        $post = Yii::$app->request->post();
-        // 验签
-        if(Yii::$app->alipay->verifyNotify())
-        {
-            // 记录支付日志
-            PayLog::write('N',$post['out_trade_no'],$post);
 
-            // 判断该笔订单是否已经处理过
-            if(OrderInfo::updateOrder($post['out_trade_no'],$post['total_fee']))
-            {
-                echo 'success';
-            }
-            else
-            {
-                echo 'fail';
-            }
 
-        }
-        else
-        {
-            echo 'fail';
-        }
-    }
 }

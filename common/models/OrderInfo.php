@@ -62,8 +62,9 @@ class OrderInfo extends \yii\db\ActiveRecord
     const ORDER_BRACE = 4;
     const ORDER_RETURN = 5;
 
-    const PAY_SUCCESS = 1;
-    const PAY_ERROR = 0;
+    const PAY_SUCCESS = 1;  // 支付成功
+    const PAY_ERROR = 0;    // 未支付
+    const PAY_REFUND = 2;   // 已退款
 
     const SHIP_UNSHIP = 0;
     const SHIP_SHIPED = 1;
@@ -91,6 +92,7 @@ class OrderInfo extends \yii\db\ActiveRecord
             [['order_sn', 'mobile'], 'string', 'max' => 20],
             [['message', 'address'], 'string', 'max' => 120],
             [['pay_name', 'shipping_name'], 'string', 'max' => 60],
+            ['trade_no', 'string', 'max' => 64],
             [['remarks'], 'string', 'max' => 255],
             [['consignee', 'invoice_no'], 'string', 'max' => 45],
             [['zipcode'], 'string', 'max' => 6],
@@ -263,9 +265,10 @@ class OrderInfo extends \yii\db\ActiveRecord
      *
      * @param $orderSn
      * @param $totalFee
+     * @param $trade_no   原支付交易流水号
      * @return bool
      */
-    static function updateOrder($orderSn,$totalFee)
+    static function updateOrder($orderSn,$totalFee,$trade_no)
     {
         $order = self::findOne(['order_sn'=>$orderSn]);
         if(!is_null($order))
@@ -276,6 +279,7 @@ class OrderInfo extends \yii\db\ActiveRecord
             $order->pay_status = self::PAY_SUCCESS;
             $order->money_paid = $totalFee;
             $order->pay_time = time();
+            $order->trade_no = $trade_no;
             return $order->save();
 
         }
@@ -435,6 +439,37 @@ class OrderInfo extends \yii\db\ActiveRecord
             $order->pay_time = time();
             $order->money_paid = $order->order_amount;
             return $order->save();
+        }
+    }
+
+    /**
+     * 单条退款记录，订单退款状态修改
+     * 
+     * @param   array  $resultDetails   批量退款数据中的详细信息
+     * @return  bool
+     */
+    static function updateRowOrderRefund($resultDetails)
+    {
+        if(!empty($resultDetails) && is_array($resultDetails))
+        {
+            $orderInfo = self::find()->where(['trade_no'=>$resultDetails[0]])->one();
+                
+            if(is_null($orderInfo))
+            {
+                // 没查到该交易记录
+                // return false;
+                throw new Exception($resultDetails[0].'该交易流水号不存在.');
+            }
+
+            if(($orderInfo->order_status == self::ORDER_RETURN) && ($orderInfo->pay_status == self::PAY_REFUND))
+            {
+                return true;
+            }
+
+            // 处理该订单退款状态
+            $orderInfo->order_status = self::ORDER_RETURN;
+            $orderInfo->pay_status = self::PAY_REFUND;             
+            return $orderInfo->save();
         }
     }
 }

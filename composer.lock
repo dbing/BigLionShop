@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "16900b9ebca00a17d6031721c8b2d1e9",
+    "content-hash": "6d3cae2ad60d394e428c7c3732ac100c",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -400,6 +400,44 @@
             "time": "2017-06-03T02:28:16+00:00"
         },
         {
+            "name": "notamedia/yii2-sentry",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/notamedia/yii2-sentry.git",
+                "reference": "06881dfc1bcd84c162c633301e5f759f022d50a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/notamedia/yii2-sentry/06881dfc1bcd84c162c633301e5f759f022d50a7.zip",
+                "reference": "06881dfc1bcd84c162c633301e5f759f022d50a7",
+                "shasum": ""
+            },
+            "require": {
+                "sentry/sentry": "^1.1",
+                "yiisoft/yii2": "~2.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "notamedia\\sentry\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Yii2 logger for Sentry",
+            "keywords": [
+                "sentry",
+                "yii2"
+            ],
+            "time": "2017-08-24T13:19:42+00:00"
+        },
+        {
             "name": "qiniu/php-sdk",
             "version": "v7.2.1",
             "source": {
@@ -449,6 +487,70 @@
                 "storage"
             ],
             "time": "2017-08-26T00:46:11+00:00"
+        },
+        {
+            "name": "sentry/sentry",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/sentry-php.git",
+                "reference": "3e4bb1486cd4e09869cb3342aef374788d540f1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/getsentry/sentry-php/3e4bb1486cd4e09869cb3342aef374788d540f1c.zip",
+                "reference": "3e4bb1486cd4e09869cb3342aef374788d540f1c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^5.3|^7.0"
+            },
+            "conflict": {
+                "raven/raven": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.8.0",
+                "monolog/monolog": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7"
+            },
+            "suggest": {
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "monolog/monolog": "Automatically capture Monolog events as breadcrumbs"
+            },
+            "bin": [
+                "bin/sentry"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Raven_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Cramer",
+                    "email": "dcramer@gmail.com"
+                }
+            ],
+            "description": "A PHP client for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2017-11-09T17:44:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

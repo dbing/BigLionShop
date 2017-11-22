@@ -33,7 +33,7 @@ return [
             'partner'       =>'2088121321528708',                           //合作身份者id
             'seller_email'  =>'itbing@sina.cn',                             //收款支付宝账号
             'key'           =>'1cvr0ix35iyy7qbkgs3gwymeiqlgromm',           //安全检验码，
-            'return_url'    =>'http://dev.biglionshop.com/order/return', //同步通知地址（注意：不能加?id=123这类自定义参数）
+            'return_url'    =>'http://dev.biglionshop.com/pay/return', //同步通知地址（注意：不能加?id=123这类自定义参数）
             'notify_url'    =>'http://demo.bingphp.com/notify.php', //异步通知地址（注意：同上且不能写成内网域如localhost）
             'refund_url'    =>'http://demo.bingphp.com/refund.php', //异步通知地址（注意：同上且不能写成内网域如localhost）
 

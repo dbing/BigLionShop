@@ -51,6 +51,7 @@ use \yii\helpers\Html;
     <script src="/statics/js/jquery-latest.js"></script>
     <script src="/statics/js/bootstrap.min.js"></script>
     <script src="/statics/js/theme.js"></script>
+    <script src="/statics/layer/layer.js"></script>
 
 </head>
 
@@ -229,7 +230,8 @@ use \yii\helpers\Html;
             </a>
             <ul class="submenu">
                 <li><a href="<?= Url::to(['order/index']);?>">订单列表</a></li>
-                <li><a href="new-user.html">发货单列表</a></li>
+                <!--<li><a href="new-user.html">发货单列表</a></li>-->
+                <li><a href="<?= Url::to(['refund/list']);?>">退款列表</a></li>
             </ul>
         </li>
 
