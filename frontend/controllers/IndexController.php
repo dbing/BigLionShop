@@ -11,6 +11,7 @@ use frontend\models\Slider;
 class IndexController extends \yii\web\Controller
 {
 
+/*
     public function behaviors()
     {
         return [
@@ -18,18 +19,20 @@ class IndexController extends \yii\web\Controller
                 'class' => 'yii\filters\PageCache',
                 'only' => ['index'],
                 'duration' => 50,
-                /*
+                
                 'dependency' => [
                     'class' => 'yii\caching\DbDependency',
                     'sql' => 'SELECT COUNT(*) FROM post',
                 ],
-                */
+                
             ],
         ];
     }
-    
+*/
+
     public function actionIndex()
     {
+        
         // 查询全部商品分类
         $navigation = Yii::$app->cache->get('navigation');
     

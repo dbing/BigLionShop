@@ -15,6 +15,7 @@ use frontend\models\Cart;
 $cart = Cart::getCartList();
 $this->params['cart'] = $cart;
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -289,7 +290,12 @@ $this->params['cart'] = $cart;
     </header>
     <!-- ============================================================= HEADER : END ============================================================= -->
 
+    <?php if ($this->beginCache($_SERVER['REQUEST_URI'],['duration' => 3600])): ?>
+   
+
     <?=$content;?>
+
+    <?php $this->endCache();endif; ?>
 
     <!-- ============================================================= FOOTER ============================================================= -->
     <footer id="footer" class="color-bg">

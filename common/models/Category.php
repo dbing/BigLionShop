@@ -1,11 +1,17 @@
 <?php
-
+/*
+ * @Author: dingbing 
+ * @Date: 2017-11-23 20:37:14 
+ * @Last Modified by: dingbing
+ * @Last Modified time: 2017-11-23 20:38:05
+ */
 namespace common\models;
 
 use common\helpers\Tools;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 
 /**
  * This is the model class for table "{{%category}}".
@@ -59,6 +65,12 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 加载默认值
+     *
+     * @param boolean $skipIfSet
+     * @return void
+     */
     public function loadDefaultValues($skipIfSet = true)
     {
         $this->is_show = 1;

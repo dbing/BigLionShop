@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
+
 ?>
+
 <div id="top-banner-and-menu">
         <div class="container">
 

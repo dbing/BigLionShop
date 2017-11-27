@@ -23,6 +23,7 @@ class UserController extends \yii\web\Controller
 
     public function init()
     {
+        
         // 验证是否登录
         if (Yii::$app->user->isGuest) {
             return $this->goBack();
@@ -38,7 +39,7 @@ class UserController extends \yii\web\Controller
 //        return $this->render('index', ['cart' => $cart]);
     }
 
-
+    
     public function actionMyOrder()
     {
         $orderlist = OrderInfo::getMyOrder($this->userId);
