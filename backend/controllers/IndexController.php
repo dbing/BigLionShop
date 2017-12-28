@@ -10,6 +10,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLoginLog;
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -22,26 +23,30 @@ class IndexController extends Controller
      *
      * @inheritdoc
      */
-    public function behaviors()
-    {
+//    public function behaviors()
+//    {
 
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => [],
-                        'allow' => true,
-                        'roles' => ['@'],       // @ 已认证用户
-                    ],
-                ],
-            ],
-        ];
-    }
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => [],
+//                        'allow' => true,
+//                        'roles' => ['@'],       // @ 已认证用户
+//                    ],
+//                ],
+//            ],
+//        ];
+//    }
 
     public function actionIndex()
     {
-        return $this->render('index');
+
+        // 登录日志
+        $loginLogList = AdminLoginLog::find()->all();
+
+        return $this->render('index',['loginLogList'=>$loginLogList]);
     }
 
 

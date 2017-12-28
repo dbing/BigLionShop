@@ -11,7 +11,7 @@
                         <?php if(!empty($goodsInfo['galleries'])): foreach ($goodsInfo['galleries'] as $key=>$gallery):?>
                         <div class="single-product-gallery-item" id="slide<?=$key;?>">
                             <a data-rel="prettyphoto" href="<?=$gallery['url'];?>">
-                                <img class="img-responsive" alt="" src="assets/images/blank.gif" data-echo="<?=$gallery['middle'];?>" />
+                                <img class="img-responsive" alt="" src="/assets/images/blank.gif" data-echo="<?=$gallery['middle'];?>" />
                             </a>
                         </div><!-- /.single-product-gallery-item -->
                         <?php endforeach;endif;?>
@@ -23,7 +23,7 @@
                         <div id="owl-single-product-thumbnails">
                             <?php if(!empty($goodsInfo['galleries'])): foreach ($goodsInfo['galleries'] as $key=>$gallery):?>
                             <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="<?=$key;?>" href="#slide<?=$key;?>">
-                                <img width="67" alt="" src="assets/images/blank.gif" data-echo="<?=$gallery['mini'];?>" />
+                                <img width="67" alt="" src="/assets/images/blank.gif" data-echo="<?=$gallery['mini'];?>" />
                             </a>
                             <?php endforeach;endif;?>
 
@@ -43,8 +43,8 @@
             </div><!-- /.gallery-holder -->
             <div class="no-margin col-xs-12 col-sm-7 body-holder">
                 <div class="body">
-                    <div class="star-holder inline"><div class="star" data-score="4"></div></div>
-                    <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
+<!--                    <div class="star-holder inline"><div class="star" data-score="4"></div></div>-->
+<!--                    <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>-->
 
                     <div class="title"><a href="<?=$goodsInfo['url'];?>"><?=$goodsInfo['goods_name'];?></a></div>
                     <div class="brand"><?=$goodsInfo['brand_name'];?></div>
@@ -180,7 +180,7 @@
                                 <div class="row no-margin">
                                     <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                         <div class="avatar">
-                                            <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                            <img alt="avatar" src="/assets/images/default-avatar.jpg">
                                         </div><!-- /.avatar -->
                                     </div><!-- /.col -->
 
@@ -211,7 +211,7 @@
                                 <div class="row no-margin">
                                     <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                         <div class="avatar">
-                                            <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                            <img alt="avatar" src="/assets/images/default-avatar.jpg">
                                         </div><!-- /.avatar -->
                                     </div><!-- /.col -->
 
@@ -242,7 +242,7 @@
                                 <div class="row no-margin">
                                     <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
                                         <div class="avatar">
-                                            <img alt="avatar" src="assets/images/default-avatar.jpg">
+                                            <img alt="avatar" src="/assets/images/default-avatar.jpg">
                                         </div><!-- /.avatar -->
                                     </div><!-- /.col -->
 
@@ -340,7 +340,7 @@
                                 <div class="ribbon green"><span>best</span></div>
                             <?php endif;?>
                             <div class="image">
-                                <img alt="" src="assets/images/blank.gif" data-echo="<?=$goods['prothumb'];?>" />
+                                <img alt="" src="/assets/images/blank.gif" data-echo="<?=$goods['prothumb'];?>" />
                             </div>
                             <div class="body">
                                 <div class="title">

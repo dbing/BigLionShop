@@ -13,7 +13,7 @@
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <div class="basket-item-count">
             <span class="count"><?=count($cart['goodsList'])?></span>
-            <img src="assets/images/icon-cart.png" alt="" />
+            <img src="/assets/images/icon-cart.png" alt="" />
         </div>
 
         <div class="total-price-basket">

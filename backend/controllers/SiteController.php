@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use backend\models\Admin;
+use backend\models\AdminLoginLog;
 use common\helpers\Tools;
 use Yii;
 use yii\web\Controller;
@@ -90,7 +91,10 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-//            return $this->goBack();
+            // 记录登录日志
+            (new AdminLoginLog)->write($model->getUsername());
+
+            return $this->goBack();
             $this->redirect(['index/index']);
         } else {
             return $this->render('login', [

@@ -85,4 +85,14 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    /**
+     * 获取管理名称
+     *
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->_user->username;
+    }
 }

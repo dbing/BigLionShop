@@ -23,31 +23,31 @@
             <div class="row-fluid stats-row">
                 <div class="span3 stat">
                     <div class="data">
-                        <span class="number">2457</span>
-                        个访客
+                        <span class="number">8</span>
+                        个用户注册
                     </div>
-                    <span class="date">今天</span>
+                    <span class="date">今日</span>
                 </div>
                 <div class="span3 stat">
                     <div class="data">
-                        <span class="number">3240</span>
-                        个用户
+                        <span class="number">18</span>
+                        个订单未发货
                     </div>
-                    <span class="date">2016年3月</span>
+                    <span class="date">今日</span>
                 </div>
                 <div class="span3 stat">
                     <div class="data">
-                        <span class="number">322</span>
+                        <span class="number">36</span>
                         个订单
                     </div>
-                    <span class="date">本周</span>
+                    <span class="date">今日</span>
                 </div>
                 <div class="span3 stat last">
                     <div class="data">
-                        <span class="number">$2,340</span>
+                        <span class="number">￥68,340</span>
                         成交金额
                     </div>
-                    <span class="date">最近30天</span>
+                    <span class="date">今日</span>
                 </div>
             </div>
         </div>
@@ -60,9 +60,9 @@
                 <h4>
                     统计
                     <div class="btn-group pull-right">
-                        <button class="glow left">天</button>
-                        <button class="glow middle active">月</button>
-                        <button class="glow right">年</button>
+<!--                        <button class="glow active">天</button>-->
+<!--                        <button class="glow middle active">月</button>-->
+<!--                        <button class="glow right">年</button>-->
                     </div>
                 </h4>
                 <div class="span12">
@@ -76,10 +76,10 @@
             <div class="table-products section">
                 <div class="row-fluid head">
                     <div class="span12">
-                        <h4>商品列表</h4>
+                        <h4>登录纪录</h4>
                     </div>
                 </div>
-
+                <!--
                 <div class="row-fluid filter-block">
                     <div class="pull-right">
                         <div class="ui-select">
@@ -90,129 +90,50 @@
                             </select>
                         </div>
                         <input type="text" class="search" />
-                        <a class="btn-flat new-product">+ 添加商品</a>
+                        <a class="btn-flat new-product"></a>
                     </div>
                 </div>
-
+                -->
                 <div class="row-fluid">
                     <table class="table table-hover">
                         <thead>
                         <tr>
                             <th class="span3">
                                 <input type="checkbox" />
-                                商品名称
+                                管理员
                             </th>
                             <th class="span3">
-                                <span class="line"></span>商品描述
+                                <span class="line"></span>登录时间
                             </th>
                             <th class="span3">
-                                <span class="line"></span>商品状态
+                                <span class="line"></span>登录IP
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- row -->
+                        <?php if(is_array($loginLogList)): foreach ($loginLogList as $log):?>
                         <tr class="first">
                             <td>
                                 <input type="checkbox" />
-                                <div class="img">
-                                    <img src="/statics/img/table-img.png" />
-                                </div>
-                                <a href="#">There are many variations </a>
+                                <?= $log->username;?>
                             </td>
                             <td class="description">
-                                if you are going to use a passage of Lorem Ipsum.
+                                <?= date('Y/m/d H:i:s',$log->created_at);?>
                             </td>
                             <td>
-                                <span class="label label-success">Active</span>
+                                <span class="label label-success"><?= $log->login_ip;?></span>
                                 <ul class="actions">
-                                    <li><i class="table-edit"></i></li>
-                                    <li><i class="table-settings"></i></li>
+<!--                                    <li><i class="table-edit"></i></li>-->
+<!--                                    <li><i class="table-settings"></i></li>-->
                                     <li class="last"><i class="table-delete"></i></li>
                                 </ul>
                             </td>
                         </tr>
+                        <?php endforeach;endif; ?>
                         <!-- row -->
-                        <tr>
-                            <td>
-                                <input type="checkbox" />
-                                <div class="img">
-                                    <img src="/statics/img/table-img.png" />
-                                </div>
-                                <a href="#">Internet tend</a>
-                            </td>
-                            <td class="description">
-                                There are many variations of passages.
-                            </td>
-                            <td>
-                                <ul class="actions">
-                                    <li><i class="table-edit"></i></li>
-                                    <li><i class="table-settings"></i></li>
-                                    <li class="last"><i class="table-delete"></i></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <!-- row -->
-                        <tr>
-                            <td>
-                                <input type="checkbox" />
-                                <div class="img">
-                                    <img src="/statics/img/table-img.png" />
-                                </div>
-                                <a href="#">Many desktop publishing </a>
-                            </td>
-                            <td class="description">
-                                if you are going to use a passage of Lorem Ipsum.
-                            </td>
-                            <td>
-                                <ul class="actions">
-                                    <li><i class="table-edit"></i></li>
-                                    <li><i class="table-settings"></i></li>
-                                    <li class="last"><i class="table-delete"></i></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <!-- row -->
-                        <tr>
-                            <td>
-                                <input type="checkbox" />
-                                <div class="img">
-                                    <img src="/statics/img/table-img.png" />
-                                </div>
-                                <a href="#">Generate Lorem </a>
-                            </td>
-                            <td class="description">
-                                There are many variations of passages.
-                            </td>
-                            <td>
-                                <span class="label label-info">Standby</span>
-                                <ul class="actions">
-                                    <li><i class="table-edit"></i></li>
-                                    <li><i class="table-settings"></i></li>
-                                    <li class="last"><i class="table-delete"></i></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <!-- row -->
-                        <tr>
-                            <td>
-                                <input type="checkbox" />
-                                <div class="img">
-                                    <img src="/statics/img/table-img.png" />
-                                </div>
-                                <a href="#">Internet tend</a>
-                            </td>
-                            <td class="description">
-                                There are many variations of passages.
-                            </td>
-                            <td>
-                                <ul class="actions">
-                                    <li><i class="table-edit"></i></li>
-                                    <li><i class="table-settings"></i></li>
-                                    <li class="last"><i class="table-delete"></i></li>
-                                </ul>
-                            </td>
-                        </tr>
+
+
                         </tbody>
                     </table>
                 </div>
@@ -280,7 +201,7 @@
 
         var plot = $.plot($("#statsChart"),
             [ { data: visits, label: "注册量"},
-                { data: visitors, label: "访客量" }], {
+                { data: visitors, label: "订单量" }], {
                 series: {
                     lines: { show: true,
                         lineWidth: 1,
@@ -305,8 +226,8 @@
                 },
                 colors: ["#a7b5c5", "#30a0eb"],
                 xaxis: {
-                    ticks: [[1, "一月"], [2, "二月"], [3, "三月"], [4,"四月"], [5,"五月"], [6,"六月"],
-                        [7,"七月"], [8,"八月"], [9,"九月"], [10,"十月"], [11,"十一月"], [12,"十二月"]],
+                    ticks: [[1, "12月18日"], [2, "12月17日"], [3, "12月16日"], [4,"12月15日"], [5,"12月14日"], [6,"12月13日"],
+                        [7,"12月12日"], [8,"12月11日"], [9,"12月10日"], [10,"12月9日"], [11,"12月8日"], [12,"12月7日"]],
                     font: {
                         size: 12,
                         family: "Open Sans, Arial",

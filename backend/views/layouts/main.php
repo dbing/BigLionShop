@@ -161,15 +161,12 @@ use \yii\helpers\Html;
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?=Url::to(['admin/info'])?>">个人信息管理</a></li>
-                    <li><a href="#">订单管理</a></li>
+                    <li><a href="javascript:alert('测试');">测试一栏</a></li>
+                    <li><a href="javascript:alert('测试');">测试二栏</a></li>
                 </ul>
             </li>
-            <li class="settings hidden-phone">
-                <a href="personal-info.html" role="button">
-                    <i class="icon-cog"></i>
-                </a>
-            </li>
+
+
             <li class="settings hidden-phone">
                 <?= Html::beginForm(['/site/logout'], 'post'); ?>
                     <?= Html::submitButton(
@@ -218,8 +215,8 @@ use \yii\helpers\Html;
                 <i class="icon-chevron-down"></i>
             </a>
             <ul class="submenu">
-                <li><a href="user-list.html">会员列表</a></li>
-                <li><a href="new-user.html">加入新会员</a></li>
+                <li><a href="<?= Url::to(['user/list']);?>">会员列表</a></li>
+
             </ul>
         </li>
         <li>
@@ -236,17 +233,19 @@ use \yii\helpers\Html;
         </li>
 
         <li>
-            <a href="personal-info.html">
+            <a class="dropdown-toggle" href="#">
                 <i class="icon-cog"></i>
-                <span>我的信息</span>
+                <span>系统管理</span>
+                <i class="icon-chevron-down"></i>
             </a>
+            <ul class="submenu">
+                <li><a href="<?=Url::to(['admin/info'])?>">我的信息</a></li>
+                <!--<li><a href="new-user.html">发货单列表</a></li>-->
+                <li><a href="<?= Url::to(['set/index']);?>">商店设置</a></li>
+            </ul>
+
         </li>
-        <li>
-            <a href="chart-showcase.html">
-                <i class="icon-signal"></i>
-                <span>统计</span>
-            </a>
-        </li>
+
     </ul>
 </div>
 <!-- end sidebar -->

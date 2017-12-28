@@ -41,7 +41,7 @@ use \yii\helpers\Html;
 
                         <?= $form->field($brand,'brand_name');?>
                         <?= $form->field($brand,'site_url');?>
-                        <?= $form->field($brand,'brand_logo');?>
+                        <?= $form->field($brand,'brand_logo')->fileInput();?>
                         <?= $form->field($brand,'is_show')->checkbox([],false);?>
 
                         <?= $form->field($brand,'sort')->input('text');?>

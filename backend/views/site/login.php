@@ -22,14 +22,14 @@ use yii\bootstrap\ActiveForm;
                 <?= $form->field($model, 'rememberMe')->checkbox()->label('记住我') ?>
             </div>
 
-            <?= Html::submitButton('Login', ['class' => 'btn-glow primary login', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('登录', ['class' => 'btn-glow primary login', 'name' => 'login-button']) ?>
 
         </div>
         <?php ActiveForm::end(); ?>
     </div>
 
     <div class="span4 no-account">
-        <p>没有账户?</p>
-        <a href="signup.html">注册</a>
+        <p>Copyright &copy; 必应学院</p>
+
     </div>
 </div>

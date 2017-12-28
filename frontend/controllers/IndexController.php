@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\helpers\Tools;
+use common\models\Brand;
 use common\models\GoodsGallery;
 use Yii;
 use common\models\Category;
@@ -50,6 +52,11 @@ class IndexController extends \yii\web\Controller
         $mainPromote = array_pop($promotes);
         $mainPromote['galleries'] = (new GoodsGallery)->getGalleries($mainPromote['goods_id']);
 
+        // 读取最近浏览
+        $historyList = Goods::historyList(Tools::history());
+
+
+
         $data = [
             'navigation'=>$navigation,
             'slider'    =>$slider,
@@ -57,7 +64,8 @@ class IndexController extends \yii\web\Controller
             'newGoods'  =>Goods::getRecommendGoods('is_new'),
             'hotGoods'  =>Goods::getRecommendGoods('is_hot'),
             'promotes'  =>$promotes,
-            'mainPromote'=>$mainPromote
+            'mainPromote'=>$mainPromote,
+            'historyList'=>$historyList
         ];
 
         return $this->render('index',$data);

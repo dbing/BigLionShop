@@ -23,7 +23,7 @@
             <?= $form->field($admin,'email')->textInput(['class'=>'span12','placeholder'=>'管理员Email'])->label(''); ?>
 
             <a href="#" class="forgot">去登录?</a>
-            <?=\yii\bootstrap\Html::submitButton('发送Email',['class'=>'btn-glow primary login'])?>
+            <?=\yii\bootstrap\Html::submitButton('发送邮件',['class'=>'btn-glow primary login'])?>
 
         </div>
     </div>

@@ -265,7 +265,7 @@ class Goods extends \yii\db\ActiveRecord
 
         $query = self::find()
             ->select('goods_id,goods_name,market_price,shop_price,brand_id,goods_img,is_new,is_hot,is_best')
-            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1,'is_promote'=>self::IS_NOT_PROMOTE]);
+            ->where(['is_on_sale'=>self::IS_ON_SALE,'is_delete'=>self::IS_NOT_DELETE,$type=>1]);
 
         // 指定分类
         if(!empty($cid))

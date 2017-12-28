@@ -22,9 +22,9 @@ use yii\helpers\Url;
 
                     <?= \yii\helpers\Html::beginForm(['brand/list'],'get')?>
 
-                    <input type="text" value="<?=$brandName;?>" class="span5 search" name="brand_name" placeholder="Search brand name..." />
+                    <input type="text" value="<?=$brandName;?>" class="span5 search" name="brand_name" placeholder="品牌名称" />
                     <div class="ui-dropdown">
-                        <input type="submit" class="btn" value="Search">
+                        <input type="submit" class="btn" value="搜索">
 <!--                        <button class="btn">Search</button>-->
                     </div>
                     <?= \yii\helpers\Html::endForm(); ?>
@@ -42,17 +42,23 @@ use yii\helpers\Url;
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th class="span2 sortable">
+                            品牌Logo
+                        </th>
+                        <th class="span2 sortable">
+                            品牌名称
+                        </th>
                         <th class="span4 sortable">
-                            品牌名/简短描述
+                            简短描述
                         </th>
 
-                        <th class="span2 sortable">
+                        <th class="span1 sortable">
                             <span class="line"></span>排序
                         </th>
-                        <th class="span2 sortable">
+                        <th class="span1 sortable">
                             <span class="line"></span>是否展示
                         </th>
-                        <th class="span3 sortable align-right">
+                        <th class="span2 sortable align-right">
                             <span class="line"></span>操作
                         </th>
                     </tr>
@@ -63,17 +69,19 @@ use yii\helpers\Url;
                     <?php foreach ($brands as $brand): ?>
                     <tr class="first">
                         <td>
-                            <img src="<?= $brand->brand_logo;?>" class="img-circle avatar thumbnail hidden-phone" />
-                            <a href="<?= $brand->site_url;?>" class="name" target="_blank"><?= $brand->brand_name;?></a>
-                            <span class="subtext"><?= $brand->brand_desc;?></span>
+                            <a href="<?= $brand->site_url;?>" class="name" target="_blank"><img src="<?= $brand->brand_logo;?>" class="img-circle avatar thumbnail hidden-phone" /></a>
                         </td>
+                        <td>
+                            <?= $brand->brand_name;?>
+                        </td>
+                        <td><span class="subtext"><?= $brand->brand_desc;?></span></td>
                         <td><?= $brand->sort;?></td>
                         <td>
                             <?= ($brand->is_show) ? '<span class="label label-success">是</span>' : '<span class="label label-default">否</span>'; ?>
                         </td>
                         <td class="align-right">
                             <a href="<?= URL::to(['brand/update','id'=>$brand->brand_id])?>">修改</a> |
-                            <a href="<?= URL::to(['brand/delete','id'=>$brand->brand_id])?>">回收站</a>
+                            <a href="<?= URL::to(['brand/delete','id'=>$brand->brand_id])?>">删除</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

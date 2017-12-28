@@ -212,11 +212,11 @@
                                                 </div>
                                                 <div class="hover-area">
                                                     <div class="add-cart-button">
-                                                        <a href="<?=$goods['url'];?>" class="le-button">add to cart</a>
+                                                        <a href="<?=$goods['url'];?>" class="le-button">加入购物车</a>
                                                     </div>
                                                     <div class="wish-compare">
-                                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                                        <a class="btn-add-to-compare" href="#">compare</a>
+                                                        <a class="btn-add-to-wishlist" href="#">加入收藏</a>
+<!--                                                        <a class="btn-add-to-compare" href="#">compare</a>-->
                                                     </div>
                                                 </div>
                                             </div><!-- /.product-item -->
@@ -274,17 +274,17 @@
                                                         <p><?=$goods['goods_brief'];?></p>
                                                     </div>
                                                     <div class="addto-compare">
-                                                        <a class="btn-add-to-compare" href="#">add to compare list</a>
+<!--                                                        <a class="btn-add-to-compare" href="#">add to compare list</a>-->
                                                     </div>
                                                 </div>
                                             </div><!-- /.body-holder -->
                                             <div class="no-margin col-xs-12 col-sm-3 price-area">
                                                 <div class="right-clmn">
-                                                    <div class="price-current"><?=$goods['market_price'];?></div>
-                                                    <div class="price-prev"><?=$goods['shop_price'];?></div>
+                                                    <div class="price-current"><?=$goods['shop_price'];?></div>
+                                                    <div class="price-prev"><?=$goods['market_price'];?></div>
                                                     <div class="availability"><label>availability:</label><span class="available">  in stock</span></div>
-                                                    <a class="le-button" href="<?=$goods['url'];?>">add to cart</a>
-                                                    <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
+                                                    <a class="le-button" href="<?=$goods['url'];?>">加入购物车</a>
+                                                    <a class="btn-add-to-wishlist" href="#">加入收藏</a>
                                                 </div>
                                             </div><!-- /.price-area -->
                                         </div><!-- /.row -->

@@ -12,15 +12,15 @@ use common\models\OrderInfo;
             <div class="row-fluid header">
                 <h3>订单列表</h3>
                 <div class="span10 pull-right">
-                    <input type="text" class="span5 search" placeholder="Type a user's name..." />
+                    <input type="text" class="span5 search" placeholder="订单编号" />
 
                     <div class="ui-dropdown">
-                        <button class="btn">Search</button>
+                        <button class="btn">搜索</button>
                     </div>
 
                     <a href="javascript:alert('未开发');" class="btn-flat success pull-right">
                         <span>&#43;</span>
-                        搜索订单
+                        高级搜索
                     </a>
                 </div>
             </div>
@@ -80,6 +80,10 @@ use common\models\OrderInfo;
                                 <span class="label label-success">已完成</span>
                             <?php elseif($order['order_status'] == OrderInfo::ORDER_CANCEL):?>
                                 <span class="label label-danger">已取消</span>
+                            <?php elseif($order['order_status'] == OrderInfo::ORDER_BRACE):?>
+                                <span class="label label-danger">已作废</span>
+                            <?php elseif($order['order_status'] == OrderInfo::ORDER_RETURN):?>
+                                <span class="label label-danger">已退款</span>
                             <?php endif;?>
                         </td>
                         <td>

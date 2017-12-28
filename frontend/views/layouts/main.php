@@ -13,12 +13,12 @@ $this->params['cart'] = $cart;
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="">
+    <meta name="description" content="必应商城-演示版">
     <meta name="author" content="">
-    <meta name="keywords" content="MediaCenter, Template, eCommerce">
+    <meta name="keywords" content="必应商城-演示版">
     <meta name="robots" content="all">
 
-    <title>MediaCenter - Responsive eCommerce Template</title>
+    <title>必应商城</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -56,9 +56,9 @@ $this->params['cart'] = $cart;
         <div class="container">
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul>
-                    <li><a href="index.html">主页</a></li>
+                    <li><a href="/">主页</a></li>
                     <li><a href="faq.html">帮助</a></li>
-                    <li class="dropdown">
+                    <!--<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#pages">页面</a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="index.html">Home</a></li>
@@ -78,7 +78,7 @@ $this->params['cart'] = $cart;
                             <li><a href="terms.html">Terms & Conditions</a></li>
                             <li><a href="authentication.html">Login/Register</a></li><li><a href="http://www.moke8.com">More</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
             </div><!-- /.col -->
 
@@ -113,7 +113,7 @@ $this->params['cart'] = $cart;
             <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
                 <!-- ============================================================= LOGO ============================================================= -->
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="/">
                         <!--<img alt="logo" src="/assets/images/logo.svg" width="233" height="54"/>-->
                         <!--<object id="sp" type="image/svg+xml" data="assets/images/logo.svg" width="233" height="54"></object>-->
                         <svg width="233px" height="54px" viewBox="0 0 233 54" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +209,7 @@ $this->params['cart'] = $cart;
     </header>
     <!-- ============================================================= HEADER : END ============================================================= -->
 
-    <?php if ($this->beginCache($_SERVER['REQUEST_URI'],['duration' => 3600])): ?>
+    <?php if ($this->beginCache($_SERVER['REQUEST_URI'],['duration' => 1])): ?>
 
     <?=$content;?>
 
@@ -225,7 +225,7 @@ $this->params['cart'] = $cart;
                 <div class="col-xs-12  col-sm-4 no-margin-left">
                     <!-- ============================================================= FEATURED PRODUCTS ============================================================= -->
                     <div class="widget">
-                        <h2>精品推荐</h2>
+                        <h2>Featured Products</h2>
                         <div class="body">
                             <ul>
                                 <li>
@@ -288,7 +288,7 @@ $this->params['cart'] = $cart;
                 <div class="col-xs-12 col-sm-4 ">
                     <!-- ============================================================= ON SALE PRODUCTS ============================================================= -->
                     <div class="widget">
-                        <h2>新品推荐</h2>
+                        <h2>On-Sale Products</h2>
                         <div class="body">
                             <ul>
                                 <li>
@@ -352,7 +352,7 @@ $this->params['cart'] = $cart;
                 <div class="col-xs-12 col-sm-4 ">
                     <!-- ============================================================= TOP RATED PRODUCTS ============================================================= -->
                     <div class="widget">
-                        <h2>热销商品</h2>
+                        <h2>Top Rated Products</h2>
                         <div class="body">
                             <ul>
                                 <li>
@@ -537,7 +537,7 @@ $this->params['cart'] = $cart;
             <div class="container">
                 <div class="col-xs-12 col-sm-6 no-margin">
                     <div class="copyright">
-                        &copy; <a href="index.html">Media Center</a> - all rights reserved
+                        &copy; <a href="index.html">必应学院</a> - 保留所有权利
                     </div><!-- /.copyright -->
                 </div>
                 <div class="col-xs-12 col-sm-6 no-margin">

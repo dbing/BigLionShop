@@ -10,7 +10,7 @@
             <div class="row-fluid header">
                 <h3>分类列表</h3>
                 <div class="span10 pull-right">
-                    <input type="text" class="span5 search" placeholder="Type a user's name..." />
+<!--                    <input type="text" class="span5 search" placeholder="Type a user's name..." />-->
 
                     <a href="<?= \yii\helpers\Url::to(['category/create']);?>" class="btn-flat success pull-right">
                         <span>&#43;</span>

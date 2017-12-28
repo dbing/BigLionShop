@@ -59,8 +59,8 @@ class OrderInfo extends \yii\db\ActiveRecord
     const ORDER_CONFIRM = 1;
     const ORDER_FINISH = 2;
     const ORDER_CANCEL = 3;
-    const ORDER_BRACE = 4;
-    const ORDER_RETURN = 5;
+    const ORDER_BRACE = 4;      // 无效
+    const ORDER_RETURN = 5;     // 退款
 
     const PAY_SUCCESS = 1;  // 支付成功
     const PAY_ERROR = 0;    // 未支付
